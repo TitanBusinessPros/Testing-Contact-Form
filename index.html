@@ -384,45 +384,6 @@
             z-index: 150;
             display: none;
         }
-
-        /* Mobile Joystick */
-        #joystick-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 150px;
-            height: 150px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 3px solid rgba(255, 215, 0, 0.5);
-            border-radius: 50%;
-            display: none;
-            z-index: 200;
-        }
-        #joystick-container.active {
-            display: block;
-        }
-        #joystick-thumb {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 215, 0, 0.7);
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        /* Mobile detect */
-        @media (max-width: 768px) {
-            #joystick-container {
-                display: block;
-            }
-            .controls-info {
-                font-size: 10px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -459,11 +420,6 @@
         </div>
 
         <div class="selection-box" id="selectionBox"></div>
-
-        <!-- Mobile Joystick -->
-        <div id="joystick-container" class="active">
-            <div id="joystick-thumb"></div>
-        </div>
 
         <div class="build-menu">
             <div class="build-menu-header" id="buildMenuHeader">
@@ -1618,7 +1574,6 @@
 
             // Handle keyboard controls
             handleKeyboardControls();
-            handleJoystickMovement();
 
             // Update
             enemyAI();
@@ -1822,18 +1777,13 @@
                 }
                 gameState.selectedUnit = clickedShip;
             } else if (selectedUnits.length > 0) {
-                // Have selected units, clicking empty space
-                // Check if click is very small (not a drag) - if so, deselect
-                const clickWasSmall = true; // Will be checked in mouseup
-                // Store that we should check for deselect
-                window.checkDeselect = {x: mouseX, y: mouseY};
-                
-                // Also send move command
+                // Have selected units, clicking empty space = move them
                 selectedUnits.forEach(unit => {
                     unit.targetX = mouseX;
                     unit.targetY = mouseY;
                     unit.moving = true;
                 });
+                // Don't set checkDeselect - keep ships selected after moving
             } else {
                 // No ships selected, clicking empty space = start selection box
                 isSelecting = true;
@@ -1880,23 +1830,6 @@
         });
 
         canvas.addEventListener('mouseup', (e) => {
-            // Check if this was a deselect click (clicked on ocean with ships selected)
-            if (window.checkDeselect) {
-                const rect = canvas.getBoundingClientRect();
-                const screenX = e.clientX - rect.left;
-                const screenY = e.clientY - rect.top;
-                const mouseX = screenX / gameState.zoom + gameState.cameraX;
-                const mouseY = screenY / gameState.zoom + gameState.cameraY;
-                
-                // If barely moved (less than 10 pixels in world), deselect
-                const dist = Math.hypot(mouseX - window.checkDeselect.x, mouseY - window.checkDeselect.y);
-                if (dist < 10) {
-                    selectedUnits = [];
-                    gameState.selectedUnit = null;
-                }
-                window.checkDeselect = null;
-            }
-            
             if (isSelecting) {
                 const rect = canvas.getBoundingClientRect();
                 const screenX = e.clientX - rect.left;
@@ -2108,59 +2041,6 @@
             // Clamp camera
             gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
             gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
-        }
-
-        // Mobile Joystick
-        const joystickContainer = document.getElementById('joystick-container');
-        const joystickThumb = document.getElementById('joystick-thumb');
-        let joystickActive = false;
-        let joystickDX = 0;
-        let joystickDY = 0;
-
-        joystickContainer.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            joystickActive = true;
-        });
-
-        joystickContainer.addEventListener('touchmove', (e) => {
-            if (!joystickActive) return;
-            e.preventDefault();
-            
-            const touch = e.touches[0];
-            const rect = joystickContainer.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const dx = touch.clientX - centerX;
-            const dy = touch.clientY - centerY;
-            const distance = Math.min(Math.hypot(dx, dy), 45);
-            const angle = Math.atan2(dy, dx);
-            
-            const thumbX = Math.cos(angle) * distance;
-            const thumbY = Math.sin(angle) * distance;
-            
-            joystickThumb.style.transform = `translate(calc(-50% + ${thumbX}px), calc(-50% + ${thumbY}px))`;
-            
-            joystickDX = thumbX / 45;
-            joystickDY = thumbY / 45;
-        });
-
-        joystickContainer.addEventListener('touchend', () => {
-            joystickActive = false;
-            joystickThumb.style.transform = 'translate(-50%, -50%)';
-            joystickDX = 0;
-            joystickDY = 0;
-        });
-
-        function handleJoystickMovement() {
-            if (joystickActive) {
-                const panSpeed = 15 / gameState.zoom;
-                gameState.cameraX += joystickDX * panSpeed;
-                gameState.cameraY += joystickDY * panSpeed;
-                
-                gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
-                gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
-            }
         }
 
         function showMessage(title, text, callback) {
