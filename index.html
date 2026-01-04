@@ -482,8 +482,8 @@
         canvas.height = window.innerHeight;
 
         // Game constants
-        const MAP_WIDTH = 4000;
-        const MAP_HEIGHT = 3000;
+        const MAP_WIDTH = 2400;
+        const MAP_HEIGHT = 1600;
         const CELL_SIZE = 50;
         const ATTACK_RANGE = 300;
         const ISLAND_RANGE = 300;
@@ -512,7 +512,7 @@
             gameRunning: true,
             attackCooldowns: new Map(),
             waveOffset: 0,
-            zoom: 0.5,
+            zoom: 0.8,
             roundInterval: null,
             placingIsland: false,
             islandCooldowns: new Map(),
@@ -672,9 +672,9 @@
                 maxHp: 200
             };
 
-            // Center camera on player base
-            gameState.cameraX = gameState.playerBase.x - canvas.width / 2;
-            gameState.cameraY = gameState.playerBase.y - canvas.height / 2;
+            // Center camera on MIDDLE of map so player can see both bases
+            gameState.cameraX = MAP_WIDTH / 2 - canvas.width / 2 / gameState.zoom;
+            gameState.cameraY = MAP_HEIGHT / 2 - canvas.height / 2 / gameState.zoom;
 
             // Generate ghost ships based on stage
             generateGhostShips();
