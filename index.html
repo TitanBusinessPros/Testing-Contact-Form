@@ -1,1 +1,2199 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirate Strategy - Naval Warfare</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', Arial, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        #startScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a1f3d 0%, #1a3a5f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #startScreen.hidden {
+            display: none;
+        }
+
+        #startScreen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        #startScreen .menu-buttons {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: auto;
+            margin-bottom: 50px;
+        }
+
+        .start-menu-btn {
+            width: 350px;
+            padding: 20px;
+            margin: 15px;
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            color: #ffd700;
+            border: 3px solid #ffd700;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 22px;
+            transition: all 0.3s;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .start-menu-btn:hover {
+            background: linear-gradient(45deg, #a0522d, #cd853f);
+            transform: scale(1.05);
+        }
+
+        .split-screen-divider {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: #ffd700;
+            z-index: 50;
+            display: none;
+        }
+
+        #gameContainer {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair;
+        }
+
+        .hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            border: 3px solid #ffd700;
+            z-index: 100;
+            min-width: 250px;
+        }
+
+        .hud-header {
+            padding: 12px 15px;
+            background: linear-gradient(45deg, #1a472a, #2d5a3d);
+            border-radius: 7px 7px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hud-header-content {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hud-toggle {
+            color: #ffd700;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hud-content {
+            padding: 15px;
+        }
+
+        .hud-content.collapsed {
+            display: none;
+        }
+
+        .hud-item {
+            margin: 8px 0;
+            font-size: 16px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .timer {
+            font-size: 24px;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .gold {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .stage {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .build-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            border: 3px solid #ffd700;
+            z-index: 100;
+            max-width: 280px;
+        }
+
+        .build-menu-header {
+            padding: 15px;
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            border-radius: 7px 7px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .build-menu-header h3 {
+            color: #ffd700;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .build-menu-toggle {
+            color: #ffd700;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .build-menu-content {
+            padding: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .build-menu-content.collapsed {
+            display: none;
+        }
+
+        .build-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .build-button:hover:not(:disabled) {
+            background: linear-gradient(45deg, #a0522d, #cd853f);
+            transform: scale(1.05);
+        }
+
+        .build-button:disabled {
+            background: #555;
+            color: #888;
+            border-color: #666;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .button-cost {
+            font-size: 11px;
+            color: #ffd700;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .button-stats {
+            font-size: 10px;
+            color: #aaa;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border: 4px solid #ffd700;
+            z-index: 200;
+            text-align: center;
+            display: none;
+        }
+
+        .message-box h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-shadow: 3px 3px 6px #000;
+        }
+
+        .message-box button {
+            padding: 15px 40px;
+            margin: 10px;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: 3px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .message-box button:hover {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            transform: scale(1.1);
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            z-index: 100;
+            max-width: 300px;
+            display: none;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            z-index: 100;
+        }
+
+        .control-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background: #2c3e50;
+            color: #fff;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .control-btn:hover {
+            background: #34495e;
+        }
+
+        .zoom-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            z-index: 100;
+        }
+
+        .zoom-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #2c3e50;
+            color: #fff;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .zoom-btn:hover {
+            background: #34495e;
+        }
+
+        .controls-info {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 2px solid #ffd700;
+            z-index: 100;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .controls-info span {
+            margin: 0 10px;
+            color: #ffd700;
+        }
+
+        .selection-box {
+            position: absolute;
+            border: 2px dashed #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            pointer-events: none;
+            z-index: 150;
+            display: none;
+        }
+
+        /* Mobile Joystick */
+        #joystick-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            border-radius: 50%;
+            display: none;
+            z-index: 200;
+        }
+        #joystick-container.active {
+            display: block;
+        }
+        #joystick-thumb {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 215, 0, 0.7);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* Mobile detect */
+        @media (max-width: 768px) {
+            #joystick-container {
+                display: block;
+            }
+            .controls-info {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="startScreen">
+        <img src="https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Logo.png" alt="Pirate Strategy">
+        <div class="menu-buttons">
+            <button class="start-menu-btn" id="btnSinglePlayer">⚔️ Start Game</button>
+        </div>
+    </div>
+
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div class="hud">
+            <div class="hud-header" id="hudHeader">
+                <div class="hud-header-content">
+                    <div class="hud-item stage">Stage: <span id="stageNum">1</span></div>
+                    <div class="hud-item timer">Time: <span id="timeLeft">5</span>s</div>
+                </div>
+                <span class="hud-toggle" id="hudToggle">▼</span>
+            </div>
+            <div class="hud-content" id="hudContent">
+                <div class="hud-item gold">Your Gold: <span id="goldAmount">100</span></div>
+                <div class="hud-item" style="color: #ff6b6b;">Enemy Gold: <span id="enemyGold">100</span></div>
+                <div class="hud-item">Your Ships: <span id="shipCount">0</span></div>
+                <div class="hud-item" style="color: #ff6b6b;">Enemy Ships: <span id="enemyShipCount">0</span></div>
+            </div>
+        </div>
+
+        <div class="controls-info">
+            <span>🖱️ Right-Click Drag: Pan Map</span>
+            <span>🖱️ Scroll: Zoom</span>
+            <span>📦 Left-Click Drag: Select Multiple Ships</span>
+        </div>
+
+        <div class="selection-box" id="selectionBox"></div>
+
+        <!-- Mobile Joystick -->
+        <div id="joystick-container" class="active">
+            <div id="joystick-thumb"></div>
+        </div>
+
+        <div class="build-menu">
+            <div class="build-menu-header" id="buildMenuHeader">
+                <h3>Build Menu</h3>
+                <span class="build-menu-toggle" id="buildMenuToggle">▼</span>
+            </div>
+            <div class="build-menu-content" id="buildMenuContent">
+                <button class="build-button" id="buildCommand">
+                    Build Command Center
+                    <span class="button-cost">Cost: 100 Gold</span>
+                </button>
+                <button class="build-button" id="buildDock" disabled>
+                    Build Navy Dock
+                    <span class="button-cost">Cost: 100 Gold</span>
+                </button>
+                <button class="build-button" id="buildIsland" disabled>
+                    Build Pirate Island
+                    <span class="button-cost">Cost: 200 Gold</span>
+                    <span class="button-stats">HP: 50 | Attack: 10 | Range: 300</span>
+                </button>
+                <hr style="border-color: #ffd700; margin: 10px 0;">
+                <button class="build-button" id="buildMiniShip" disabled>
+                    Little Mini Ship
+                    <span class="button-cost">Cost: 75 Gold</span>
+                    <span class="button-stats">HP: 50 | Attack: 5 | Range: 200 | Moves after attack</span>
+                </button>
+                <button class="build-button" id="buildDestroyer" disabled>
+                    Pirate Destroyer
+                    <span class="button-cost">Cost: 150 Gold</span>
+                    <span class="button-stats">HP: 100 | Attack: 15 | Range: 300</span>
+                </button>
+                <button class="build-button" id="buildQueenShip" disabled>
+                    Pirate Queen Ship
+                    <span class="button-cost">Cost: 300 Gold</span>
+                    <span class="button-stats">HP: 250 | Attack: 20 | Range: 700</span>
+                </button>
+                <button class="build-button" id="buildKingShip" disabled>
+                    King Pirate Ship
+                    <span class="button-cost">Cost: 500 Gold</span>
+                    <span class="button-stats">HP: 350 | Attack: 30 | Range: 1000</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="info-panel" id="infoPanel"></div>
+
+        <div class="zoom-controls">
+            <span style="color: #ffd700; font-size: 14px;">Pinch to Zoom on Mobile | Mouse Wheel on Desktop</span>
+        </div>
+
+        <div class="message-box" id="messageBox">
+            <h2 id="messageTitle"></h2>
+            <p id="messageText" style="font-size: 18px; margin: 20px 0;"></p>
+            <button id="messageBtn">Continue</button>
+        </div>
+
+        <div class="split-screen-divider"></div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Game constants
+        const MAP_WIDTH = 4000;
+        const MAP_HEIGHT = 3000;
+        const CELL_SIZE = 50;
+        const ATTACK_RANGE = 300;
+        const ISLAND_RANGE = 300;
+        const GHOST_RANGE = 500;
+        const ROUND_TIME = 5; // CHANGE THIS NUMBER TO ADJUST ROUND TIME IN SECONDS (currently 5 seconds for testing)
+
+        // Game state
+        let gameState = {
+            stage: 1,
+            gold: 100,
+            timeLeft: ROUND_TIME,
+            playerBase: null,
+            enemyBase: null,
+            playerShips: [],
+            enemyShips: [],
+            playerBuildings: [],
+            enemyBuildings: [],
+            ghostShips: [],
+            cannonballs: [],
+            selectedUnit: null,
+            hasCommandCenter: false,
+            hasNavyDock: false,
+            cameraX: 0,
+            cameraY: 0,
+            fogOfWar: [],
+            gameRunning: true,
+            attackCooldowns: new Map(),
+            waveOffset: 0,
+            zoom: 1,
+            roundInterval: null,
+            placingIsland: false,
+            islandCooldowns: new Map(),
+            gameMode: 'menu', // 'menu', 'singleplayer', 'twoplayer'
+            currentPlayer: 1,
+            treasureChests: [],
+            healthIslands: [],
+            kingIslands: [],
+            player2Gold: 100,
+            player2Ships: [],
+            player2Buildings: [],
+            player2Base: null,
+            player2HasCommandCenter: false,
+            player2HasNavyDock: false
+        };
+
+        // Images
+        const images = {};
+        const imageUrls = {
+            playerShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-1.png',
+            enemyShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-2.png',
+            miniShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-3.png',
+            queenShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-4.png',
+            kingShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-5.png',
+            island: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Island-1.png',
+            cannonball: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/C-Ball.png',
+            base: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Pirate%20Base.png',
+            commandCenter: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Command-Center.png',
+            navyDock: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Navy-Dock.png',
+            ghostShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/G-Pirate.png',
+            bgTile: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/BG-Tile-1.png',
+            treasureChest: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Treasure-Chest.png',
+            healthIsland: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Health-Island.png',
+            kingIsland: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/King-island.png'
+        };
+
+        let imagesLoaded = 0;
+        const totalImages = Object.keys(imageUrls).length;
+
+        // Load images
+        for (let key in imageUrls) {
+            images[key] = new Image();
+            images[key].src = imageUrls[key];
+            images[key].onload = () => {
+                imagesLoaded++;
+                // Images loaded, game will start from menu buttons
+            };
+        }
+
+        // Audio - Background Music
+        const bgMusic = new Audio('https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-song-2.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.3;
+
+        // Sound Effects using Web Audio API
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        function playCannonSound() {
+            if (!audioCtx) initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.frequency.value = 80;  // Deeper sound
+            oscillator.type = 'sine';  // Smoother tone
+            
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);  // Quieter
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);  // Shorter
+            
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.15);
+        }
+
+        function playTreasureSound() {
+            if (!audioCtx) initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function playPowerupSound() {
+            if (!audioCtx) initAudio();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.2);
+            oscillator.type = 'triangle';
+            
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + 0.4);
+        }
+
+        // Start screen button handlers
+        document.getElementById('btnSinglePlayer').addEventListener('click', () => {
+            gameState.gameMode = 'singleplayer';
+            document.getElementById('startScreen').classList.add('hidden');
+            bgMusic.play().catch(e => console.log('Audio autoplay prevented'));
+            initAudio();
+            initGame();
+        });
+
+        function initGame() {
+            // Initialize fog of war
+            gameState.fogOfWar = Array(Math.ceil(MAP_HEIGHT / CELL_SIZE))
+                .fill(null)
+                .map(() => Array(Math.ceil(MAP_WIDTH / CELL_SIZE)).fill(true));
+
+            // Create player base
+            gameState.playerBase = {
+                x: 200,
+                y: MAP_HEIGHT / 2,
+                width: 150,
+                height: 150,
+                type: 'base',
+                owner: 'player',
+                hp: 500,
+                maxHp: 500
+            };
+
+            // Create enemy base
+            gameState.enemyBase = {
+                x: MAP_WIDTH - 350,
+                y: MAP_HEIGHT / 2,
+                width: 150,
+                height: 150,
+                type: 'base',
+                owner: 'enemy',
+                hp: 200,
+                maxHp: 200
+            };
+
+            // Center camera on player base
+            gameState.cameraX = gameState.playerBase.x - canvas.width / 2;
+            gameState.cameraY = gameState.playerBase.y - canvas.height / 2;
+
+            // Generate ghost ships based on stage
+            generateGhostShips();
+
+            // Generate powerups
+            generatePowerups();
+
+            // Start game loop and first round
+            updateHUD();
+            updateBuildButtons();
+            startFirstRound();
+            gameLoop();
+        }
+
+        function generatePowerups() {
+            gameState.treasureChests = [];
+            gameState.healthIslands = [];
+            gameState.kingIslands = [];
+
+            // 3 treasure chests per stage
+            for (let i = 0; i < 3; i++) {
+                gameState.treasureChests.push({
+                    x: Math.random() * (MAP_WIDTH - 600) + 300,
+                    y: Math.random() * (MAP_HEIGHT - 600) + 300,
+                    width: 60,
+                    height: 60
+                });
+            }
+
+            // 10 health islands per stage
+            for (let i = 0; i < 10; i++) {
+                gameState.healthIslands.push({
+                    x: Math.random() * (MAP_WIDTH - 600) + 300,
+                    y: Math.random() * (MAP_HEIGHT - 600) + 300,
+                    width: 80,
+                    height: 80
+                });
+            }
+
+            // 1 king island per stage
+            gameState.kingIslands.push({
+                x: Math.random() * (MAP_WIDTH - 800) + 400,
+                y: Math.random() * (MAP_HEIGHT - 800) + 400,
+                width: 100,
+                height: 100
+            });
+        }
+
+        function checkPowerupCollection() {
+            // Check all player and enemy ships for powerup collection
+            [...gameState.playerShips, ...gameState.enemyShips].forEach(ship => {
+                // Check treasure chests
+                gameState.treasureChests = gameState.treasureChests.filter(treasure => {
+                    const dist = Math.hypot(ship.x - treasure.x, ship.y - treasure.y);
+                    if (dist < 60) {
+                        // Add gold to appropriate player
+                        if (ship.owner === 'player') {
+                            gameState.gold += 500;
+                        } else if (ship.owner === 'enemy') {
+                            enemyState.gold += 500;
+                        }
+                        playTreasureSound();
+                        updateHUD();
+                        return false; // Remove treasure
+                    }
+                    return true;
+                });
+
+                // Check health islands
+                gameState.healthIslands = gameState.healthIslands.filter(health => {
+                    const dist = Math.hypot(ship.x - health.x, ship.y - health.y);
+                    if (dist < 60) {
+                        // Fully heal the ship
+                        ship.hp = ship.maxHp;
+                        playPowerupSound();
+                        return false; // Remove health island
+                    }
+                    return true;
+                });
+
+                // Check king islands
+                gameState.kingIslands = gameState.kingIslands.filter(kingIsland => {
+                    const dist = Math.hypot(ship.x - kingIsland.x, ship.y - kingIsland.y);
+                    if (dist < 70) {
+                        // Give a king ship to the player who found it
+                        const owner = ship.owner;
+                        const base = owner === 'player' ? gameState.playerBase : gameState.enemyBase;
+                        const shipList = owner === 'player' ? gameState.playerShips : gameState.enemyShips;
+                        
+                        shipList.push({
+                            x: base.x + (owner === 'player' ? 200 : -200),
+                            y: base.y,
+                            width: 110,
+                            height: 110,
+                            hp: 350,
+                            maxHp: 350,
+                            damage: 30,
+                            range: 1000,
+                            owner: owner,
+                            moving: false,
+                            targetX: null,
+                            targetY: null,
+                            shipType: 'king',
+                            canMoveAfterAttack: false
+                        });
+                        playPowerupSound();
+                        updateHUD();
+                        return false; // Remove king island
+                    }
+                    return true;
+                });
+            });
+        }
+
+        function startFirstRound() {
+            gameState.timeLeft = ROUND_TIME;
+            // Don't add gold on first round, we already have starting gold
+            updateHUD();
+            
+            // Clear any existing interval
+            if (gameState.roundInterval) {
+                clearInterval(gameState.roundInterval);
+            }
+            
+            gameState.roundInterval = setInterval(() => {
+                if (gameState.gameRunning) {
+                    gameState.timeLeft--;
+                    updateHUD();
+                    
+                    if (gameState.timeLeft <= 0) {
+                        clearInterval(gameState.roundInterval);
+                        gameState.roundInterval = null;
+                        endRound();
+                    }
+                } else {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+            }, 1000);
+        }
+
+        function generateGhostShips() {
+            gameState.ghostShips = [];
+            const numGhosts = gameState.stage;
+            
+            for (let i = 0; i < numGhosts; i++) {
+                const x = Math.random() * (MAP_WIDTH - 400) + 200;
+                const y = Math.random() * (MAP_HEIGHT - 400) + 200;
+                
+                // Make sure not too close to bases
+                const distToPlayer = Math.hypot(x - gameState.playerBase.x, y - gameState.playerBase.y);
+                const distToEnemy = Math.hypot(x - gameState.enemyBase.x, y - gameState.enemyBase.y);
+                
+                if (distToPlayer > 600 && distToEnemy > 600) {
+                    gameState.ghostShips.push({
+                        x: x,
+                        y: y,
+                        width: 80,
+                        height: 80,
+                        hp: 200,
+                        maxHp: 200,
+                        damage: 20,
+                        range: GHOST_RANGE,
+                        type: 'ghost'
+                    });
+                }
+            }
+        }
+
+        function startRound() {
+            gameState.timeLeft = ROUND_TIME;
+            gameState.gold += 100;
+            enemyState.gold += 100; // Enemy gets same gold as player
+            updateHUD();
+            
+            // Clear any existing interval
+            if (gameState.roundInterval) {
+                clearInterval(gameState.roundInterval);
+            }
+            
+            gameState.roundInterval = setInterval(() => {
+                if (gameState.gameRunning) {
+                    gameState.timeLeft--;
+                    updateHUD();
+                    
+                    if (gameState.timeLeft <= 0) {
+                        clearInterval(gameState.roundInterval);
+                        gameState.roundInterval = null;
+                        endRound();
+                    }
+                } else {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+            }, 1000);
+        }
+
+        function endRound() {
+            // Clear attack cooldowns
+            gameState.attackCooldowns.clear();
+            gameState.islandCooldowns.clear();
+            
+            // Check win/loss conditions
+            const enemyBaseDestroyed = gameState.enemyBase.hp <= 0;
+            const allGhostsDestroyed = gameState.ghostShips.length === 0;
+            const allEnemyBuildingsDestroyed = gameState.enemyBuildings.length === 0;
+            
+            if (enemyBaseDestroyed && allGhostsDestroyed && allEnemyBuildingsDestroyed) {
+                gameState.gameRunning = false;
+                if (gameState.roundInterval) {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+                gameState.stage++;
+                
+                alert(`Stage ${gameState.stage - 1} Complete! Advancing to Stage ${gameState.stage}`);
+                
+                if (gameState.stage > 10) {
+                    alert('Victory! You conquered all 10 stages!');
+                    gameState.stage = 1;
+                    resetGame();
+                } else {
+                    nextStage();
+                }
+            } else if (gameState.playerBase.hp <= 0) {
+                gameState.gameRunning = false;
+                if (gameState.roundInterval) {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+                alert('Defeat! Your base was destroyed!');
+                resetGame();
+            } else {
+                startRound();
+            }
+        }
+
+        function nextStage() {
+            // Reset for next stage
+            gameState.playerShips = [];
+            gameState.enemyShips = [];
+            gameState.cannonballs = [];
+            gameState.playerBuildings = [];
+            gameState.enemyBuildings = [];
+            
+            gameState.playerBase.hp = 500;
+            gameState.enemyBase.hp = 200; // Enemy base has 200 HP
+            
+            gameState.hasCommandCenter = false;
+            gameState.hasNavyDock = false;
+            
+            // Reset enemy state
+            enemyState.gold = 100;
+            enemyState.hasCommandCenter = false;
+            enemyState.hasNavyDock = false;
+            
+            // Generate new ghosts and powerups for this stage
+            generateGhostShips();
+            generatePowerups();
+            
+            // Restart the game
+            gameState.gameRunning = true;
+            updateBuildButtons();
+            updateHUD();
+            startRound();
+            
+            // FORCE GAME LOOP TO RESTART
+            requestAnimationFrame(gameLoop);
+        }
+
+        function resetGame() {
+            gameState.stage = 1;
+            gameState.gold = 100;
+            enemyState.gold = 100;
+            nextStage();
+        }
+
+        function updateHUD() {
+            document.getElementById('stageNum').textContent = gameState.stage;
+            document.getElementById('goldAmount').textContent = gameState.gold;
+            document.getElementById('enemyGold').textContent = enemyState.gold;
+            document.getElementById('timeLeft').textContent = gameState.timeLeft;
+            document.getElementById('shipCount').textContent = gameState.playerShips.length;
+            document.getElementById('enemyShipCount').textContent = gameState.enemyShips.length;
+        }
+
+        function updateBuildButtons() {
+            const buildCommand = document.getElementById('buildCommand');
+            const buildDock = document.getElementById('buildDock');
+            const buildIsland = document.getElementById('buildIsland');
+            const buildMiniShip = document.getElementById('buildMiniShip');
+            const buildDestroyer = document.getElementById('buildDestroyer');
+            const buildQueenShip = document.getElementById('buildQueenShip');
+            const buildKingShip = document.getElementById('buildKingShip');
+
+            buildCommand.disabled = gameState.hasCommandCenter || gameState.gold < 100;
+            buildDock.disabled = !gameState.hasCommandCenter || gameState.hasNavyDock || gameState.gold < 100;
+            buildIsland.disabled = !gameState.hasCommandCenter || gameState.gold < 200;
+            buildMiniShip.disabled = !gameState.hasNavyDock || gameState.gold < 75;
+            buildDestroyer.disabled = !gameState.hasNavyDock || gameState.gold < 150;
+            buildQueenShip.disabled = !gameState.hasNavyDock || gameState.gold < 300;
+            buildKingShip.disabled = !gameState.hasNavyDock || gameState.gold < 500;
+        }
+
+        // Build functions
+        document.getElementById('buildCommand').addEventListener('click', () => {
+            if (gameState.gold >= 100 && !gameState.hasCommandCenter) {
+                gameState.gold -= 100;
+                gameState.hasCommandCenter = true;
+                gameState.playerBuildings.push({
+                    x: gameState.playerBase.x,
+                    y: gameState.playerBase.y - 50,
+                    width: 100,
+                    height: 100,
+                    type: 'command',
+                    owner: 'player',
+                    hp: 300,
+                    maxHp: 300
+                });
+                updateHUD();
+                updateBuildButtons();
+            }
+        });
+
+        document.getElementById('buildDock').addEventListener('click', () => {
+            if (gameState.gold >= 100 && gameState.hasCommandCenter && !gameState.hasNavyDock) {
+                gameState.gold -= 100;
+                gameState.hasNavyDock = true;
+                gameState.playerBuildings.push({
+                    x: gameState.playerBase.x + 150,
+                    y: gameState.playerBase.y,
+                    width: 120,
+                    height: 100,
+                    type: 'dock',
+                    owner: 'player',
+                    hp: 200,
+                    maxHp: 200
+                });
+                updateHUD();
+                updateBuildButtons();
+            }
+        });
+
+        document.getElementById('buildIsland').addEventListener('click', () => {
+            if (gameState.gold >= 200 && gameState.hasCommandCenter) {
+                gameState.placingIsland = true;
+                canvas.style.cursor = 'crosshair';
+            }
+        });
+
+        function createShip(type, cost, hp, damage, range, width, height, canMoveAfterAttack = false) {
+            if (gameState.gold >= cost && gameState.hasNavyDock) {
+                gameState.gold -= cost;
+                const spawnOffset = gameState.playerShips.length % 5; // Stack vertically, max 5 high
+                const spawnRow = Math.floor(gameState.playerShips.length / 5); // Then move to right
+                gameState.playerShips.push({
+                    x: gameState.playerBase.x + 200 + (spawnRow * 100),
+                    y: gameState.playerBase.y - 100 + (spawnOffset * 60),
+                    width: width,
+                    height: height,
+                    hp: hp,
+                    maxHp: hp,
+                    damage: damage,
+                    range: range,
+                    owner: 'player',
+                    moving: false,
+                    targetX: null,
+                    targetY: null,
+                    shipType: type,
+                    canMoveAfterAttack: canMoveAfterAttack
+                });
+                updateHUD();
+                updateBuildButtons();
+            }
+        }
+
+        document.getElementById('buildMiniShip').addEventListener('click', () => {
+            createShip('mini', 75, 50, 5, 200, 50, 50, true);
+        });
+
+        document.getElementById('buildDestroyer').addEventListener('click', () => {
+            createShip('destroyer', 150, 100, 15, 300, 70, 70, false);
+        });
+
+        document.getElementById('buildQueenShip').addEventListener('click', () => {
+            createShip('queen', 300, 250, 20, 700, 90, 90, false);
+        });
+
+        document.getElementById('buildKingShip').addEventListener('click', () => {
+            createShip('king', 500, 350, 30, 1000, 110, 110, false);
+        });
+
+        // Enemy AI state
+        let enemyState = {
+            gold: 100,
+            hasCommandCenter: false,
+            hasNavyDock: false
+        };
+
+        // Enemy AI
+        function enemyAI() {
+            // Enemy AI decision making - runs every few seconds
+            if (gameState.timeLeft % 5 === 0) {
+                
+                // Build command center if doesn't have one and can afford it
+                if (!enemyState.hasCommandCenter && enemyState.gold >= 100) {
+                    enemyState.gold -= 100;
+                    enemyState.hasCommandCenter = true;
+                    gameState.enemyBuildings.push({
+                        x: gameState.enemyBase.x,
+                        y: gameState.enemyBase.y - 50,
+                        width: 100,
+                        height: 100,
+                        type: 'command',
+                        owner: 'enemy',
+                        hp: 300,
+                        maxHp: 300
+                    });
+                }
+
+                // Build dock if has command center and can afford it
+                if (enemyState.hasCommandCenter && !enemyState.hasNavyDock && enemyState.gold >= 100) {
+                    enemyState.gold -= 100;
+                    enemyState.hasNavyDock = true;
+                    gameState.enemyBuildings.push({
+                        x: gameState.enemyBase.x - 150,
+                        y: gameState.enemyBase.y,
+                        width: 120,
+                        height: 100,
+                        type: 'dock',
+                        owner: 'enemy',
+                        hp: 200,
+                        maxHp: 200
+                    });
+                }
+
+                // Build ships if has dock and can afford it
+                if (enemyState.hasNavyDock && enemyState.gold >= 150) {
+                    enemyState.gold -= 150;
+                    const spawnOffset = gameState.enemyShips.length % 5;
+                    const spawnRow = Math.floor(gameState.enemyShips.length / 5);
+                    gameState.enemyShips.push({
+                        x: gameState.enemyBase.x - 200 - (spawnRow * 100),
+                        y: gameState.enemyBase.y - 100 + (spawnOffset * 60),
+                        width: 70,
+                        height: 70,
+                        hp: 100,
+                        maxHp: 100,
+                        damage: 15,
+                        range: ATTACK_RANGE,
+                        owner: 'enemy',
+                        moving: true,
+                        targetX: gameState.playerBase.x + Math.random() * 400 - 200,
+                        targetY: gameState.playerBase.y + Math.random() * 400 - 200
+                    });
+                }
+
+                // Build pirate islands occasionally if has command center
+                if (enemyState.hasCommandCenter && enemyState.gold >= 200 && Math.random() > 0.7) {
+                    enemyState.gold -= 200;
+                    gameState.enemyBuildings.push({
+                        x: gameState.enemyBase.x - 300,
+                        y: gameState.enemyBase.y + Math.random() * 200 - 100,
+                        width: 100,
+                        height: 100,
+                        type: 'island',
+                        owner: 'enemy',
+                        range: ISLAND_RANGE,
+                        hp: 50,
+                        maxHp: 50,
+                        damage: 10
+                    });
+                }
+            }
+
+            // Move enemy ships toward player
+            gameState.enemyShips.forEach(ship => {
+                if (ship.moving && ship.targetX !== null) {
+                    const dx = ship.targetX - ship.x;
+                    const dy = ship.targetY - ship.y;
+                    const dist = Math.hypot(dx, dy);
+                    
+                    if (dist > 5) {
+                        ship.x += (dx / dist) * 2;
+                        ship.y += (dy / dist) * 2;
+                    } else {
+                        // Set new target to continue advancing
+                        ship.targetX = gameState.playerBase.x + Math.random() * 200 - 100;
+                        ship.targetY = gameState.playerBase.y + Math.random() * 200 - 100;
+                    }
+                }
+            });
+        }
+
+        // Combat system
+        function processCombat() {
+            // Player ships attack - ONLY if not currently moving
+            gameState.playerShips.forEach(ship => {
+                if (!gameState.attackCooldowns.has(ship) && !ship.moving) {
+                    // Find targets in range - ships and ghosts first
+                    let targets = [...gameState.enemyShips, ...gameState.ghostShips];
+                    let attacked = false;
+                    
+                    for (let target of targets) {
+                        const dist = Math.hypot(ship.x - target.x, ship.y - target.y);
+                        if (dist <= ship.range) {
+                            attack(ship, target);
+                            gameState.attackCooldowns.set(ship, true);
+                            attacked = true;
+                            break;
+                        }
+                    }
+
+                    // Attack enemy buildings if no ships in range
+                    if (!attacked) {
+                        for (let building of gameState.enemyBuildings) {
+                            const dist = Math.hypot(ship.x - building.x, ship.y - building.y);
+                            if (dist <= ship.range) {
+                                attack(ship, building);
+                                gameState.attackCooldowns.set(ship, true);
+                                attacked = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Attack enemy base if in range
+                    if (!attacked) {
+                        const distToBase = Math.hypot(ship.x - gameState.enemyBase.x, ship.y - gameState.enemyBase.y);
+                        if (distToBase <= ship.range) {
+                            attack(ship, gameState.enemyBase);
+                            gameState.attackCooldowns.set(ship, true);
+                        }
+                    }
+                }
+            });
+
+            // Enemy ships attack
+            gameState.enemyShips.forEach(ship => {
+                if (!gameState.attackCooldowns.has(ship)) {
+                    // Attack player ships first
+                    let targets = [...gameState.playerShips];
+                    let attacked = false;
+                    
+                    for (let target of targets) {
+                        const dist = Math.hypot(ship.x - target.x, ship.y - target.y);
+                        if (dist <= ship.range) {
+                            attack(ship, target);
+                            gameState.attackCooldowns.set(ship, true);
+                            ship.moving = false;
+                            attacked = true;
+                            break;
+                        }
+                    }
+
+                    // If no ships in range, attack buildings (islands, command centers, docks)
+                    if (!attacked) {
+                        for (let building of gameState.playerBuildings) {
+                            const dist = Math.hypot(ship.x - building.x, ship.y - building.y);
+                            if (dist <= ship.range) {
+                                attack(ship, building);
+                                gameState.attackCooldowns.set(ship, true);
+                                ship.moving = false;
+                                attacked = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Finally attack player base
+                    if (!attacked) {
+                        const distToBase = Math.hypot(ship.x - gameState.playerBase.x, ship.y - gameState.playerBase.y);
+                        if (distToBase <= ship.range) {
+                            attack(ship, gameState.playerBase);
+                            gameState.attackCooldowns.set(ship, true);
+                        }
+                    }
+                }
+            });
+
+            // Ghost ships attack
+            gameState.ghostShips.forEach(ghost => {
+                if (!gameState.attackCooldowns.has(ghost)) {
+                    let targets = [...gameState.playerShips, ...gameState.enemyShips];
+                    
+                    for (let target of targets) {
+                        const dist = Math.hypot(ghost.x - target.x, ghost.y - target.y);
+                        if (dist <= ghost.range) {
+                            attack(ghost, target);
+                            gameState.attackCooldowns.set(ghost, true);
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Island defenses - only fire once per round
+            gameState.playerBuildings.forEach(building => {
+                if (building.type === 'island' && !gameState.islandCooldowns.has(building)) {
+                    gameState.enemyShips.forEach(ship => {
+                        if (!gameState.islandCooldowns.has(building)) {
+                            const dist = Math.hypot(building.x - ship.x, building.y - ship.y);
+                            if (dist <= building.range) {
+                                attack(building, ship, 10);
+                                gameState.islandCooldowns.set(building, true);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Enemy island defenses
+            gameState.enemyBuildings.forEach(building => {
+                if (building.type === 'island' && !gameState.islandCooldowns.has(building)) {
+                    gameState.playerShips.forEach(ship => {
+                        if (!gameState.islandCooldowns.has(building)) {
+                            const dist = Math.hypot(building.x - ship.x, building.y - ship.y);
+                            if (dist <= building.range) {
+                                attack(building, ship, 10);
+                                gameState.islandCooldowns.set(building, true);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function attack(attacker, target, damage = null) {
+            const dmg = damage || attacker.damage || 15;
+            
+            // Create cannonball
+            gameState.cannonballs.push({
+                x: attacker.x,
+                y: attacker.y,
+                targetX: target.x,
+                targetY: target.y,
+                speed: 10,
+                damage: dmg,
+                target: target
+            });
+
+            // Play sound
+            playCannonSound();
+        }
+
+        // Update cannonballs
+        function updateCannonballs() {
+            gameState.cannonballs = gameState.cannonballs.filter(ball => {
+                const dx = ball.targetX - ball.x;
+                const dy = ball.targetY - ball.y;
+                const dist = Math.hypot(dx, dy);
+
+                if (dist < ball.speed) {
+                    // Hit target
+                    if (ball.target.hp !== undefined) {
+                        const oldHP = ball.target.hp;
+                        ball.target.hp -= ball.damage;
+                        console.log(`HIT! Old HP: ${oldHP}, New HP: ${ball.target.hp}, Damage: ${ball.damage}`);
+                        if (ball.target.hp <= 0) {
+                            handleDeath(ball.target);
+                        }
+                    }
+                    return false;
+                }
+
+                ball.x += (dx / dist) * ball.speed;
+                ball.y += (dy / dist) * ball.speed;
+                return true;
+            });
+        }
+
+        function handleDeath(unit) {
+            if (unit.owner === 'player') {
+                gameState.playerShips = gameState.playerShips.filter(s => s !== unit);
+                
+                // Check if it's a building that was destroyed
+                const buildingIndex = gameState.playerBuildings.indexOf(unit);
+                if (buildingIndex !== -1) {
+                    gameState.playerBuildings.splice(buildingIndex, 1);
+                    
+                    // Reset flags so buildings can be rebuilt
+                    if (unit.type === 'command') {
+                        gameState.hasCommandCenter = false;
+                        gameState.hasNavyDock = false; // If command center is destroyed, dock becomes unusable
+                        // Remove dock too if it exists
+                        gameState.playerBuildings = gameState.playerBuildings.filter(b => b.type !== 'dock');
+                    } else if (unit.type === 'dock') {
+                        gameState.hasNavyDock = false;
+                    }
+                }
+            } else if (unit.owner === 'enemy') {
+                gameState.enemyShips = gameState.enemyShips.filter(s => s !== unit);
+                
+                // Check if it's an enemy building
+                const buildingIndex = gameState.enemyBuildings.indexOf(unit);
+                if (buildingIndex !== -1) {
+                    gameState.enemyBuildings.splice(buildingIndex, 1);
+                    
+                    if (unit.type === 'command') {
+                        enemyState.hasCommandCenter = false;
+                        enemyState.hasNavyDock = false;
+                        gameState.enemyBuildings = gameState.enemyBuildings.filter(b => b.type !== 'dock');
+                    } else if (unit.type === 'dock') {
+                        enemyState.hasNavyDock = false;
+                    }
+                }
+            } else if (unit.type === 'ghost') {
+                gameState.ghostShips = gameState.ghostShips.filter(s => s !== unit);
+            }
+            updateHUD();
+            updateBuildButtons();
+        }
+
+        // Fog of war
+        function updateFogOfWar() {
+            // Reset fog
+            gameState.fogOfWar = gameState.fogOfWar.map(row => row.map(() => true));
+
+            // Reveal around player units
+            const revealRadius = 400;
+            const units = [
+                gameState.playerBase,
+                ...gameState.playerShips,
+                ...gameState.playerBuildings
+            ];
+
+            units.forEach(unit => {
+                const gridX = Math.floor(unit.x / CELL_SIZE);
+                const gridY = Math.floor(unit.y / CELL_SIZE);
+                const radius = Math.ceil(revealRadius / CELL_SIZE);
+
+                for (let y = -radius; y <= radius; y++) {
+                    for (let x = -radius; x <= radius; x++) {
+                        const gx = gridX + x;
+                        const gy = gridY + y;
+                        if (gy >= 0 && gy < gameState.fogOfWar.length &&
+                            gx >= 0 && gx < gameState.fogOfWar[0].length) {
+                            const dist = Math.hypot(x * CELL_SIZE, y * CELL_SIZE);
+                            if (dist <= revealRadius) {
+                                gameState.fogOfWar[gy][gx] = false;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function isInFog(x, y) {
+            const gridX = Math.floor(x / CELL_SIZE);
+            const gridY = Math.floor(y / CELL_SIZE);
+            if (gridY >= 0 && gridY < gameState.fogOfWar.length &&
+                gridX >= 0 && gridX < gameState.fogOfWar[0].length) {
+                return gameState.fogOfWar[gridY][gridX];
+            }
+            return true;
+        }
+
+        // Drawing functions
+        function drawWaves() {
+            // Fill with base ocean color first
+            ctx.fillStyle = '#1e3a5f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw tiled background if loaded
+            if (images.bgTile && images.bgTile.complete) {
+                const tileWidth = images.bgTile.width;
+                const tileHeight = images.bgTile.height;
+                const startX = Math.floor(gameState.cameraX / tileWidth) * tileWidth;
+                const startY = Math.floor(gameState.cameraY / tileHeight) * tileHeight;
+                
+                for (let y = startY; y < gameState.cameraY + canvas.height / gameState.zoom + tileHeight; y += tileHeight) {
+                    for (let x = startX; x < gameState.cameraX + canvas.width / gameState.zoom + tileWidth; x += tileWidth) {
+                        const screenX = (x - gameState.cameraX) * gameState.zoom;
+                        const screenY = (y - gameState.cameraY) * gameState.zoom;
+                        const width = tileWidth * gameState.zoom;
+                        const height = tileHeight * gameState.zoom;
+                        ctx.drawImage(images.bgTile, screenX, screenY, width, height);
+                    }
+                }
+            } else {
+                // Fallback animated waves if image not loaded
+                gameState.waveOffset += 0.5;
+                const waveHeight = 10;
+                const waveLength = 60;
+
+                ctx.fillStyle = '#2c5f8d';
+                ctx.beginPath();
+                for (let x = -gameState.cameraX % waveLength; x < canvas.width; x += waveLength) {
+                    const y = Math.sin((x + gameState.waveOffset) / 30) * waveHeight + canvas.height / 2;
+                    if (x === -gameState.cameraX % waveLength) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                ctx.lineTo(canvas.width, canvas.height);
+                ctx.lineTo(0, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function drawUnit(unit, defaultImage) {
+            const screenX = (unit.x - gameState.cameraX) * gameState.zoom;
+            const screenY = (unit.y - gameState.cameraY) * gameState.zoom;
+            const width = unit.width * gameState.zoom;
+            const height = unit.height * gameState.zoom;
+
+            if (screenX > -width && screenX < canvas.width &&
+                screenY > -height && screenY < canvas.height) {
+                
+                // Select correct image based on ship type
+                let shipImage = defaultImage;
+                if (unit.shipType) {
+                    if (unit.shipType === 'mini') shipImage = images.miniShip;
+                    else if (unit.shipType === 'destroyer') shipImage = images.playerShip;
+                    else if (unit.shipType === 'queen') shipImage = images.queenShip;
+                    else if (unit.shipType === 'king') shipImage = images.kingShip;
+                }
+                
+                // Only draw if image is loaded
+                if (shipImage && shipImage.complete) {
+                    ctx.drawImage(shipImage, screenX, screenY, width, height);
+                }
+
+                // Draw HP bar if unit has HP
+                if (unit.hp !== undefined && unit.maxHp !== undefined) {
+                    const barWidth = width;
+                    const barHeight = 6 * gameState.zoom;
+                    const hpPercent = unit.hp / unit.maxHp;
+
+                    ctx.fillStyle = '#000';
+                    ctx.fillRect(screenX, screenY - 12 * gameState.zoom, barWidth, barHeight);
+                    ctx.fillStyle = hpPercent > 0.5 ? '#2ecc71' : hpPercent > 0.25 ? '#f39c12' : '#e74c3c';
+                    ctx.fillRect(screenX, screenY - 12 * gameState.zoom, barWidth * hpPercent, barHeight);
+                }
+
+                // Highlight selected unit
+                if (gameState.selectedUnit === unit || selectedUnits.includes(unit)) {
+                    ctx.strokeStyle = '#ffd700';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(screenX - 5, screenY - 5, width + 10, height + 10);
+                }
+            }
+        }
+
+        function drawBuilding(building) {
+            const screenX = (building.x - gameState.cameraX) * gameState.zoom;
+            const screenY = (building.y - gameState.cameraY) * gameState.zoom;
+            const width = building.width * gameState.zoom;
+            const height = building.height * gameState.zoom;
+
+            if (building.type === 'base') {
+                ctx.drawImage(images.base, screenX, screenY, width, height);
+            } else if (building.type === 'command') {
+                ctx.drawImage(images.commandCenter, screenX, screenY, width, height);
+            } else if (building.type === 'dock') {
+                ctx.drawImage(images.navyDock, screenX, screenY, width, height);
+            } else if (building.type === 'island') {
+                ctx.drawImage(images.island, screenX, screenY, width, height);
+            }
+
+            if (building.hp !== undefined && building.maxHp !== undefined) {
+                const barWidth = width;
+                const barHeight = 8 * gameState.zoom;
+                const hpPercent = building.hp / building.maxHp;
+
+                ctx.fillStyle = '#000';
+                ctx.fillRect(screenX, screenY - 15 * gameState.zoom, barWidth, barHeight);
+                ctx.fillStyle = hpPercent > 0.5 ? '#2ecc71' : hpPercent > 0.25 ? '#f39c12' : '#e74c3c';
+                ctx.fillRect(screenX, screenY - 15 * gameState.zoom, barWidth * hpPercent, barHeight);
+            }
+        }
+
+        function drawFogOfWar() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            for (let y = 0; y < gameState.fogOfWar.length; y++) {
+                for (let x = 0; x < gameState.fogOfWar[0].length; x++) {
+                    if (gameState.fogOfWar[y][x]) {
+                        const screenX = (x * CELL_SIZE - gameState.cameraX) * gameState.zoom;
+                        const screenY = (y * CELL_SIZE - gameState.cameraY) * gameState.zoom;
+                        const size = CELL_SIZE * gameState.zoom;
+                        ctx.fillRect(screenX, screenY, size, size);
+                    }
+                }
+            }
+        }
+
+        function gameLoop() {
+            if (!gameState.gameRunning) return;
+
+            // Handle keyboard controls
+            handleKeyboardControls();
+            handleJoystickMovement();
+
+            // Update
+            enemyAI();
+            processCombat();
+            updateCannonballs();
+            checkPowerupCollection();
+            updateFogOfWar();
+            updateBuildButtons();
+
+            // Check win/loss conditions every frame
+            // WIN: Enemy base destroyed AND all ghosts destroyed AND all enemy buildings destroyed
+            const enemyBaseDestroyed = gameState.enemyBase.hp <= 0;
+            const allGhostsDestroyed = gameState.ghostShips.length === 0;
+            const allEnemyBuildingsDestroyed = gameState.enemyBuildings.length === 0;
+            
+            if (enemyBaseDestroyed && allGhostsDestroyed && allEnemyBuildingsDestroyed) {
+                gameState.gameRunning = false;
+                if (gameState.roundInterval) {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+                gameState.stage++;
+                
+                alert(`Stage ${gameState.stage - 1} Complete! Advancing to Stage ${gameState.stage}`);
+                
+                if (gameState.stage > 10) {
+                    alert('Victory! You conquered all 10 stages!');
+                    gameState.stage = 1;
+                    resetGame();
+                } else {
+                    nextStage();
+                }
+                return;
+            } else if (gameState.playerBase.hp <= 0) {
+                gameState.gameRunning = false;
+                if (gameState.roundInterval) {
+                    clearInterval(gameState.roundInterval);
+                    gameState.roundInterval = null;
+                }
+                alert('Defeat! Your base was destroyed!');
+                resetGame();
+                return;
+            }
+
+            // Move player ships
+            gameState.playerShips.forEach(ship => {
+                if (ship.moving && ship.targetX !== null) {
+                    const dx = ship.targetX - ship.x;
+                    const dy = ship.targetY - ship.y;
+                    const dist = Math.hypot(dx, dy);
+                    
+                    if (dist > 5) {
+                        ship.x += (dx / dist) * 2;
+                        ship.y += (dy / dist) * 2;
+                    } else {
+                        ship.moving = false;
+                        ship.targetX = null;
+                        ship.targetY = null;
+                    }
+                }
+            });
+
+            // Draw
+            drawWaves();
+
+            // Draw buildings
+            drawBuilding(gameState.playerBase);
+            if (!isInFog(gameState.enemyBase.x, gameState.enemyBase.y)) {
+                drawBuilding(gameState.enemyBase);
+            }
+
+            gameState.playerBuildings.forEach(b => drawBuilding(b));
+            gameState.enemyBuildings.forEach(b => {
+                if (!isInFog(b.x, b.y)) drawBuilding(b);
+            });
+
+            // Draw units
+            gameState.playerShips.forEach(ship => drawUnit(ship, images.playerShip));
+            gameState.enemyShips.forEach(ship => {
+                if (!isInFog(ship.x, ship.y)) drawUnit(ship, images.enemyShip);
+            });
+            gameState.ghostShips.forEach(ghost => {
+                if (!isInFog(ghost.x, ghost.y)) drawUnit(ghost, images.ghostShip);
+            });
+
+            // Draw powerups
+            gameState.treasureChests.forEach(treasure => {
+                if (!isInFog(treasure.x, treasure.y)) {
+                    const screenX = (treasure.x - gameState.cameraX) * gameState.zoom;
+                    const screenY = (treasure.y - gameState.cameraY) * gameState.zoom;
+                    if (images.treasureChest && images.treasureChest.complete) {
+                        ctx.drawImage(images.treasureChest, screenX, screenY, treasure.width * gameState.zoom, treasure.height * gameState.zoom);
+                    }
+                }
+            });
+            gameState.healthIslands.forEach(health => {
+                if (!isInFog(health.x, health.y)) {
+                    const screenX = (health.x - gameState.cameraX) * gameState.zoom;
+                    const screenY = (health.y - gameState.cameraY) * gameState.zoom;
+                    if (images.healthIsland && images.healthIsland.complete) {
+                        ctx.drawImage(images.healthIsland, screenX, screenY, health.width * gameState.zoom, health.height * gameState.zoom);
+                    }
+                }
+            });
+            gameState.kingIslands.forEach(kingIsland => {
+                if (!isInFog(kingIsland.x, kingIsland.y)) {
+                    const screenX = (kingIsland.x - gameState.cameraX) * gameState.zoom;
+                    const screenY = (kingIsland.y - gameState.cameraY) * gameState.zoom;
+                    if (images.kingIsland && images.kingIsland.complete) {
+                        ctx.drawImage(images.kingIsland, screenX, screenY, kingIsland.width * gameState.zoom, kingIsland.height * gameState.zoom);
+                    }
+                }
+            });
+
+            // Draw cannonballs
+            gameState.cannonballs.forEach(ball => {
+                const screenX = (ball.x - gameState.cameraX) * gameState.zoom;
+                const screenY = (ball.y - gameState.cameraY) * gameState.zoom;
+                const size = 20 * gameState.zoom;
+                ctx.drawImage(images.cannonball, screenX - size/2, screenY - size/2, size, size);
+            });
+
+            // Draw fog of war
+            drawFogOfWar();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Input handling
+        let isDragging = false;
+        let isSelecting = false;
+        let dragStartX, dragStartY;
+        let dragStartScreenX, dragStartScreenY;
+        let selectedUnits = [];
+        const selectionBox = document.getElementById('selectionBox');
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const screenX = e.clientX - rect.left;
+            const screenY = e.clientY - rect.top;
+            const mouseX = screenX / gameState.zoom + gameState.cameraX;
+            const mouseY = screenY / gameState.zoom + gameState.cameraY;
+
+            // Right-click for camera drag ONLY
+            if (e.button === 2) {
+                isDragging = true;
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+                e.preventDefault();
+                return;
+            }
+
+            // Left click only from here on
+            if (e.button !== 0) return;
+
+            // Handle island placement mode
+            if (gameState.placingIsland) {
+                const distFromBase = Math.hypot(mouseX - gameState.playerBase.x, mouseY - gameState.playerBase.y);
+                if (distFromBase <= 1000) {
+                    gameState.gold -= 200;
+                    gameState.playerBuildings.push({
+                        x: mouseX - 50,
+                        y: mouseY - 50,
+                        width: 100,
+                        height: 100,
+                        type: 'island',
+                        owner: 'player',
+                        range: ISLAND_RANGE,
+                        hp: 50,
+                        maxHp: 50,
+                        damage: 10
+                    });
+                    updateHUD();
+                    updateBuildButtons();
+                    gameState.placingIsland = false;
+                    canvas.style.cursor = 'crosshair';
+                } else {
+                    alert('Island must be placed within 1000 range of your base!');
+                }
+                return;
+            }
+
+            // Check if clicking on player ship
+            let clickedShip = null;
+            for (let ship of gameState.playerShips) {
+                if (mouseX >= ship.x && mouseX <= ship.x + ship.width &&
+                    mouseY >= ship.y && mouseY <= ship.y + ship.height) {
+                    clickedShip = ship;
+                    break;
+                }
+            }
+
+            if (clickedShip) {
+                // Clicked on a ship - select it
+                if (e.shiftKey) {
+                    if (!selectedUnits.includes(clickedShip)) {
+                        selectedUnits.push(clickedShip);
+                    }
+                } else {
+                    selectedUnits = [clickedShip];
+                }
+                gameState.selectedUnit = clickedShip;
+            } else if (selectedUnits.length > 0) {
+                // Have selected units, clicking empty space
+                // Check if click is very small (not a drag) - if so, deselect
+                const clickWasSmall = true; // Will be checked in mouseup
+                // Store that we should check for deselect
+                window.checkDeselect = {x: mouseX, y: mouseY};
+                
+                // Also send move command
+                selectedUnits.forEach(unit => {
+                    unit.targetX = mouseX;
+                    unit.targetY = mouseY;
+                    unit.moving = true;
+                });
+            } else {
+                // No ships selected, clicking empty space = start selection box
+                isSelecting = true;
+                dragStartScreenX = screenX;
+                dragStartScreenY = screenY;
+                dragStartX = mouseX;
+                dragStartY = mouseY;
+                selectionBox.style.left = screenX + 'px';
+                selectionBox.style.top = screenY + 'px';
+                selectionBox.style.width = '0px';
+                selectionBox.style.height = '0px';
+                selectionBox.style.display = 'block';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const dx = (e.clientX - dragStartX) / gameState.zoom;
+                const dy = (e.clientY - dragStartY) / gameState.zoom;
+                
+                gameState.cameraX -= dx;
+                gameState.cameraY -= dy;
+                
+                gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
+                gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
+                
+                dragStartX = e.clientX;
+                dragStartY = e.clientY;
+            } else if (isSelecting) {
+                const rect = canvas.getBoundingClientRect();
+                const currentScreenX = e.clientX - rect.left;
+                const currentScreenY = e.clientY - rect.top;
+                
+                const left = Math.min(dragStartScreenX, currentScreenX);
+                const top = Math.min(dragStartScreenY, currentScreenY);
+                const width = Math.abs(currentScreenX - dragStartScreenX);
+                const height = Math.abs(currentScreenY - dragStartScreenY);
+                
+                selectionBox.style.left = left + 'px';
+                selectionBox.style.top = top + 'px';
+                selectionBox.style.width = width + 'px';
+                selectionBox.style.height = height + 'px';
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            // Check if this was a deselect click (clicked on ocean with ships selected)
+            if (window.checkDeselect) {
+                const rect = canvas.getBoundingClientRect();
+                const screenX = e.clientX - rect.left;
+                const screenY = e.clientY - rect.top;
+                const mouseX = screenX / gameState.zoom + gameState.cameraX;
+                const mouseY = screenY / gameState.zoom + gameState.cameraY;
+                
+                // If barely moved (less than 10 pixels in world), deselect
+                const dist = Math.hypot(mouseX - window.checkDeselect.x, mouseY - window.checkDeselect.y);
+                if (dist < 10) {
+                    selectedUnits = [];
+                    gameState.selectedUnit = null;
+                }
+                window.checkDeselect = null;
+            }
+            
+            if (isSelecting) {
+                const rect = canvas.getBoundingClientRect();
+                const screenX = e.clientX - rect.left;
+                const screenY = e.clientY - rect.top;
+                const mouseX = screenX / gameState.zoom + gameState.cameraX;
+                const mouseY = screenY / gameState.zoom + gameState.cameraY;
+                
+                const minX = Math.min(dragStartX, mouseX);
+                const maxX = Math.max(dragStartX, mouseX);
+                const minY = Math.min(dragStartY, mouseY);
+                const maxY = Math.max(dragStartY, mouseY);
+                
+                // Select all player ships whose centers are in the box
+                selectedUnits = gameState.playerShips.filter(ship => {
+                    const centerX = ship.x + ship.width / 2;
+                    const centerY = ship.y + ship.height / 2;
+                    return centerX >= minX && centerX <= maxX &&
+                           centerY >= minY && centerY <= maxY;
+                });
+                
+                if (selectedUnits.length > 0) {
+                    gameState.selectedUnit = selectedUnits[0];
+                } else {
+                    gameState.selectedUnit = null;
+                }
+                
+                selectionBox.style.display = 'none';
+                isSelecting = false;
+            }
+            isDragging = false;
+        });
+
+        // Prevent context menu on right-click
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Touch support
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const touchX = (touch.clientX - rect.left) / gameState.zoom + gameState.cameraX;
+            const touchY = (touch.clientY - rect.top) / gameState.zoom + gameState.cameraY;
+
+            let clickedShip = null;
+            for (let ship of gameState.playerShips) {
+                if (touchX >= ship.x && touchX <= ship.x + ship.width &&
+                    touchY >= ship.y && touchY <= ship.y + ship.height) {
+                    clickedShip = ship;
+                    break;
+                }
+            }
+
+            if (clickedShip) {
+                gameState.selectedUnit = clickedShip;
+            } else if (gameState.selectedUnit && gameState.selectedUnit.owner === 'player') {
+                if (!gameState.attackCooldowns.has(gameState.selectedUnit)) {
+                    gameState.selectedUnit.targetX = touchX;
+                    gameState.selectedUnit.targetY = touchY;
+                    gameState.selectedUnit.moving = true;
+                }
+            }
+        });
+
+        // Touch and hold for mobile movement
+        let touchHoldTimer = null;
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const touchX = (touch.clientX - rect.left) / gameState.zoom + gameState.cameraX;
+            const touchY = (touch.clientY - rect.top) / gameState.zoom + gameState.cameraY;
+
+            // Start hold timer
+            touchHoldTimer = setTimeout(() => {
+                // Long press - move all selected units
+                if (selectedUnits.length > 0) {
+                    selectedUnits.forEach(unit => {
+                        unit.targetX = touchX;
+                        unit.targetY = touchY;
+                        unit.moving = true;
+                    });
+                }
+            }, 500); // 500ms hold
+
+            // Check if tapped on ship for selection
+            let clickedShip = null;
+            for (let ship of gameState.playerShips) {
+                if (touchX >= ship.x && touchX <= ship.x + ship.width &&
+                    touchY >= ship.y && touchY <= ship.y + ship.height) {
+                    clickedShip = ship;
+                    break;
+                }
+            }
+
+            if (clickedShip) {
+                selectedUnits = [clickedShip];
+                gameState.selectedUnit = clickedShip;
+            }
+        });
+
+        canvas.addEventListener('touchend', () => {
+            if (touchHoldTimer) {
+                clearTimeout(touchHoldTimer);
+                touchHoldTimer = null;
+            }
+        });
+
+        canvas.addEventListener('touchmove', () => {
+            if (touchHoldTimer) {
+                clearTimeout(touchHoldTimer);
+                touchHoldTimer = null;
+            }
+        });
+
+        // Mouse wheel zoom to cursor position
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            zoomToPoint(mouseX, mouseY, delta);
+        });
+
+        // Pinch to zoom for mobile
+        let lastTouchDistance = 0;
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const distance = Math.hypot(
+                    touch2.clientX - touch1.clientX,
+                    touch2.clientY - touch1.clientY
+                );
+                
+                if (lastTouchDistance > 0) {
+                    const delta = (distance - lastTouchDistance) * 0.01;
+                    const rect = canvas.getBoundingClientRect();
+                    const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+                    const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+                    zoomToPoint(centerX, centerY, delta);
+                }
+                
+                lastTouchDistance = distance;
+            }
+        });
+
+        canvas.addEventListener('touchend', () => {
+            lastTouchDistance = 0;
+        });
+
+        function zoomToPoint(screenX, screenY, zoomDelta) {
+            const oldZoom = gameState.zoom;
+            const newZoom = Math.max(0.3, Math.min(2, oldZoom + zoomDelta));
+            
+            if (newZoom === oldZoom) return;
+            
+            // Get world position at mouse before zoom
+            const worldX = screenX / oldZoom + gameState.cameraX;
+            const worldY = screenY / oldZoom + gameState.cameraY;
+            
+            // Update zoom
+            gameState.zoom = newZoom;
+            
+            // Adjust camera to keep world position under mouse
+            gameState.cameraX = worldX - screenX / newZoom;
+            gameState.cameraY = worldY - screenY / newZoom;
+            
+            // Clamp camera
+            gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
+            gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
+        }
+
+        // Keyboard controls for camera panning
+        const keys = {};
+        window.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            
+            // ESC key to deselect all
+            if (e.key === 'Escape') {
+                selectedUnits = [];
+                gameState.selectedUnit = null;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        function handleKeyboardControls() {
+            const panSpeed = 10 / gameState.zoom;
+            
+            if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
+                gameState.cameraX -= panSpeed;
+            }
+            if (keys['ArrowRight'] || keys['d'] || keys['D']) {
+                gameState.cameraX += panSpeed;
+            }
+            if (keys['ArrowUp'] || keys['w'] || keys['W']) {
+                gameState.cameraY -= panSpeed;
+            }
+            if (keys['ArrowDown'] || keys['s'] || keys['S']) {
+                gameState.cameraY += panSpeed;
+            }
+            
+            // Clamp camera
+            gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
+            gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
+        }
+
+        // Mobile Joystick
+        const joystickContainer = document.getElementById('joystick-container');
+        const joystickThumb = document.getElementById('joystick-thumb');
+        let joystickActive = false;
+        let joystickDX = 0;
+        let joystickDY = 0;
+
+        joystickContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            joystickActive = true;
+        });
+
+        joystickContainer.addEventListener('touchmove', (e) => {
+            if (!joystickActive) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const rect = joystickContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const dx = touch.clientX - centerX;
+            const dy = touch.clientY - centerY;
+            const distance = Math.min(Math.hypot(dx, dy), 45);
+            const angle = Math.atan2(dy, dx);
+            
+            const thumbX = Math.cos(angle) * distance;
+            const thumbY = Math.sin(angle) * distance;
+            
+            joystickThumb.style.transform = `translate(calc(-50% + ${thumbX}px), calc(-50% + ${thumbY}px))`;
+            
+            joystickDX = thumbX / 45;
+            joystickDY = thumbY / 45;
+        });
+
+        joystickContainer.addEventListener('touchend', () => {
+            joystickActive = false;
+            joystickThumb.style.transform = 'translate(-50%, -50%)';
+            joystickDX = 0;
+            joystickDY = 0;
+        });
+
+        function handleJoystickMovement() {
+            if (joystickActive) {
+                const panSpeed = 15 / gameState.zoom;
+                gameState.cameraX += joystickDX * panSpeed;
+                gameState.cameraY += joystickDY * panSpeed;
+                
+                gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
+                gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
+            }
+        }
+
+        function showMessage(title, text, callback) {
+            document.getElementById('messageTitle').textContent = title;
+            document.getElementById('messageText').textContent = text;
+            document.getElementById('messageBox').style.display = 'block';
+            
+            document.getElementById('messageBtn').onclick = () => {
+                document.getElementById('messageBox').style.display = 'none';
+                callback();
+            };
+        }
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Dropdown toggles
+        document.getElementById('hudHeader').addEventListener('click', () => {
+            const content = document.getElementById('hudContent');
+            const toggle = document.getElementById('hudToggle');
+            content.classList.toggle('collapsed');
+            toggle.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
+        });
+
+        document.getElementById('buildMenuHeader').addEventListener('click', () => {
+            const content = document.getElementById('buildMenuContent');
+            const toggle = document.getElementById('buildMenuToggle');
+            content.classList.toggle('collapsed');
+            toggle.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
+        });
+    </script>
+</body>
+</html>
