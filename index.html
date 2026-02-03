@@ -1,9 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZTXGY3JS5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZTXGY3JS5M');
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pirate Strategy - Naval Warfare</title>
+    <title>PLS.Games — Tulsa's Newest and Most Exciting Gaming Platform!</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://github.com/TitanBusinessPros/Gameville-/raw/main/Tulsa-games-back.png" as="image">
+    <link rel="preload" href="https://github.com/TitanBusinessPros/Gameville-/raw/main/OKC-Top-2.png" as="image">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://github.com/TitanBusinessPros/Gameville-/raw/main/TG-Favicon-2.png">
+    
+    <!-- ====== FIXED FACEBOOK META TAGS ====== -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://titanbusinesspros.github.io/Testing-News-Maker/">
+    
+    <!-- Facebook Open Graph Tags - UPDATED WITH WORKING IMAGE URL -->
+    <meta property="og:title" content="PLS.games — Tulsa's Newest and Most Exciting Gaming Platform!">
+    <meta property="og:description" content="Welcome to PLS.games — Tulsa's newest and most exciting gaming platform! Explore a growing collection of fun and addictive games created for players of all ages. Whether you're here to pass the time or chase high scores, you'll find plenty to enjoy. Jump into the action and discover fresh new games added regularly. Thanks for visiting PLS.games — where Tulsa plays, competes, and has a blast!">
+    
+    <!-- MAIN IMAGE URL - Try using the GitHub Pages URL instead of raw -->
+    <meta property="og:image" content="https://titanbusinesspros.github.io/Gameville-/Meta%20Tag.png">
+    
+    <!-- BACKUP IMAGE URL - In case the first one doesn't work -->
+    <meta property="og:image:url" content="https://raw.githubusercontent.com/TitanBusinessPros/Gameville-/main/Meta%20Tag.png">
+    
+    <!-- Specify image dimensions and type -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="PLS.games - Tulsa's Gaming Platform">
+    <meta property="og:image:type" content="image/png">
+    
+    <!-- URL and other properties -->
+    <meta property="og:url" content="https://titanbusinesspros.github.io/Testing-News-Maker/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PLS.games">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PLS.games — Tulsa's Newest and Most Exciting Gaming Platform!">
+    <meta name="twitter:description" content="Welcome to PLS.games — Tulsa's newest and most exciting gaming platform! Explore a growing collection of fun and addictive games created for players of all ages. Whether you're here to pass the time or chase high scores, you'll find plenty to enjoy. Jump into the action and discover fresh new games added regularly. Thanks for visiting PLS.games — where Tulsa plays, competes, and has a blast!">
+    <meta name="twitter:image" content="https://titanbusinesspros.github.io/Gameville-/Meta%20Tag.png">
+    <meta name="twitter:image:alt" content="PLS.games - Tulsa's Gaming Platform">
+    <meta name="twitter:site" content="@TulsaGames">
+    
+    <!-- Standard Meta Tags -->
+    <meta name="description" content="Welcome to PLS.games — Tulsa's newest and most exciting gaming platform! Explore a growing collection of fun and addictive games created for players of all ages. Whether you're here to pass the time or chase high scores, you'll find plenty to enjoy. Jump into the action and discover fresh new games added regularly. Thanks for visiting PLS.games — where Tulsa plays, competes, and has a blast!">
+    <meta name="keywords" content="Tulsa games, online games, free games, gaming platform, Oklahoma games, play games">
+    
+    <!-- Font Awesome for Facebook icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- IMPORTANT: Also add a hidden image on the page that Facebook can find -->
+    <style>
+        .facebook-share-image {
+            display: none;
+        }
+    </style>
+    
     <style>
         * {
             margin: 0;
@@ -12,2061 +78,1277 @@
         }
 
         body {
-            font-family: 'Arial Black', Arial, sans-serif;
-            background: #1a1a2e;
-            color: #fff;
-            overflow: hidden;
-            touch-action: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('https://github.com/TitanBusinessPros/Gameville-/raw/main/Temp%20Tile.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
         }
 
-        #startScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #0a1f3d 0%, #1a3a5f 100%);
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .page-wrapper {
+            max-width: 1800px;
+            margin: 0 auto;
+            min-height: calc(100vh - 40px);
+            display: grid;
+            grid-template-rows: auto auto 1fr auto auto;
+            gap: 20px;
+        }
+
+        /* Header Styles */
+        .site-header {
+            text-align: center;
+            padding: 10px 20px 5px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .logo-side-image {
+            max-width: 200px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-side-image:hover {
+            transform: scale(1.05);
+        }
+
+        .header-logo {
+            max-width: 600px; /* Increased by 100% from 300px */
+            height: auto;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            /* Initial animation */
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header-logo:hover {
+            animation-play-state: paused;
+        }
+
+        /* Header Ad Images */
+        .header-ads-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-ad-image {
+            width: 150px;
+            height: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+        }
+
+        .header-ad-image:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .header-title {
+            color: #333;
+            font-size: 2.2em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            margin: 0;
+        }
+
+        .daily-message {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+            font-size: 1.1em;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-logo-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+            border: 2px solid #22c55e;
+        }
+
+        .add-logo-button:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6);
+        }
+
+        .add-logo-button:active {
+            transform: translateY(0);
+        }
+
+        /* Logo animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-copyright {
+            font-size: 1em;
+            margin-bottom: 10px;
+            flex: 1;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            gap: 20px;
+            flex: 2;
         }
 
-        #startScreen.hidden {
-            display: none;
+        .footer-social-link {
+            color: white;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
         }
 
-        #startScreen img {
+        .footer-social-link:hover {
+            color: #3b5998; /* Facebook blue */
+        }
+
+        .footer-phone, .footer-email {
+            font-size: 1em;
+        }
+
+        /* Top and Bottom ad rows */
+        .ads-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Middle area with left ads, center game, right ads */
+        .middle-row {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .ads-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .ad-box {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+        }
+
+        .ad-box:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .ad-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        #startScreen .menu-buttons {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: auto;
-            margin-bottom: 50px;
-        }
-
-        .start-menu-btn {
-            width: 350px;
-            padding: 20px;
-            margin: 15px;
-            background: linear-gradient(45deg, #8b4513, #a0522d);
-            color: #ffd700;
-            border: 3px solid #ffd700;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 22px;
-            transition: all 0.3s;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        .start-menu-btn:hover {
-            background: linear-gradient(45deg, #a0522d, #cd853f);
-            transform: scale(1.05);
-        }
-
-        .split-screen-divider {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: #ffd700;
-            z-index: 50;
-            display: none;
-        }
-
-        #gameContainer {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #gameCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            cursor: crosshair;
-        }
-
-        .hud {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
-            border: 3px solid #ffd700;
-            z-index: 100;
-            min-width: 250px;
-        }
-
-        .hud-header {
-            padding: 12px 15px;
-            background: linear-gradient(45deg, #1a472a, #2d5a3d);
-            border-radius: 7px 7px 0 0;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hud-header-content {
-            display: flex;
-            gap: 15px;
-        }
-
-        .hud-toggle {
-            color: #ffd700;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .hud-content {
-            padding: 15px;
-        }
-
-        .hud-content.collapsed {
-            display: none;
-        }
-
-        .hud-item {
-            margin: 8px 0;
-            font-size: 16px;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        .timer {
-            font-size: 24px;
-            color: #ff6b6b;
-            font-weight: bold;
-        }
-
-        .gold {
-            color: #ffd700;
-            font-weight: bold;
-        }
-
-        .stage {
-            color: #4ecdc4;
-            font-weight: bold;
-        }
-
-        .build-menu {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-            border: 3px solid #ffd700;
-            z-index: 100;
-            max-width: 280px;
-        }
-
-        .build-menu-header {
-            padding: 15px;
-            background: linear-gradient(45deg, #8b4513, #a0522d);
-            border-radius: 7px 7px 0 0;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .build-menu-header h3 {
-            color: #ffd700;
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .build-menu-toggle {
-            color: #ffd700;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .build-menu-content {
-            padding: 15px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .build-menu-content.collapsed {
-            display: none;
-        }
-
-        .build-button {
             display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: linear-gradient(45deg, #8b4513, #a0522d);
-            color: #ffd700;
-            border: 2px solid #ffd700;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-            transition: all 0.3s;
-            text-align: left;
         }
 
-        .build-button:hover:not(:disabled) {
-            background: linear-gradient(45deg, #a0522d, #cd853f);
-            transform: scale(1.05);
-        }
-
-        .build-button:disabled {
-            background: #555;
-            color: #888;
-            border-color: #666;
-            cursor: not-allowed;
-            transform: scale(1);
-        }
-
-        .button-cost {
-            font-size: 11px;
-            color: #ffd700;
-            display: block;
-            margin-top: 4px;
-        }
-
-        .button-stats {
-            font-size: 10px;
-            color: #aaa;
-            display: block;
-            margin-top: 2px;
-        }
-
-        .message-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.95);
+        .center-container {
+            background: rgba(255, 255, 255, 0.98);
+            border: 4px solid #fff;
+            border-radius: 10px;
             padding: 30px;
-            border-radius: 15px;
-            border: 4px solid #ffd700;
-            z-index: 200;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .center-title {
             text-align: center;
-            display: none;
-        }
-
-        .message-box h2 {
-            color: #ffd700;
+            color: #333;
             margin-bottom: 20px;
-            font-size: 32px;
-            text-shadow: 3px 3px 6px #000;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
-        .message-box button {
-            padding: 15px 40px;
-            margin: 10px;
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-            color: white;
-            border: 3px solid #fff;
+        .inner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .inner-item {
+            background: #fff;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 18px;
-            transition: all 0.3s;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .message-box button:hover {
-            background: linear-gradient(45deg, #27ae60, #229954);
+        .inner-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 160px;
+            display: block;
+            overflow: hidden;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-container img.loaded {
+            opacity: 1;
+        }
+
+        .image-container:hover img {
             transform: scale(1.1);
         }
 
-        .info-panel {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #ffd700;
-            z-index: 100;
-            max-width: 300px;
-            display: none;
+        .content {
+            padding: 15px;
         }
 
-        .controls {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #ffd700;
-            z-index: 100;
-        }
-
-        .control-btn {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 5px;
-            background: #2c3e50;
-            color: #fff;
-            border: 2px solid #ffd700;
-            border-radius: 5px;
-            cursor: pointer;
+        .item-title {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 8px;
             font-weight: bold;
         }
 
-        .control-btn:hover {
-            background: #34495e;
+        .item-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9em;
         }
 
-        .zoom-controls {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-            border: 2px solid #ffd700;
-            z-index: 100;
-        }
-
-        .zoom-btn {
+        /* Advertise Button Styles */
+        .advertise-button {
             display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
             padding: 10px 20px;
-            margin: 5px;
-            background: #2c3e50;
-            color: #fff;
-            border: 2px solid #ffd700;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 25px;
+            text-decoration: none;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 0.95em;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+            transition: all 0.3s ease;
+            border: 2px solid #dc2626;
         }
 
-        .zoom-btn:hover {
-            background: #34495e;
+        .advertise-button:hover {
+            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
         }
 
-        .controls-info {
+        .advertise-button:active {
+            transform: translateY(0);
+        }
+
+        /* Loading placeholder */
+        .image-placeholder {
             position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Music control */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             background: rgba(0, 0, 0, 0.7);
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: 2px solid #ffd700;
-            z-index: 100;
-            font-size: 12px;
-            text-align: center;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        .controls-info span {
-            margin: 0 10px;
-            color: #ffd700;
+        .music-control:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.1);
         }
 
-        .selection-box {
-            position: absolute;
-            border: 2px dashed #ffd700;
-            background: rgba(255, 215, 0, 0.1);
-            pointer-events: none;
-            z-index: 150;
-            display: none;
+        /* Footer additions */
+        .footer-bottom {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+        }
+
+        .footer-address, .footer-website {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .footer-website {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-website:hover {
+            text-decoration: underline;
+        }
+
+        /* Make it a bit nicer on small screens */
+        @media (max-width: 1200px) {
+            .logo-container {
+                gap: 20px;
+            }
+            
+            .header-logo {
+                max-width: 500px;
+            }
+            
+            .logo-side-image {
+                max-width: 180px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .page-wrapper {
+                grid-template-rows: auto auto auto;
+            }
+
+            .middle-row {
+                grid-template-columns: 1fr;
+            }
+
+            .ads-col {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .ad-box {
+                width: 80px;
+                height: 80px;
+            }
+
+            .center-container {
+                height: auto;
+                max-height: 70vh;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .footer-contact {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .header-title {
+                font-size: 1.8em;
+            }
+
+            .daily-message {
+                font-size: 1em;
+                padding: 6px 12px;
+            }
+
+            .header-ad-image {
+                width: 100px;
+            }
+
+            .header-ads-container {
+                gap: 10px;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header-logo {
+                max-width: 400px;
+                order: 1;
+            }
+            
+            .logo-side-image {
+                max-width: 150px;
+            }
+            
+            .logo-side-image:first-child {
+                order: 2;
+            }
+            
+            .logo-side-image:last-child {
+                order: 3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .add-logo-button {
+                font-size: 0.95em;
+                padding: 10px 20px;
+            }
+
+            .header-ad-image {
+                width: 80px;
+            }
+
+            .header-ads-container {
+                gap: 8px;
+            }
+            
+            .header-logo {
+                max-width: 300px;
+            }
+            
+            .logo-side-image {
+                max-width: 120px;
+            }
+            
+            .header-title {
+                font-size: 1.5em;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="startScreen">
-        <img src="https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Logo.png" alt="Pirate Strategy">
-        <div class="menu-buttons">
-            <button class="start-menu-btn" id="btnSinglePlayer">⚔️ Start Game</button>
-        </div>
+    <!-- HIDDEN IMAGE FOR FACEBOOK TO FIND -->
+    <div class="facebook-share-image">
+        <img src="https://titanbusinesspros.github.io/Gameville-/Meta%20Tag.png" alt="Tulsa.games Share Image" style="display:none;">
+    </div>
+    
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="https://github.com/TitanBusinessPros/Gameville-/raw/main/OKC%20Roofers%20Jingle.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Music Control -->
+    <div class="music-control" id="music-toggle">
+        <i class="fas fa-music"></i>
     </div>
 
-    <div id="gameContainer">
-        <canvas id="gameCanvas"></canvas>
-        
-        <div class="hud">
-            <div class="hud-header" id="hudHeader">
-                <div class="hud-header-content">
-                    <div class="hud-item stage">Stage: <span id="stageNum">1</span></div>
-                    <div class="hud-item timer">Time: <span id="timeLeft">5</span>s</div>
+    <div class="page-wrapper">
+
+        <!-- HEADER SECTION -->
+        <header class="site-header">
+            <!-- Header Ad Images - Row 1 -->
+            <div class="header-ads-container">
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="EZ Remodeling">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="ART Services">
+                </a>
+            </div>
+            
+            <!-- Header Ad Images - Row 2 -->
+            <div class="header-ads-container">
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+            </div>
+            
+            <!-- Header Ad Images - Row 3 -->
+            <div class="header-ads-container">
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+                <a href="https://www.purcelllinestripingllc.com/" target="_blank">
+                    <img src="https://github.com/TitanBusinessPros/Gameville-/raw/main/Games-Ad.png" class="header-ad-image" alt="Advertise Here">
+                </a>
+            </div>
+            
+            <!-- Logo Container with Award on Left, Logo in Center, PLS-PL on Right -->
+            <div class="logo-container">
+                <!-- Award Image on Left -->
+                <img src="https://github.com/TitanBusinessPros/PLS-Games/raw/main/award-purcell.jpg" class="logo-side-image" alt="Award">
+                
+                <!-- Main Logo (Increased by 100%) -->
+                <img src="https://github.com/TitanBusinessPros/PLS-Games/raw/main/PLS-Logo-T.png" class="header-logo" id="logo">
+                
+                <!-- PLS-PL Image on Right -->
+                <img src="https://github.com/TitanBusinessPros/PLS-Games/raw/main/pls-pl.jpg" class="logo-side-image" alt="PLS-PL">
+            </div>
+            
+            <h1 class="header-title">Welcome To Tulsa's Newest Gaming Platform brought to you by Purcell Line Striping! Check Back Weekly For New Games!</h1>
+            <a href="https://www.purcelllinestripingllc.com/" class="add-logo-button" target="_blank">Add Your Logo to the Platform</a>
+            <div class="daily-message">Welcome to Tulsa's gaming hub! 🎮
+You've landed on a local gaming platform built for players right here in Tulsa, OK by Purcell Line Striping. Whether you're here to relax, challenge yourself, or explore something new, our growing collection of games is designed for all ages and play styles. From strategy boards and arcade-style challenges to competitive scoreboards and creative game worlds, this is a place where Tulsa comes together to play, compete, and have fun.</div>
+        </header>
+
+        <!-- CENTER: Your game / gallery -->
+        <div class="middle-row">
+            <div class="center-container">
+                <h1 class="center-title"></h1>
+                <div class="inner-grid">
+                  
+                   <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/ABM-Tulsa/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Audio-Book-Maker/raw/main/AB-Logo.png" alt="Audio Book Website Builder">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Audio Book Website Builder</h2>
+                            <p class="item-description">You can make unlimited audio books that turn into free unlimited audio book websites using links! Really awesome tool once you know how to use it! We will be adding more voices someday soon! Join the Titan Software Guild to learn how to make software just like this!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Bubble-Popper/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Bubble-Popper/raw/main/BPPP-Logo-2.png" alt="BPPP">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Bubble Pop Pop Poppin</h2>
+                            <p class="item-description">This Bubble Pop Pop Poppin game wass created for all your bubble pop poP pOPpin needs! Complete all 20 stages to unlock all characters for download! Only one download each win.</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Cribbage/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Cribbage/raw/main/CribbageLogo.png" alt="Neon Pinball">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Cribbage</h2>
+                            <p class="item-description">Dive into a wonderful game of Cribbage! This is a two player game you can enjoy with others! Good for mobile and desktop!</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                  
+                  <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Insect-Eradicator-Royale/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Insect-Eradicator-Royale/raw/main/IER-Logo.png" alt="Insect Eradicator Royale">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Insect Eradicator Royale</h2>
+                            <p class="item-description">This New Game is under construction! Check back soon for official launch</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                  
+                  <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Neon-Pinball-Tulsa/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Neon-Pinball/raw/main/Neon%20Pinbll%20Logo.png" alt="Neon Pinball">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Neon Pinball</h2>
+                            <p class="item-description">Neon Pinball is a fast-paced arcade experience featuring 10 visually intense stages filled with glowing neon lights and dynamic effects. Each table is packed with reactive bumpers, flashing targets, and smooth animations that respond instantly to every hit. The constant motion, color shifts, and light bursts create strong visual stimulation that keeps players fully engaged.</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                  
+                  <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/WynneWars-Tulsa/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Wynne-Wars/raw/main/WynneWars-Logo.png" alt="Zombie Outbreak Honolulu">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">WynneWars</h2>
+                            <p class="item-description">Welcome to the world of magic and strategy on this one or two player game! We are currently working on this game and adding many exciting levels! Check back soon for official launch!</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                  
+                  <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/ZOH-Tulsa/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Zombie-Outbreak-Honolulu/raw/main/ZOH-Logo%203.png" alt="Zombie Outbreak Honolulu">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Zombie Outbreak Honolulu</h2>
+                            <p class="item-description">Zombie Outbreak Honolulu: Christmas Edition is a ruthless 10-stage survival game with over 10 brutal bosses and a deadly holiday theme. You must kill 1,000 zombies and defeat three bosses in the final stage, earning lives only by beating bosses and starting with just five lives that carry over, so don't expect any mercy. Most players won't survive—think you can?</p>
+                            <a href="https://www.purcelllinestripingllc.com/" class="advertise-button" target="_blank">Advertise in this game</a>
+                        </div>
+                    </div>
+                    <!-- All games restored with lazy loading -->
+
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Chess-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Chess%20Logo.png" alt="Chess">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Chess</h2>
+                            <p class="item-description">Test your skills in a challenging game of Chess. You can play with a friend in two-player mode for a classic head-to-head match. If you prefer solo gameplay, the built-in AI is ready to take you on. The game also runs smoothly on mobile, making it easy to play anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Navy-War1/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Navy-War1/raw/main/Navy%20War-1%20Logo.png" alt="Navy War-1">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Navy War-1</h2>
+                            <p class="item-description">Compete against a challenging AI opponent in this strategic war game. You'll earn one additional submarine every five moves to strengthen your forces. Use your fleet of five jets to strike the enemy and turn the tide of battle. The game is optimized for mobile play, giving you smooth performance on the go.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Air-Hockey/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Air-Hockey/raw/main/Air%20Hockey-Logo2.png" alt="Air Hockey">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Air Hockey</h2>
+                            <p class="item-description">Enjoy a quick and exciting round of Air Hockey in this fast-paced solo game. The controls are simple, making it easy for anyone to jump in and start playing. Each match delivers quick action that keeps you on your toes. It's the perfect game when you want a fun challenge in just a few minutes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Guide-The-Fly/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Guide-The-Fly/raw/main/Guide%20The%20Fly%20Logo.png" alt="Guide The Fly">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Guide The Fly</h2>
+                            <p class="item-description">Take the fly on an exciting journey toward the light. You'll guide The Fly through twelve unique stages filled with obstacles. Each level becomes more challenging as you progress. Stay focused and help the little fly reach its final destination.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Sudoku-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Sudoku-Game/raw/main/Sudoku-Logo.png" alt="Sudoku">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Sudoku</h2>
+                            <p class="item-description">Test your skills in a classic game of Sudoku as you work through each puzzle. This experience is designed for a single player who enjoys thoughtful challenges. Relax and clear your mind while solving numbers at your own pace. Enjoy the calming background music that plays as you work through every grid.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Neon-Drift/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/SSG-Image/raw/main/Neon%20Drift%20Logo.png" alt="Neon Drift">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Neon Drift</h2>
+                            <p class="item-description">Get lost in the thrilling world of Neon Drift as you race through vibrant environments. Collect glowing orbs to boost your score and keep the momentum going. The game is designed for a single player who loves fast-paced action. Enjoy the neon visuals and addictive gameplay as you drift through every level.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Gravity-Sling/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gravity-Sling/raw/main/Gravity%20Sling%20Logo.png" alt="Gravity Sling">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Gravity Sling</h2>
+                            <p class="item-description">Test your skills in the challenging game of Gravity Sling. Each level will put your math and problem-solving abilities to the test. You'll need to carefully plan every move to succeed. Can you master all the levels and prove your skills?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Detective/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Detective/raw/main/Detective%20Logo.png" alt="Detective">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Detective</h2>
+                            <p class="item-description">Step into the role of a detective in this engaging murder mystery game. Take detailed notes and carefully interview witnesses to gather clues. Every choice you make can affect how the case unfolds. Multiple endings await, giving you a different experience with each playthrough.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Dodge-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Dodge-Game/raw/main/Dodge-Logo.png" alt="Dodge">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Dodge</h2>
+                            <p class="item-description">Think you have lightning-fast reflexes? Now is your chance to prove it! A plumber's worst nightmare comes to life as flying toilets rain down on you. They keep coming faster and faster, challenging your speed and agility.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Desert-Rattler-/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Desert-Rattler-/raw/main/Desert%20Rattler%20Logo.png" alt="Desert Rattler">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Desert Rattler</h2>
+                            <p class="item-description">Can you reach a score of 120 or higher? This exciting game is designed for a single player. Challenge yourself and see how high you can go. It's optimized for smooth mobile play, so you can enjoy it anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Match-Time/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Match-Time/raw/main/Match%20Time%20Logo.png" alt="Match Time">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Match Time</h2>
+                            <p class="item-description">Test your skills in this fun and challenging matching game. It's designed for people who love a good puzzle. Sharpen your memory as you try to match all the pieces correctly. The game works great on mobile, making it easy to play anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Sea-War/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Sea-War/raw/main/SEA%20WAR%20Logo.png" alt="Sea War">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Sea War</h2>
+                            <p class="item-description">This is a sea battle game that's simple and fun to play. You can enjoy it alone in one-player mode or challenge a friend. Each match tests your strategy and timing on the high seas. The game runs smoothly on mobile, making it perfect for play on the go.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Frisbee-Golf/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Frisbee-Golf/raw/main/Frisbee%20Golf%20Logo%202.png" alt="Frisbee Golf">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Frisbee Golf</h2>
+                            <p class="item-description">Are you ready to show off your frisbee golf skills? Play solo or challenge a friend to see who scores the best. The game features over 20 exciting levels to test your accuracy and strategy. Have fun as you aim for the perfect throw on every course.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Checkers-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/CheckersLogo.png" alt="Checkers">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Checkers</h2>
+                            <p class="item-description">Test your strategic skills in a classic game of Checkers. You can play against a friend in two-player mode for a competitive match. If you prefer, challenge the AI and see if you can outsmart it. The game offers fun and engaging gameplay for players of all skill levels.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Hearts-Card-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Hearts.png" alt="Hearts">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Hearts</h2>
+                            <p class="item-description">Test your card-playing skills in an exciting game of Hearts. Play solo against the AI and try to outsmart your opponents. Each round challenges your strategy and decision-making abilities. The game is optimized for mobile, so you can enjoy it anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Bowling-1/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Bowling%20Game%20Logo.png" alt="Bowling">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Bowling</h2>
+                            <p class="item-description">Enjoy a classic bowling experience in this simple game. You can play alone or compete with a friend in two-player mode. Each frame challenges your aim and timing for the perfect strike. The game is optimized for mobile, so you can play anytime, anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/BlackJack/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Blackjack%20Logo.png" alt="Blackjack">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Blackjack</h2>
+                            <p class="item-description">Enjoy a classic game of Blackjack to pass the time. Test your luck and strategy as you aim for 21. The game is simple and easy to pick up for quick sessions. It's perfect for a few minutes of fun anytime you want.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Kids-Coloring-Fun/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Kids%20Coloring%20Book%20Logo.png" alt="Kids Coloring Book">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Kids Coloring Book</h2>
+                            <p class="item-description">This kids' line art coloring book was created by a kid and is sure to delight young artists. Children can have fun coloring a variety of playful designs. The book works best on a tablet or desktop for the full interactive experience. It's a creative way for kids to enjoy art anytime.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://best-businesses.github.io/Your-Company-Video-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Titan%20Space%20Defense%20Logo.png" alt="Titan Space Defense">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Titan Space Defense</h2>
+                            <p class="item-description">Blast off into an exciting space adventure in this thrilling shooter game. Fight through 15 levels filled with challenging enemies and obstacles. Each level ramps up the intensity, keeping you on your toes. The game is mobile-friendly, so you can play anywhere you go.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://best-businesses.github.io/My-Food-Truck-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/My%20Food%20Truck%20Logo.png" alt="My Food Truck">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">My Food Truck</h2>
+                            <p class="item-description">Step into the shoes of a food truck owner in this fun and engaging game. Your goal is simple: get to work and serve as many customers as you can. The game is designed for a single player and works best on a tablet or computer. It may also run on mobile devices if you use desktop mode.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Magical-Word-Search/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Education-Logos/raw/main/Magical%20Word%20Search.png" alt="Magical Word Search">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Magical Word Search</h2>
+                            <p class="item-description">Challenge yourself with this engaging one-player word search game. You can enter up to ten words to search for in each puzzle. It's a fun and interactive way to practice spelling and vocabulary. Perfect for studying or just enjoying a relaxing brain game.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://team-america.github.io/Patriotic-Blockade/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Patriotic%20Blocks%20Logo.png" alt="Patriotic Blocks">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Patriotic Blocks</h2>
+                            <p class="item-description">Enjoy a classic block-stacking challenge in this one-player game. Test your speed and strategy as you fit the pieces together. Each level gets progressively harder, keeping you engaged. It's a fun and addictive way to pass the time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Luxury-Casino/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Luxury%20Casino-2-Logo.png" alt="Luxury Casino">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Luxury Casino</h2>
+                            <p class="item-description">Try your luck in this exciting one-player slot machine game. Spin the reels and aim for big wins with every play. The game features a reward system that lets you earn coins and prizes. Use your winnings to buy luxury items and upgrade your in-game experience.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Match-3/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Match-3/raw/main/Match-3%20Logo.png" alt="Match 3">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Match 3</h2>
+                            <p class="item-description">Challenge yourself in this fun one-player symbol matching game. Match all the symbols correctly to advance through the levels. The game features groovy background music to keep the experience lively and engaging. It's a relaxing yet stimulating way to pass the time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Math-Tower-Defense/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Education-Logos/raw/main/Math%20Tower%20Defense.png" alt="Math Tower Defense">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Math Tower Defense</h2>
+                            <p class="item-description">This is an exciting one-player tower defense game available only on the desktop version. Strategically place your towers to stop waves of enemies from advancing. Each level becomes more challenging as new threats appear. Test your planning and reflexes to defend your territory successfully.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Stacking-Checkers/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Stacking%20Checkers%20Logo.png" alt="Stacking Checkers">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Stacking Checkers</h2>
+                            <p class="item-description">Try your hand at this unique stacking checkers game. Challenge yourself to stack and capture pieces strategically. The game offers a fresh twist on the classic checkers experience. It's optimized for mobile play, so you can enjoy it anywhere.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/War-Card-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/War-Card-Game/raw/main/War%20Logo.png" alt="War Card Game">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">War Card Game</h2>
+                            <p class="item-description">Play the classic card game WAR in this fun one-player version. Challenge yourself to see how long you can win against the deck. The game features groovy background music to make each round more enjoyable. It's a simple yet addictive way to pass the time.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Follow-Along/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Follow-Along/raw/main/Follow%20Along%20Logo.png" alt="Follow Along">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Follow Along</h2>
+                            <p class="item-description">Test your memory skills in this fun one-player game. Match pairs and challenge yourself to remember each card's position. The game features groovy background music to make gameplay more enjoyable. It's a relaxing and engaging way to exercise your brain.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Space-Turkey/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Space-Turkey/raw/main/Space%20Turkey%20Game%20Logo.png" alt="Space Turkey">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Space Turkey</h2>
+                            <p class="item-description">Play this thrilling one-player endless runner game and see how far you can go. Dodge obstacles and avoid becoming a turkey dinner as the kitchen table rushes toward you. Timing and quick reflexes are key to surviving each run.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Space-Math-Asteroids-Hard/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Education-Logos/raw/main/Space%20Asteroids.png" alt="Space Math Asteroids">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Space Math Asteroids</h2>
+                            <p class="item-description">Blast off in this one-player space shooter game available only on desktop. Fight through over 20 action-packed levels as you dodge and destroy enemies. Each level challenges you with a basic math question to solve. Combine your shooting skills and math smarts to conquer every stage.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Golf-Game/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Golf-Game/raw/main/Golf%20Game%20Logo.png" alt="Golf Challenge">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Golf Challenge</h2>
+                            <p class="item-description">Enjoy this fun golf game, playable by one or two players. Tee off across 24 challenging holes and test your skills. The game has not been tested on mobile devices, so it's best enjoyed on a computer. Each hole offers a new opportunity for strategy and precision.</p>
+                        </div>
+                    </div>
+              
+                    <div class="inner-item">
+                        <a href="https://titanbusinesspros.github.io/Space-Word-Mission/" class="image-container">
+                            <div class="image-placeholder"></div>
+                            <img loading="lazy" data-src="https://github.com/TitanBusinessPros/Gameville-Logos/raw/main/Space%20Word%20Mission%20Logo.png" alt="Space Word Mission">
+                        </a>
+                        <div class="content">
+                            <h2 class="item-title">Space Word Mission</h2>
+                            <p class="item-description">Challenge yourself with this exciting one-player word search game. Find all the hidden words to test your brain and sharpen your skills. Each correct answer helps prepare your spaceship for takeoff. Can you complete the puzzle and launch your ship into flight?</p>
+                        </div>
+                    </div>
+
                 </div>
-                <span class="hud-toggle" id="hudToggle">▼</span>
             </div>
-            <div class="hud-content" id="hudContent">
-                <div class="hud-item gold">Your Gold: <span id="goldAmount">100</span></div>
-                <div class="hud-item" style="color: #ff6b6b;">Enemy Gold: <span id="enemyGold">100</span></div>
-                <div class="hud-item">Your Ships: <span id="shipCount">0</span></div>
-                <div class="hud-item" style="color: #ff6b6b;">Enemy Ships: <span id="enemyShipCount">0</span></div>
+
+            <!-- RIGHT COLUMN: ads -->
+            <div class="ads-col">
+                <!-- Right column ads removed as requested -->
             </div>
         </div>
 
-        <div class="selection-box" id="selectionBox"></div>
+        <!-- BOTTOM ROW: ads -->
+        <div class="ads-row">
+            <!-- Bottom row ads removed as requested -->
+        </div>
 
-        <div class="build-menu">
-            <div class="build-menu-header" id="buildMenuHeader">
-                <h3>Build Menu</h3>
-                <span class="build-menu-toggle" id="buildMenuToggle">▼</span>
+        <!-- FOOTER SECTION -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-copyright">Advertise in our games forever!</div>
+                <div class="footer-contact">
+                    <a href="https://www.facebook.com/profile.php?id=100091509630743" class="footer-social-link" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                   
+                    <a href="https://www.youtube.com/@PurcellLineStripingLLC" class="footer-social-link" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <span class="footer-phone">918-860-3212</span>
+                    <span class="footer-email">purcelllinestriping@gmail.com</span>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-address"></div>
+                    <a href="https://www.purcelllinestripingllc.com/" class="footer-website" target="_blank">Purcell Line Striping Website</a>
+                </div>
             </div>
-            <div class="build-menu-content" id="buildMenuContent">
-                <button class="build-button" id="buildCommand">
-                    Build Command Center
-                    <span class="button-cost">Cost: 100 Gold</span>
-                </button>
-                <button class="build-button" id="buildDock" disabled>
-                    Build Navy Dock
-                    <span class="button-cost">Cost: 100 Gold</span>
-                </button>
-                <button class="build-button" id="buildIsland" disabled>
-                    Build Pirate Island
-                    <span class="button-cost">Cost: 200 Gold</span>
-                    <span class="button-stats">HP: 50 | Attack: 10 | Range: 300</span>
-                </button>
-                <hr style="border-color: #ffd700; margin: 10px 0;">
-                <button class="build-button" id="buildMiniShip" disabled>
-                    Little Mini Ship
-                    <span class="button-cost">Cost: 75 Gold</span>
-                    <span class="button-stats">HP: 50 | Attack: 5 | Range: 200 | Moves after attack</span>
-                </button>
-                <button class="build-button" id="buildDestroyer" disabled>
-                    Pirate Destroyer
-                    <span class="button-cost">Cost: 150 Gold</span>
-                    <span class="button-stats">HP: 100 | Attack: 15 | Range: 300</span>
-                </button>
-                <button class="build-button" id="buildQueenShip" disabled>
-                    Pirate Queen Ship
-                    <span class="button-cost">Cost: 300 Gold</span>
-                    <span class="button-stats">HP: 250 | Attack: 20 | Range: 700</span>
-                </button>
-                <button class="build-button" id="buildKingShip" disabled>
-                    King Pirate Ship
-                    <span class="button-cost">Cost: 500 Gold</span>
-                    <span class="button-stats">HP: 350 | Attack: 30 | Range: 1000</span>
-                </button>
-            </div>
-        </div>
+        </footer>
 
-        <div class="info-panel" id="infoPanel"></div>
-
-        <div class="zoom-controls">
-            <span style="color: #ffd700; font-size: 14px;">Pinch to Zoom on Mobile | Mouse Wheel on Desktop</span>
-        </div>
-
-        <div class="message-box" id="messageBox">
-            <h2 id="messageTitle"></h2>
-            <p id="messageText" style="font-size: 18px; margin: 20px 0;"></p>
-            <button id="messageBtn">Continue</button>
-        </div>
-
-        <div class="split-screen-divider"></div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        // Game constants
-        const MAP_WIDTH = 1600;
-        const MAP_HEIGHT = 900;
-        const CELL_SIZE = 50;
-        const ATTACK_RANGE = 300;
-        const ISLAND_RANGE = 300;
-        const GHOST_RANGE = 500;
-        const ROUND_TIME = 5; // CHANGE THIS NUMBER TO ADJUST ROUND TIME IN SECONDS (currently 5 seconds for testing)
-
-        // Game state
-        let gameState = {
-            stage: 1,
-            gold: 100,
-            timeLeft: ROUND_TIME,
-            playerBase: null,
-            enemyBase: null,
-            playerShips: [],
-            enemyShips: [],
-            playerBuildings: [],
-            enemyBuildings: [],
-            ghostShips: [],
-            cannonballs: [],
-            selectedUnit: null,
-            hasCommandCenter: false,
-            hasNavyDock: false,
-            cameraX: 0,
-            cameraY: 0,
-            fogOfWar: [],
-            gameRunning: true,
-            attackCooldowns: new Map(),
-            waveOffset: 0,
-            zoom: 0.5,
-            roundInterval: null,
-            placingIsland: false,
-            islandCooldowns: new Map(),
-            gameMode: 'menu', // 'menu', 'singleplayer', 'twoplayer'
-            currentPlayer: 1,
-            treasureChests: [],
-            healthIslands: [],
-            kingIslands: [],
-            player2Gold: 100,
-            player2Ships: [],
-            player2Buildings: [],
-            player2Base: null,
-            player2HasCommandCenter: false,
-            player2HasNavyDock: false
-        };
-
-        // Images
-        const images = {};
-        const imageUrls = {
-            playerShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-1.png',
-            enemyShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-2.png',
-            miniShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-3.png',
-            queenShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-4.png',
-            kingShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Ship-5.png',
-            island: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Island-1.png',
-            cannonball: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/C-Ball.png',
-            base: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Pirate%20Base.png',
-            commandCenter: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Command-Center.png',
-            navyDock: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-Navy-Dock.png',
-            ghostShip: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/G-Pirate.png',
-            bgTile: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/BG-Tile-1.png',
-            treasureChest: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Treasure-Chest.png',
-            healthIsland: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/Health-Island.png',
-            kingIsland: 'https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/King-island.png'
-        };
-
-        let imagesLoaded = 0;
-        const totalImages = Object.keys(imageUrls).length;
-
-        // Load images
-        for (let key in imageUrls) {
-            images[key] = new Image();
-            images[key].src = imageUrls[key];
-            images[key].onload = () => {
-                imagesLoaded++;
-                // Images loaded, game will start from menu buttons
-            };
-        }
-
-        // Audio - Background Music
-        const bgMusic = new Audio('https://github.com/TitanBusinessPros/Pirates-Quest-1/raw/main/P-song-2.mp3');
-        bgMusic.loop = true;
-        bgMusic.volume = 0.3;
-
-        // Sound Effects using Web Audio API
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        let audioCtx;
-        
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new AudioContext();
-            }
-        }
-
-        function playCannonSound() {
-            if (!audioCtx) initAudio();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.value = 80;  // Deeper sound
-            oscillator.type = 'sine';  // Smoother tone
-            
-            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);  // Quieter
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);  // Shorter
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.15);
-        }
-
-        function playTreasureSound() {
-            if (!audioCtx) initAudio();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.setValueAtTime(400, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.3);
-        }
-
-        function playPowerupSound() {
-            if (!audioCtx) initAudio();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            
-            oscillator.frequency.setValueAtTime(300, audioCtx.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.2);
-            oscillator.type = 'triangle';
-            
-            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-            
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.4);
-        }
-
-        // Start screen button handlers
-        document.getElementById('btnSinglePlayer').addEventListener('click', () => {
-            gameState.gameMode = 'singleplayer';
-            document.getElementById('startScreen').classList.add('hidden');
-            bgMusic.play().catch(e => console.log('Audio autoplay prevented'));
-            initAudio();
-            initGame();
-        });
-
-        function initGame() {
-            // Initialize fog of war
-            gameState.fogOfWar = Array(Math.ceil(MAP_HEIGHT / CELL_SIZE))
-                .fill(null)
-                .map(() => Array(Math.ceil(MAP_WIDTH / CELL_SIZE)).fill(true));
-
-            // Create player base
-            gameState.playerBase = {
-                x: 200,
-                y: MAP_HEIGHT / 2,
-                width: 150,
-                height: 150,
-                type: 'base',
-                owner: 'player',
-                hp: 500,
-                maxHp: 500
-            };
-
-            // Create enemy base
-            gameState.enemyBase = {
-                x: MAP_WIDTH - 350,
-                y: MAP_HEIGHT / 2,
-                width: 150,
-                height: 150,
-                type: 'base',
-                owner: 'enemy',
-                hp: 200,
-                maxHp: 200
-            };
-
-            // Center camera to show ENTIRE map
-            gameState.cameraX = 0;
-            gameState.cameraY = 0;
-
-            // Generate ghost ships based on stage
-            generateGhostShips();
-
-            // Generate powerups
-            generatePowerups();
-
-            // Start game loop and first round
-            updateHUD();
-            updateBuildButtons();
-            startFirstRound();
-            gameLoop();
-        }
-
-        function generatePowerups() {
-            gameState.treasureChests = [];
-            gameState.healthIslands = [];
-            gameState.kingIslands = [];
-
-            // 3 treasure chests per stage
-            for (let i = 0; i < 3; i++) {
-                gameState.treasureChests.push({
-                    x: Math.random() * (MAP_WIDTH - 600) + 300,
-                    y: Math.random() * (MAP_HEIGHT - 600) + 300,
-                    width: 60,
-                    height: 60
-                });
-            }
-
-            // 10 health islands per stage
-            for (let i = 0; i < 10; i++) {
-                gameState.healthIslands.push({
-                    x: Math.random() * (MAP_WIDTH - 600) + 300,
-                    y: Math.random() * (MAP_HEIGHT - 600) + 300,
-                    width: 80,
-                    height: 80
-                });
-            }
-
-            // 1 king island per stage
-            gameState.kingIslands.push({
-                x: Math.random() * (MAP_WIDTH - 800) + 400,
-                y: Math.random() * (MAP_HEIGHT - 800) + 400,
-                width: 100,
-                height: 100
-            });
-        }
-
-        function checkPowerupCollection() {
-            // Check all player and enemy ships for powerup collection
-            [...gameState.playerShips, ...gameState.enemyShips].forEach(ship => {
-                // Check treasure chests
-                gameState.treasureChests = gameState.treasureChests.filter(treasure => {
-                    const dist = Math.hypot(ship.x - treasure.x, ship.y - treasure.y);
-                    if (dist < 60) {
-                        // Add gold to appropriate player
-                        if (ship.owner === 'player') {
-                            gameState.gold += 500;
-                        } else if (ship.owner === 'enemy') {
-                            enemyState.gold += 500;
-                        }
-                        playTreasureSound();
-                        updateHUD();
-                        return false; // Remove treasure
-                    }
-                    return true;
-                });
-
-                // Check health islands
-                gameState.healthIslands = gameState.healthIslands.filter(health => {
-                    const dist = Math.hypot(ship.x - health.x, ship.y - health.y);
-                    if (dist < 60) {
-                        // Fully heal the ship
-                        ship.hp = ship.maxHp;
-                        playPowerupSound();
-                        return false; // Remove health island
-                    }
-                    return true;
-                });
-
-                // Check king islands
-                gameState.kingIslands = gameState.kingIslands.filter(kingIsland => {
-                    const dist = Math.hypot(ship.x - kingIsland.x, ship.y - kingIsland.y);
-                    if (dist < 70) {
-                        // Give a king ship to the player who found it
-                        const owner = ship.owner;
-                        const base = owner === 'player' ? gameState.playerBase : gameState.enemyBase;
-                        const shipList = owner === 'player' ? gameState.playerShips : gameState.enemyShips;
-                        
-                        shipList.push({
-                            x: base.x + (owner === 'player' ? 200 : -200),
-                            y: base.y,
-                            width: 110,
-                            height: 110,
-                            hp: 350,
-                            maxHp: 350,
-                            damage: 30,
-                            range: 1000,
-                            owner: owner,
-                            moving: false,
-                            targetX: null,
-                            targetY: null,
-                            shipType: 'king',
-                            canMoveAfterAttack: false
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Image optimization and lazy loading
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load images
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.getAttribute('data-src');
+                        img.addEventListener('load', () => {
+                            img.classList.add('loaded');
+                            const placeholder = img.previousElementSibling;
+                            if (placeholder && placeholder.classList.contains('image-placeholder')) {
+                                placeholder.style.display = 'none';
+                            }
                         });
-                        playPowerupSound();
-                        updateHUD();
-                        return false; // Remove king island
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
                     }
-                    return true;
                 });
             });
-        }
 
-        function startFirstRound() {
-            gameState.timeLeft = ROUND_TIME;
-            // Don't add gold on first round, we already have starting gold
-            updateHUD();
-            
-            // Clear any existing interval
-            if (gameState.roundInterval) {
-                clearInterval(gameState.roundInterval);
-            }
-            
-            gameState.roundInterval = setInterval(() => {
-                if (gameState.gameRunning) {
-                    gameState.timeLeft--;
-                    updateHUD();
-                    
-                    if (gameState.timeLeft <= 0) {
-                        clearInterval(gameState.roundInterval);
-                        gameState.roundInterval = null;
-                        endRound();
-                    }
-                } else {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-            }, 1000);
-        }
-
-        function generateGhostShips() {
-            gameState.ghostShips = [];
-            const numGhosts = gameState.stage;
-            
-            for (let i = 0; i < numGhosts; i++) {
-                const x = Math.random() * (MAP_WIDTH - 400) + 200;
-                const y = Math.random() * (MAP_HEIGHT - 400) + 200;
-                
-                // Make sure not too close to bases
-                const distToPlayer = Math.hypot(x - gameState.playerBase.x, y - gameState.playerBase.y);
-                const distToEnemy = Math.hypot(x - gameState.enemyBase.x, y - gameState.enemyBase.y);
-                
-                if (distToPlayer > 600 && distToEnemy > 600) {
-                    gameState.ghostShips.push({
-                        x: x,
-                        y: y,
-                        width: 80,
-                        height: 80,
-                        hp: 200,
-                        maxHp: 200,
-                        damage: 20,
-                        range: GHOST_RANGE,
-                        type: 'ghost'
-                    });
-                }
-            }
-        }
-
-        function startRound() {
-            gameState.timeLeft = ROUND_TIME;
-            gameState.gold += 100;
-            enemyState.gold += 100; // Enemy gets same gold as player
-            updateHUD();
-            
-            // Clear any existing interval
-            if (gameState.roundInterval) {
-                clearInterval(gameState.roundInterval);
-            }
-            
-            gameState.roundInterval = setInterval(() => {
-                if (gameState.gameRunning) {
-                    gameState.timeLeft--;
-                    updateHUD();
-                    
-                    if (gameState.timeLeft <= 0) {
-                        clearInterval(gameState.roundInterval);
-                        gameState.roundInterval = null;
-                        endRound();
-                    }
-                } else {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-            }, 1000);
-        }
-
-        function endRound() {
-            // Clear attack cooldowns
-            gameState.attackCooldowns.clear();
-            gameState.islandCooldowns.clear();
-            
-            // Check win/loss conditions
-            const enemyBaseDestroyed = gameState.enemyBase.hp <= 0;
-            const allGhostsDestroyed = gameState.ghostShips.length === 0;
-            const allEnemyBuildingsDestroyed = gameState.enemyBuildings.length === 0;
-            
-            if (enemyBaseDestroyed && allGhostsDestroyed && allEnemyBuildingsDestroyed) {
-                gameState.gameRunning = false;
-                if (gameState.roundInterval) {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-                gameState.stage++;
-                
-                alert(`Stage ${gameState.stage - 1} Complete! Advancing to Stage ${gameState.stage}`);
-                
-                if (gameState.stage > 10) {
-                    alert('Victory! You conquered all 10 stages!');
-                    gameState.stage = 1;
-                    resetGame();
-                } else {
-                    nextStage();
-                }
-            } else if (gameState.playerBase.hp <= 0) {
-                gameState.gameRunning = false;
-                if (gameState.roundInterval) {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-                alert('Defeat! Your base was destroyed!');
-                resetGame();
-            } else {
-                startRound();
-            }
-        }
-
-        function nextStage() {
-            // Reset for next stage
-            gameState.playerShips = [];
-            gameState.enemyShips = [];
-            gameState.cannonballs = [];
-            gameState.playerBuildings = [];
-            gameState.enemyBuildings = [];
-            
-            gameState.playerBase.hp = 500;
-            gameState.enemyBase.hp = 200; // Enemy base has 200 HP
-            
-            gameState.hasCommandCenter = false;
-            gameState.hasNavyDock = false;
-            
-            // Reset enemy state
-            enemyState.gold = 100;
-            enemyState.hasCommandCenter = false;
-            enemyState.hasNavyDock = false;
-            
-            // Generate new ghosts and powerups for this stage
-            generateGhostShips();
-            generatePowerups();
-            
-            // Restart the game
-            gameState.gameRunning = true;
-            updateBuildButtons();
-            updateHUD();
-            startRound();
-            
-            // FORCE GAME LOOP TO RESTART
-            requestAnimationFrame(gameLoop);
-        }
-
-        function resetGame() {
-            gameState.stage = 1;
-            gameState.gold = 100;
-            enemyState.gold = 100;
-            nextStage();
-        }
-
-        function updateHUD() {
-            document.getElementById('stageNum').textContent = gameState.stage;
-            document.getElementById('goldAmount').textContent = gameState.gold;
-            document.getElementById('enemyGold').textContent = enemyState.gold;
-            document.getElementById('timeLeft').textContent = gameState.timeLeft;
-            document.getElementById('shipCount').textContent = gameState.playerShips.length;
-            document.getElementById('enemyShipCount').textContent = gameState.enemyShips.length;
-        }
-
-        function updateBuildButtons() {
-            const buildCommand = document.getElementById('buildCommand');
-            const buildDock = document.getElementById('buildDock');
-            const buildIsland = document.getElementById('buildIsland');
-            const buildMiniShip = document.getElementById('buildMiniShip');
-            const buildDestroyer = document.getElementById('buildDestroyer');
-            const buildQueenShip = document.getElementById('buildQueenShip');
-            const buildKingShip = document.getElementById('buildKingShip');
-
-            buildCommand.disabled = gameState.hasCommandCenter || gameState.gold < 100;
-            buildDock.disabled = !gameState.hasCommandCenter || gameState.hasNavyDock || gameState.gold < 100;
-            buildIsland.disabled = !gameState.hasCommandCenter || gameState.gold < 200;
-            buildMiniShip.disabled = !gameState.hasNavyDock || gameState.gold < 75;
-            buildDestroyer.disabled = !gameState.hasNavyDock || gameState.gold < 150;
-            buildQueenShip.disabled = !gameState.hasNavyDock || gameState.gold < 300;
-            buildKingShip.disabled = !gameState.hasNavyDock || gameState.gold < 500;
-        }
-
-        // Build functions
-        document.getElementById('buildCommand').addEventListener('click', () => {
-            if (gameState.gold >= 100 && !gameState.hasCommandCenter) {
-                gameState.gold -= 100;
-                gameState.hasCommandCenter = true;
-                gameState.playerBuildings.push({
-                    x: gameState.playerBase.x,
-                    y: gameState.playerBase.y - 50,
-                    width: 100,
-                    height: 100,
-                    type: 'command',
-                    owner: 'player',
-                    hp: 300,
-                    maxHp: 300
-                });
-                updateHUD();
-                updateBuildButtons();
-            }
-        });
-
-        document.getElementById('buildDock').addEventListener('click', () => {
-            if (gameState.gold >= 100 && gameState.hasCommandCenter && !gameState.hasNavyDock) {
-                gameState.gold -= 100;
-                gameState.hasNavyDock = true;
-                gameState.playerBuildings.push({
-                    x: gameState.playerBase.x + 150,
-                    y: gameState.playerBase.y,
-                    width: 120,
-                    height: 100,
-                    type: 'dock',
-                    owner: 'player',
-                    hp: 200,
-                    maxHp: 200
-                });
-                updateHUD();
-                updateBuildButtons();
-            }
-        });
-
-        document.getElementById('buildIsland').addEventListener('click', () => {
-            if (gameState.gold >= 200 && gameState.hasCommandCenter) {
-                gameState.placingIsland = true;
-                canvas.style.cursor = 'crosshair';
-            }
-        });
-
-        function createShip(type, cost, hp, damage, range, width, height, canMoveAfterAttack = false) {
-            if (gameState.gold >= cost && gameState.hasNavyDock) {
-                gameState.gold -= cost;
-                const spawnOffset = gameState.playerShips.length % 5; // Stack vertically, max 5 high
-                const spawnRow = Math.floor(gameState.playerShips.length / 5); // Then move to right
-                gameState.playerShips.push({
-                    x: gameState.playerBase.x + 200 + (spawnRow * 100),
-                    y: gameState.playerBase.y - 100 + (spawnOffset * 60),
-                    width: width,
-                    height: height,
-                    hp: hp,
-                    maxHp: hp,
-                    damage: damage,
-                    range: range,
-                    owner: 'player',
-                    moving: false,
-                    targetX: null,
-                    targetY: null,
-                    shipType: type,
-                    canMoveAfterAttack: canMoveAfterAttack
-                });
-                updateHUD();
-                updateBuildButtons();
-            }
-        }
-
-        document.getElementById('buildMiniShip').addEventListener('click', () => {
-            createShip('mini', 75, 50, 5, 200, 50, 50, true);
-        });
-
-        document.getElementById('buildDestroyer').addEventListener('click', () => {
-            createShip('destroyer', 150, 100, 15, 300, 70, 70, false);
-        });
-
-        document.getElementById('buildQueenShip').addEventListener('click', () => {
-            createShip('queen', 300, 250, 20, 700, 90, 90, false);
-        });
-
-        document.getElementById('buildKingShip').addEventListener('click', () => {
-            createShip('king', 500, 350, 30, 1000, 110, 110, false);
-        });
-
-        // Enemy AI state
-        let enemyState = {
-            gold: 100,
-            hasCommandCenter: false,
-            hasNavyDock: false
-        };
-
-        // Enemy AI
-        function enemyAI() {
-            // Enemy AI decision making - runs every few seconds
-            if (gameState.timeLeft % 5 === 0) {
-                
-                // Build command center if doesn't have one and can afford it
-                if (!enemyState.hasCommandCenter && enemyState.gold >= 100) {
-                    enemyState.gold -= 100;
-                    enemyState.hasCommandCenter = true;
-                    gameState.enemyBuildings.push({
-                        x: gameState.enemyBase.x,
-                        y: gameState.enemyBase.y - 50,
-                        width: 100,
-                        height: 100,
-                        type: 'command',
-                        owner: 'enemy',
-                        hp: 300,
-                        maxHp: 300
-                    });
-                }
-
-                // Build dock if has command center and can afford it
-                if (enemyState.hasCommandCenter && !enemyState.hasNavyDock && enemyState.gold >= 100) {
-                    enemyState.gold -= 100;
-                    enemyState.hasNavyDock = true;
-                    gameState.enemyBuildings.push({
-                        x: gameState.enemyBase.x - 150,
-                        y: gameState.enemyBase.y,
-                        width: 120,
-                        height: 100,
-                        type: 'dock',
-                        owner: 'enemy',
-                        hp: 200,
-                        maxHp: 200
-                    });
-                }
-
-                // Build ships if has dock and can afford it
-                if (enemyState.hasNavyDock && enemyState.gold >= 150) {
-                    enemyState.gold -= 150;
-                    const spawnOffset = gameState.enemyShips.length % 5;
-                    const spawnRow = Math.floor(gameState.enemyShips.length / 5);
-                    gameState.enemyShips.push({
-                        x: gameState.enemyBase.x - 200 - (spawnRow * 100),
-                        y: gameState.enemyBase.y - 100 + (spawnOffset * 60),
-                        width: 70,
-                        height: 70,
-                        hp: 100,
-                        maxHp: 100,
-                        damage: 15,
-                        range: ATTACK_RANGE,
-                        owner: 'enemy',
-                        moving: true,
-                        targetX: gameState.playerBase.x + Math.random() * 400 - 200,
-                        targetY: gameState.playerBase.y + Math.random() * 400 - 200
-                    });
-                }
-
-                // Build pirate islands occasionally if has command center
-                if (enemyState.hasCommandCenter && enemyState.gold >= 200 && Math.random() > 0.7) {
-                    enemyState.gold -= 200;
-                    gameState.enemyBuildings.push({
-                        x: gameState.enemyBase.x - 300,
-                        y: gameState.enemyBase.y + Math.random() * 200 - 100,
-                        width: 100,
-                        height: 100,
-                        type: 'island',
-                        owner: 'enemy',
-                        range: ISLAND_RANGE,
-                        hp: 50,
-                        maxHp: 50,
-                        damage: 10
-                    });
-                }
-            }
-
-            // Move enemy ships toward player
-            gameState.enemyShips.forEach(ship => {
-                if (ship.moving && ship.targetX !== null) {
-                    const dx = ship.targetX - ship.x;
-                    const dy = ship.targetY - ship.y;
-                    const dist = Math.hypot(dx, dy);
-                    
-                    if (dist > 5) {
-                        ship.x += (dx / dist) * 2;
-                        ship.y += (dy / dist) * 2;
-                    } else {
-                        // Set new target to continue advancing
-                        ship.targetX = gameState.playerBase.x + Math.random() * 200 - 100;
-                        ship.targetY = gameState.playerBase.y + Math.random() * 200 - 100;
-                    }
-                }
-            });
-        }
-
-        // Combat system
-        function processCombat() {
-            // Player ships attack - ONLY if not currently moving
-            gameState.playerShips.forEach(ship => {
-                if (!gameState.attackCooldowns.has(ship) && !ship.moving) {
-                    // Find targets in range - ships and ghosts first
-                    let targets = [...gameState.enemyShips, ...gameState.ghostShips];
-                    let attacked = false;
-                    
-                    for (let target of targets) {
-                        const dist = Math.hypot(ship.x - target.x, ship.y - target.y);
-                        if (dist <= ship.range) {
-                            attack(ship, target);
-                            gameState.attackCooldowns.set(ship, true);
-                            attacked = true;
-                            break;
-                        }
-                    }
-
-                    // Attack enemy buildings if no ships in range
-                    if (!attacked) {
-                        for (let building of gameState.enemyBuildings) {
-                            const dist = Math.hypot(ship.x - building.x, ship.y - building.y);
-                            if (dist <= ship.range) {
-                                attack(ship, building);
-                                gameState.attackCooldowns.set(ship, true);
-                                attacked = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    // Attack enemy base if in range
-                    if (!attacked) {
-                        const distToBase = Math.hypot(ship.x - gameState.enemyBase.x, ship.y - gameState.enemyBase.y);
-                        if (distToBase <= ship.range) {
-                            attack(ship, gameState.enemyBase);
-                            gameState.attackCooldowns.set(ship, true);
-                        }
-                    }
-                }
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
             });
 
-            // Enemy ships attack
-            gameState.enemyShips.forEach(ship => {
-                if (!gameState.attackCooldowns.has(ship)) {
-                    // Attack player ships first
-                    let targets = [...gameState.playerShips];
-                    let attacked = false;
-                    
-                    for (let target of targets) {
-                        const dist = Math.hypot(ship.x - target.x, ship.y - target.y);
-                        if (dist <= ship.range) {
-                            attack(ship, target);
-                            gameState.attackCooldowns.set(ship, true);
-                            ship.moving = false;
-                            attacked = true;
-                            break;
-                        }
-                    }
-
-                    // If no ships in range, attack buildings (islands, command centers, docks)
-                    if (!attacked) {
-                        for (let building of gameState.playerBuildings) {
-                            const dist = Math.hypot(ship.x - building.x, ship.y - building.y);
-                            if (dist <= ship.range) {
-                                attack(ship, building);
-                                gameState.attackCooldowns.set(ship, true);
-                                ship.moving = false;
-                                attacked = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    // Finally attack player base
-                    if (!attacked) {
-                        const distToBase = Math.hypot(ship.x - gameState.playerBase.x, ship.y - gameState.playerBase.y);
-                        if (distToBase <= ship.range) {
-                            attack(ship, gameState.playerBase);
-                            gameState.attackCooldowns.set(ship, true);
-                        }
-                    }
-                }
-            });
-
-            // Ghost ships attack
-            gameState.ghostShips.forEach(ghost => {
-                if (!gameState.attackCooldowns.has(ghost)) {
-                    let targets = [...gameState.playerShips, ...gameState.enemyShips];
-                    
-                    for (let target of targets) {
-                        const dist = Math.hypot(ghost.x - target.x, ghost.y - target.y);
-                        if (dist <= ghost.range) {
-                            attack(ghost, target);
-                            gameState.attackCooldowns.set(ghost, true);
-                            break;
-                        }
-                    }
-                }
-            });
-
-            // Island defenses - only fire once per round
-            gameState.playerBuildings.forEach(building => {
-                if (building.type === 'island' && !gameState.islandCooldowns.has(building)) {
-                    gameState.enemyShips.forEach(ship => {
-                        if (!gameState.islandCooldowns.has(building)) {
-                            const dist = Math.hypot(building.x - ship.x, building.y - ship.y);
-                            if (dist <= building.range) {
-                                attack(building, ship, 10);
-                                gameState.islandCooldowns.set(building, true);
-                            }
-                        }
-                    });
-                }
-            });
-
-            // Enemy island defenses
-            gameState.enemyBuildings.forEach(building => {
-                if (building.type === 'island' && !gameState.islandCooldowns.has(building)) {
-                    gameState.playerShips.forEach(ship => {
-                        if (!gameState.islandCooldowns.has(building)) {
-                            const dist = Math.hypot(building.x - ship.x, building.y - ship.y);
-                            if (dist <= building.range) {
-                                attack(building, ship, 10);
-                                gameState.islandCooldowns.set(building, true);
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
-        function attack(attacker, target, damage = null) {
-            const dmg = damage || attacker.damage || 15;
-            
-            // Create cannonball
-            gameState.cannonballs.push({
-                x: attacker.x,
-                y: attacker.y,
-                targetX: target.x,
-                targetY: target.y,
-                speed: 10,
-                damage: dmg,
-                target: target
-            });
-
-            // Play sound
-            playCannonSound();
-        }
-
-        // Update cannonballs
-        function updateCannonballs() {
-            gameState.cannonballs = gameState.cannonballs.filter(ball => {
-                const dx = ball.targetX - ball.x;
-                const dy = ball.targetY - ball.y;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < ball.speed) {
-                    // Hit target
-                    if (ball.target.hp !== undefined) {
-                        const oldHP = ball.target.hp;
-                        ball.target.hp -= ball.damage;
-                        console.log(`HIT! Old HP: ${oldHP}, New HP: ${ball.target.hp}, Damage: ${ball.damage}`);
-                        if (ball.target.hp <= 0) {
-                            handleDeath(ball.target);
-                        }
-                    }
-                    return false;
-                }
-
-                ball.x += (dx / dist) * ball.speed;
-                ball.y += (dy / dist) * ball.speed;
-                return true;
-            });
-        }
-
-        function handleDeath(unit) {
-            if (unit.owner === 'player') {
-                gameState.playerShips = gameState.playerShips.filter(s => s !== unit);
-                
-                // Check if it's a building that was destroyed
-                const buildingIndex = gameState.playerBuildings.indexOf(unit);
-                if (buildingIndex !== -1) {
-                    gameState.playerBuildings.splice(buildingIndex, 1);
-                    
-                    // Reset flags so buildings can be rebuilt
-                    if (unit.type === 'command') {
-                        gameState.hasCommandCenter = false;
-                        gameState.hasNavyDock = false; // If command center is destroyed, dock becomes unusable
-                        // Remove dock too if it exists
-                        gameState.playerBuildings = gameState.playerBuildings.filter(b => b.type !== 'dock');
-                    } else if (unit.type === 'dock') {
-                        gameState.hasNavyDock = false;
-                    }
-                }
-            } else if (unit.owner === 'enemy') {
-                gameState.enemyShips = gameState.enemyShips.filter(s => s !== unit);
-                
-                // Check if it's an enemy building
-                const buildingIndex = gameState.enemyBuildings.indexOf(unit);
-                if (buildingIndex !== -1) {
-                    gameState.enemyBuildings.splice(buildingIndex, 1);
-                    
-                    if (unit.type === 'command') {
-                        enemyState.hasCommandCenter = false;
-                        enemyState.hasNavyDock = false;
-                        gameState.enemyBuildings = gameState.enemyBuildings.filter(b => b.type !== 'dock');
-                    } else if (unit.type === 'dock') {
-                        enemyState.hasNavyDock = false;
-                    }
-                }
-            } else if (unit.type === 'ghost') {
-                gameState.ghostShips = gameState.ghostShips.filter(s => s !== unit);
-            }
-            updateHUD();
-            updateBuildButtons();
-        }
-
-        // Fog of war
-        function updateFogOfWar() {
-            // Reset fog
-            gameState.fogOfWar = gameState.fogOfWar.map(row => row.map(() => true));
-
-            // Reveal around player units
-            const revealRadius = 400;
-            const units = [
-                gameState.playerBase,
-                ...gameState.playerShips,
-                ...gameState.playerBuildings
+            // Preload critical images
+            const criticalImages = [
+                'https://github.com/TitanBusinessPros/Gameville-/raw/main/OKC-Top-2.png'
             ];
-
-            units.forEach(unit => {
-                const gridX = Math.floor(unit.x / CELL_SIZE);
-                const gridY = Math.floor(unit.y / CELL_SIZE);
-                const radius = Math.ceil(revealRadius / CELL_SIZE);
-
-                for (let y = -radius; y <= radius; y++) {
-                    for (let x = -radius; x <= radius; x++) {
-                        const gx = gridX + x;
-                        const gy = gridY + y;
-                        if (gy >= 0 && gy < gameState.fogOfWar.length &&
-                            gx >= 0 && gx < gameState.fogOfWar[0].length) {
-                            const dist = Math.hypot(x * CELL_SIZE, y * CELL_SIZE);
-                            if (dist <= revealRadius) {
-                                gameState.fogOfWar[gy][gx] = false;
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function isInFog(x, y) {
-            const gridX = Math.floor(x / CELL_SIZE);
-            const gridY = Math.floor(y / CELL_SIZE);
-            if (gridY >= 0 && gridY < gameState.fogOfWar.length &&
-                gridX >= 0 && gridX < gameState.fogOfWar[0].length) {
-                return gameState.fogOfWar[gridY][gridX];
-            }
-            return true;
-        }
-
-        // Drawing functions
-        function drawWaves() {
-            // Fill with base ocean color first
-            ctx.fillStyle = '#1e3a5f';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw tiled background if loaded
-            if (images.bgTile && images.bgTile.complete) {
-                const tileWidth = images.bgTile.width;
-                const tileHeight = images.bgTile.height;
-                const startX = Math.floor(gameState.cameraX / tileWidth) * tileWidth;
-                const startY = Math.floor(gameState.cameraY / tileHeight) * tileHeight;
-                
-                for (let y = startY; y < gameState.cameraY + canvas.height / gameState.zoom + tileHeight; y += tileHeight) {
-                    for (let x = startX; x < gameState.cameraX + canvas.width / gameState.zoom + tileWidth; x += tileWidth) {
-                        const screenX = (x - gameState.cameraX) * gameState.zoom;
-                        const screenY = (y - gameState.cameraY) * gameState.zoom;
-                        const width = tileWidth * gameState.zoom;
-                        const height = tileHeight * gameState.zoom;
-                        ctx.drawImage(images.bgTile, screenX, screenY, width, height);
-                    }
-                }
-            } else {
-                // Fallback animated waves if image not loaded
-                gameState.waveOffset += 0.5;
-                const waveHeight = 10;
-                const waveLength = 60;
-
-                ctx.fillStyle = '#2c5f8d';
-                ctx.beginPath();
-                for (let x = -gameState.cameraX % waveLength; x < canvas.width; x += waveLength) {
-                    const y = Math.sin((x + gameState.waveOffset) / 30) * waveHeight + canvas.height / 2;
-                    if (x === -gameState.cameraX % waveLength) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                }
-                ctx.lineTo(canvas.width, canvas.height);
-                ctx.lineTo(0, canvas.height);
-                ctx.closePath();
-                ctx.fill();
-            }
-        }
-
-        function drawUnit(unit, defaultImage) {
-            const screenX = (unit.x - gameState.cameraX) * gameState.zoom;
-            const screenY = (unit.y - gameState.cameraY) * gameState.zoom;
-            const width = unit.width * gameState.zoom;
-            const height = unit.height * gameState.zoom;
-
-            if (screenX > -width && screenX < canvas.width &&
-                screenY > -height && screenY < canvas.height) {
-                
-                // Select correct image based on ship type
-                let shipImage = defaultImage;
-                if (unit.shipType) {
-                    if (unit.shipType === 'mini') shipImage = images.miniShip;
-                    else if (unit.shipType === 'destroyer') shipImage = images.playerShip;
-                    else if (unit.shipType === 'queen') shipImage = images.queenShip;
-                    else if (unit.shipType === 'king') shipImage = images.kingShip;
-                }
-                
-                // Only draw if image is loaded
-                if (shipImage && shipImage.complete) {
-                    ctx.drawImage(shipImage, screenX, screenY, width, height);
-                }
-
-                // Draw HP bar if unit has HP
-                if (unit.hp !== undefined && unit.maxHp !== undefined) {
-                    const barWidth = width;
-                    const barHeight = 6 * gameState.zoom;
-                    const hpPercent = unit.hp / unit.maxHp;
-
-                    ctx.fillStyle = '#000';
-                    ctx.fillRect(screenX, screenY - 12 * gameState.zoom, barWidth, barHeight);
-                    ctx.fillStyle = hpPercent > 0.5 ? '#2ecc71' : hpPercent > 0.25 ? '#f39c12' : '#e74c3c';
-                    ctx.fillRect(screenX, screenY - 12 * gameState.zoom, barWidth * hpPercent, barHeight);
-                }
-
-                // Highlight selected unit
-                if (gameState.selectedUnit === unit || selectedUnits.includes(unit)) {
-                    ctx.strokeStyle = '#ffd700';
-                    ctx.lineWidth = 3;
-                    ctx.strokeRect(screenX - 5, screenY - 5, width + 10, height + 10);
-                }
-            }
-        }
-
-        function drawBuilding(building) {
-            const screenX = (building.x - gameState.cameraX) * gameState.zoom;
-            const screenY = (building.y - gameState.cameraY) * gameState.zoom;
-            const width = building.width * gameState.zoom;
-            const height = building.height * gameState.zoom;
-
-            if (building.type === 'base') {
-                ctx.drawImage(images.base, screenX, screenY, width, height);
-            } else if (building.type === 'command') {
-                ctx.drawImage(images.commandCenter, screenX, screenY, width, height);
-            } else if (building.type === 'dock') {
-                ctx.drawImage(images.navyDock, screenX, screenY, width, height);
-            } else if (building.type === 'island') {
-                ctx.drawImage(images.island, screenX, screenY, width, height);
-            }
-
-            if (building.hp !== undefined && building.maxHp !== undefined) {
-                const barWidth = width;
-                const barHeight = 8 * gameState.zoom;
-                const hpPercent = building.hp / building.maxHp;
-
-                ctx.fillStyle = '#000';
-                ctx.fillRect(screenX, screenY - 15 * gameState.zoom, barWidth, barHeight);
-                ctx.fillStyle = hpPercent > 0.5 ? '#2ecc71' : hpPercent > 0.25 ? '#f39c12' : '#e74c3c';
-                ctx.fillRect(screenX, screenY - 15 * gameState.zoom, barWidth * hpPercent, barHeight);
-            }
-        }
-
-        function drawFogOfWar() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            for (let y = 0; y < gameState.fogOfWar.length; y++) {
-                for (let x = 0; x < gameState.fogOfWar[0].length; x++) {
-                    if (gameState.fogOfWar[y][x]) {
-                        const screenX = (x * CELL_SIZE - gameState.cameraX) * gameState.zoom;
-                        const screenY = (y * CELL_SIZE - gameState.cameraY) * gameState.zoom;
-                        const size = CELL_SIZE * gameState.zoom;
-                        ctx.fillRect(screenX, screenY, size, size);
-                    }
-                }
-            }
-        }
-
-        function gameLoop() {
-            if (!gameState.gameRunning) return;
-
-            // Handle keyboard controls
-            handleKeyboardControls();
-
-            // Update
-            enemyAI();
-            processCombat();
-            updateCannonballs();
-            checkPowerupCollection();
-            updateFogOfWar();
-            updateBuildButtons();
-
-            // Check win/loss conditions every frame
-            // WIN: Enemy base destroyed AND all ghosts destroyed AND all enemy buildings destroyed
-            const enemyBaseDestroyed = gameState.enemyBase.hp <= 0;
-            const allGhostsDestroyed = gameState.ghostShips.length === 0;
-            const allEnemyBuildingsDestroyed = gameState.enemyBuildings.length === 0;
             
-            if (enemyBaseDestroyed && allGhostsDestroyed && allEnemyBuildingsDestroyed) {
-                gameState.gameRunning = false;
-                if (gameState.roundInterval) {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-                gameState.stage++;
-                
-                alert(`Stage ${gameState.stage - 1} Complete! Advancing to Stage ${gameState.stage}`);
-                
-                if (gameState.stage > 10) {
-                    alert('Victory! You conquered all 10 stages!');
-                    gameState.stage = 1;
-                    resetGame();
-                } else {
-                    nextStage();
-                }
-                return;
-            } else if (gameState.playerBase.hp <= 0) {
-                gameState.gameRunning = false;
-                if (gameState.roundInterval) {
-                    clearInterval(gameState.roundInterval);
-                    gameState.roundInterval = null;
-                }
-                alert('Defeat! Your base was destroyed!');
-                resetGame();
-                return;
-            }
-
-            // Move player ships
-            gameState.playerShips.forEach(ship => {
-                if (ship.moving && ship.targetX !== null) {
-                    const dx = ship.targetX - ship.x;
-                    const dy = ship.targetY - ship.y;
-                    const dist = Math.hypot(dx, dy);
-                    
-                    if (dist > 5) {
-                        ship.x += (dx / dist) * 2;
-                        ship.y += (dy / dist) * 2;
-                    } else {
-                        ship.moving = false;
-                        ship.targetX = null;
-                        ship.targetY = null;
-                    }
-                }
+            criticalImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
             });
+        });
 
-            // Draw
-            drawWaves();
-
-            // Draw buildings
-            drawBuilding(gameState.playerBase);
-            if (!isInFog(gameState.enemyBase.x, gameState.enemyBase.y)) {
-                drawBuilding(gameState.enemyBase);
-            }
-
-            gameState.playerBuildings.forEach(b => drawBuilding(b));
-            gameState.enemyBuildings.forEach(b => {
-                if (!isInFog(b.x, b.y)) drawBuilding(b);
-            });
-
-            // Draw units
-            gameState.playerShips.forEach(ship => drawUnit(ship, images.playerShip));
-            gameState.enemyShips.forEach(ship => {
-                if (!isInFog(ship.x, ship.y)) drawUnit(ship, images.enemyShip);
-            });
-            gameState.ghostShips.forEach(ghost => {
-                if (!isInFog(ghost.x, ghost.y)) drawUnit(ghost, images.ghostShip);
-            });
-
-            // Draw powerups
-            gameState.treasureChests.forEach(treasure => {
-                if (!isInFog(treasure.x, treasure.y)) {
-                    const screenX = (treasure.x - gameState.cameraX) * gameState.zoom;
-                    const screenY = (treasure.y - gameState.cameraY) * gameState.zoom;
-                    if (images.treasureChest && images.treasureChest.complete) {
-                        ctx.drawImage(images.treasureChest, screenX, screenY, treasure.width * gameState.zoom, treasure.height * gameState.zoom);
-                    }
-                }
-            });
-            gameState.healthIslands.forEach(health => {
-                if (!isInFog(health.x, health.y)) {
-                    const screenX = (health.x - gameState.cameraX) * gameState.zoom;
-                    const screenY = (health.y - gameState.cameraY) * gameState.zoom;
-                    if (images.healthIsland && images.healthIsland.complete) {
-                        ctx.drawImage(images.healthIsland, screenX, screenY, health.width * gameState.zoom, health.height * gameState.zoom);
-                    }
-                }
-            });
-            gameState.kingIslands.forEach(kingIsland => {
-                if (!isInFog(kingIsland.x, kingIsland.y)) {
-                    const screenX = (kingIsland.x - gameState.cameraX) * gameState.zoom;
-                    const screenY = (kingIsland.y - gameState.cameraY) * gameState.zoom;
-                    if (images.kingIsland && images.kingIsland.complete) {
-                        ctx.drawImage(images.kingIsland, screenX, screenY, kingIsland.width * gameState.zoom, kingIsland.height * gameState.zoom);
-                    }
-                }
-            });
-
-            // Draw cannonballs
-            gameState.cannonballs.forEach(ball => {
-                const screenX = (ball.x - gameState.cameraX) * gameState.zoom;
-                const screenY = (ball.y - gameState.cameraY) * gameState.zoom;
-                const size = 20 * gameState.zoom;
-                ctx.drawImage(images.cannonball, screenX - size/2, screenY - size/2, size, size);
-            });
-
-            // Draw fog of war
-            drawFogOfWar();
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        // Input handling
+        // Make the logo interactive with mouse movement
+        const logo = document.getElementById('logo');
         let isDragging = false;
-        let isSelecting = false;
-        let dragStartX, dragStartY;
-        let dragStartScreenX, dragStartScreenY;
-        let selectedUnits = [];
-        const selectionBox = document.getElementById('selectionBox');
+        let offsetX, offsetY;
 
-        canvas.addEventListener('mousedown', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const screenX = e.clientX - rect.left;
-            const screenY = e.clientY - rect.top;
-            const mouseX = screenX / gameState.zoom + gameState.cameraX;
-            const mouseY = screenY / gameState.zoom + gameState.cameraY;
-
-            // Right-click for camera drag ONLY
-            if (e.button === 2) {
-                isDragging = true;
-                dragStartX = e.clientX;
-                dragStartY = e.clientY;
-                e.preventDefault();
-                return;
-            }
-
-            // Left click only from here on
-            if (e.button !== 0) return;
-
-            // Handle island placement mode
-            if (gameState.placingIsland) {
-                const distFromBase = Math.hypot(mouseX - gameState.playerBase.x, mouseY - gameState.playerBase.y);
-                if (distFromBase <= 1000) {
-                    gameState.gold -= 200;
-                    gameState.playerBuildings.push({
-                        x: mouseX - 50,
-                        y: mouseY - 50,
-                        width: 100,
-                        height: 100,
-                        type: 'island',
-                        owner: 'player',
-                        range: ISLAND_RANGE,
-                        hp: 50,
-                        maxHp: 50,
-                        damage: 10
-                    });
-                    updateHUD();
-                    updateBuildButtons();
-                    gameState.placingIsland = false;
-                    canvas.style.cursor = 'crosshair';
-                } else {
-                    alert('Island must be placed within 1000 range of your base!');
-                }
-                return;
-            }
-
-            // Check if clicking on player ship
-            let clickedShip = null;
-            for (let ship of gameState.playerShips) {
-                if (mouseX >= ship.x && mouseX <= ship.x + ship.width &&
-                    mouseY >= ship.y && mouseY <= ship.y + ship.height) {
-                    clickedShip = ship;
-                    break;
-                }
-            }
-
-            if (clickedShip) {
-                // Clicked on a ship - select it
-                if (e.shiftKey) {
-                    if (!selectedUnits.includes(clickedShip)) {
-                        selectedUnits.push(clickedShip);
-                    }
-                } else {
-                    selectedUnits = [clickedShip];
-                }
-                gameState.selectedUnit = clickedShip;
-            } else if (selectedUnits.length > 0) {
-                // Have selected units, clicking empty space = move them
-                selectedUnits.forEach(unit => {
-                    unit.targetX = mouseX;
-                    unit.targetY = mouseY;
-                    unit.moving = true;
-                });
-                // Don't set checkDeselect - keep ships selected after moving
-            } else {
-                // No ships selected, clicking empty space = start selection box
-                isSelecting = true;
-                dragStartScreenX = screenX;
-                dragStartScreenY = screenY;
-                dragStartX = mouseX;
-                dragStartY = mouseY;
-                selectionBox.style.left = screenX + 'px';
-                selectionBox.style.top = screenY + 'px';
-                selectionBox.style.width = '0px';
-                selectionBox.style.height = '0px';
-                selectionBox.style.display = 'block';
-            }
+        // Mouse events for dragging
+        logo.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - logo.getBoundingClientRect().left;
+            offsetY = e.clientY - logo.getBoundingClientRect().top;
+            logo.style.cursor = 'grabbing';
         });
 
-        canvas.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', (e) => {
             if (isDragging) {
-                const dx = (e.clientX - dragStartX) / gameState.zoom;
-                const dy = (e.clientY - dragStartY) / gameState.zoom;
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
                 
-                gameState.cameraX -= dx;
-                gameState.cameraY -= dy;
+                // Keep the logo within the header boundaries
+                const header = document.querySelector('.site-header');
+                const headerRect = header.getBoundingClientRect();
+                const logoRect = logo.getBoundingClientRect();
                 
-                gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
-                gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
+                const maxX = headerRect.width - logoRect.width;
+                const maxY = headerRect.height - logoRect.height;
                 
-                dragStartX = e.clientX;
-                dragStartY = e.clientY;
-            } else if (isSelecting) {
-                const rect = canvas.getBoundingClientRect();
-                const currentScreenX = e.clientX - rect.left;
-                const currentScreenY = e.clientY - rect.top;
+                const boundedX = Math.max(0, Math.min(x, maxX));
+                const boundedY = Math.max(0, Math.min(y, maxY));
                 
-                const left = Math.min(dragStartScreenX, currentScreenX);
-                const top = Math.min(dragStartScreenY, currentScreenY);
-                const width = Math.abs(currentScreenX - dragStartScreenX);
-                const height = Math.abs(currentScreenY - dragStartScreenY);
-                
-                selectionBox.style.left = left + 'px';
-                selectionBox.style.top = top + 'px';
-                selectionBox.style.width = width + 'px';
-                selectionBox.style.height = height + 'px';
+                logo.style.position = 'absolute';
+                logo.style.left = `${boundedX}px`;
+                logo.style.top = `${boundedY}px`;
             }
         });
 
-        canvas.addEventListener('mouseup', (e) => {
-            if (isSelecting) {
-                const rect = canvas.getBoundingClientRect();
-                const screenX = e.clientX - rect.left;
-                const screenY = e.clientY - rect.top;
-                const mouseX = screenX / gameState.zoom + gameState.cameraX;
-                const mouseY = screenY / gameState.zoom + gameState.cameraY;
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            logo.style.cursor = 'grab';
+        });
+
+        // Touch events for mobile devices
+        logo.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            offsetX = touch.clientX - logo.getBoundingClientRect().left;
+            offsetY = touch.clientY - logo.getBoundingClientRect().top;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                const touch = e.touches[0];
+                const x = touch.clientX - offsetX;
+                const y = touch.clientY - offsetY;
                 
-                const minX = Math.min(dragStartX, mouseX);
-                const maxX = Math.max(dragStartX, mouseX);
-                const minY = Math.min(dragStartY, mouseY);
-                const maxY = Math.max(dragStartY, mouseY);
+                // Keep the logo within the header boundaries
+                const header = document.querySelector('.site-header');
+                const headerRect = header.getBoundingClientRect();
+                const logoRect = logo.getBoundingClientRect();
                 
-                // Select all player ships whose centers are in the box
-                selectedUnits = gameState.playerShips.filter(ship => {
-                    const centerX = ship.x + ship.width / 2;
-                    const centerY = ship.y + ship.height / 2;
-                    return centerX >= minX && centerX <= maxX &&
-                           centerY >= minY && centerY <= maxY;
-                });
+                const maxX = headerRect.width - logoRect.width;
+                const maxY = headerRect.height - logoRect.height;
                 
-                if (selectedUnits.length > 0) {
-                    gameState.selectedUnit = selectedUnits[0];
-                } else {
-                    gameState.selectedUnit = null;
-                }
+                const boundedX = Math.max(0, Math.min(x, maxX));
+                const boundedY = Math.max(0, Math.min(y, maxY));
                 
-                selectionBox.style.display = 'none';
-                isSelecting = false;
+                logo.style.position = 'absolute';
+                logo.style.left = `${boundedX}px`;
+                logo.style.top = `${boundedY}px`;
+                
+                e.preventDefault(); // Prevent scrolling while dragging
             }
+        });
+
+        document.addEventListener('touchend', () => {
             isDragging = false;
         });
 
-        // Prevent context menu on right-click
-        canvas.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
+        // Background music functionality
+        const backgroundMusic = document.getElementById('background-music');
+        const musicToggle = document.getElementById('music-toggle');
+        let musicStarted = false;
 
-        // Touch support
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            const touchX = (touch.clientX - rect.left) / gameState.zoom + gameState.cameraX;
-            const touchY = (touch.clientY - rect.top) / gameState.zoom + gameState.cameraY;
+        // Set the music source
+        backgroundMusic.src = "https://github.com/TitanBusinessPros/PLS-Games/raw/main/Ad-1-Rap-1.mp3";
 
-            let clickedShip = null;
-            for (let ship of gameState.playerShips) {
-                if (touchX >= ship.x && touchX <= ship.x + ship.width &&
-                    touchY >= ship.y && touchY <= ship.y + ship.height) {
-                    clickedShip = ship;
-                    break;
-                }
+        // Function to start music
+        function startMusic() {
+            if (!musicStarted) {
+                backgroundMusic.volume = 0.5; // Set volume to 50%
+                backgroundMusic.play().then(() => {
+                    musicStarted = true;
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }).catch(error => {
+                    console.log('Audio play failed:', error);
+                });
             }
-
-            if (clickedShip) {
-                gameState.selectedUnit = clickedShip;
-            } else if (gameState.selectedUnit && gameState.selectedUnit.owner === 'player') {
-                if (!gameState.attackCooldowns.has(gameState.selectedUnit)) {
-                    gameState.selectedUnit.targetX = touchX;
-                    gameState.selectedUnit.targetY = touchY;
-                    gameState.selectedUnit.moving = true;
-                }
-            }
-        });
-
-        // Touch and hold for mobile movement
-        let touchHoldTimer = null;
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            const touchX = (touch.clientX - rect.left) / gameState.zoom + gameState.cameraX;
-            const touchY = (touch.clientY - rect.top) / gameState.zoom + gameState.cameraY;
-
-            // Start hold timer
-            touchHoldTimer = setTimeout(() => {
-                // Long press - move all selected units
-                if (selectedUnits.length > 0) {
-                    selectedUnits.forEach(unit => {
-                        unit.targetX = touchX;
-                        unit.targetY = touchY;
-                        unit.moving = true;
-                    });
-                }
-            }, 500); // 500ms hold
-
-            // Check if tapped on ship for selection
-            let clickedShip = null;
-            for (let ship of gameState.playerShips) {
-                if (touchX >= ship.x && touchX <= ship.x + ship.width &&
-                    touchY >= ship.y && touchY <= ship.y + ship.height) {
-                    clickedShip = ship;
-                    break;
-                }
-            }
-
-            if (clickedShip) {
-                selectedUnits = [clickedShip];
-                gameState.selectedUnit = clickedShip;
-            }
-        });
-
-        canvas.addEventListener('touchend', () => {
-            if (touchHoldTimer) {
-                clearTimeout(touchHoldTimer);
-                touchHoldTimer = null;
-            }
-        });
-
-        canvas.addEventListener('touchmove', () => {
-            if (touchHoldTimer) {
-                clearTimeout(touchHoldTimer);
-                touchHoldTimer = null;
-            }
-        });
-
-        // Mouse wheel zoom to cursor position
-        canvas.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            zoomToPoint(mouseX, mouseY, delta);
-        });
-
-        // Pinch to zoom for mobile
-        let lastTouchDistance = 0;
-        canvas.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                const distance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                
-                if (lastTouchDistance > 0) {
-                    const delta = (distance - lastTouchDistance) * 0.01;
-                    const rect = canvas.getBoundingClientRect();
-                    const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
-                    const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
-                    zoomToPoint(centerX, centerY, delta);
-                }
-                
-                lastTouchDistance = distance;
-            }
-        });
-
-        canvas.addEventListener('touchend', () => {
-            lastTouchDistance = 0;
-        });
-
-        function zoomToPoint(screenX, screenY, zoomDelta) {
-            const oldZoom = gameState.zoom;
-            const newZoom = Math.max(0.3, Math.min(2, oldZoom + zoomDelta));
-            
-            if (newZoom === oldZoom) return;
-            
-            // Get world position at mouse before zoom
-            const worldX = screenX / oldZoom + gameState.cameraX;
-            const worldY = screenY / oldZoom + gameState.cameraY;
-            
-            // Update zoom
-            gameState.zoom = newZoom;
-            
-            // Adjust camera to keep world position under mouse
-            gameState.cameraX = worldX - screenX / newZoom;
-            gameState.cameraY = worldY - screenY / newZoom;
-            
-            // Clamp camera
-            gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
-            gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
         }
 
-        // Keyboard controls for camera panning
-        const keys = {};
-        window.addEventListener('keydown', (e) => {
-            keys[e.key] = true;
-            
-            // ESC key to deselect all
-            if (e.key === 'Escape') {
-                selectedUnits = [];
-                gameState.selectedUnit = null;
+        // Event listeners for user interaction
+        document.addEventListener('touchstart', startMusic, { once: true });
+        document.addEventListener('scroll', startMusic, { once: true });
+        document.addEventListener('click', startMusic, { once: true });
+
+        // Toggle music on/off
+        musicToggle.addEventListener('click', function() {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else {
+                backgroundMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
             }
-        });
-
-        window.addEventListener('keyup', (e) => {
-            keys[e.key] = false;
-        });
-
-        function handleKeyboardControls() {
-            const panSpeed = 10 / gameState.zoom;
-            
-            if (keys['ArrowLeft'] || keys['a'] || keys['A']) {
-                gameState.cameraX -= panSpeed;
-            }
-            if (keys['ArrowRight'] || keys['d'] || keys['D']) {
-                gameState.cameraX += panSpeed;
-            }
-            if (keys['ArrowUp'] || keys['w'] || keys['W']) {
-                gameState.cameraY -= panSpeed;
-            }
-            if (keys['ArrowDown'] || keys['s'] || keys['S']) {
-                gameState.cameraY += panSpeed;
-            }
-            
-            // Clamp camera
-            gameState.cameraX = Math.max(0, Math.min(MAP_WIDTH - canvas.width / gameState.zoom, gameState.cameraX));
-            gameState.cameraY = Math.max(0, Math.min(MAP_HEIGHT - canvas.height / gameState.zoom, gameState.cameraY));
-        }
-
-        function showMessage(title, text, callback) {
-            document.getElementById('messageTitle').textContent = title;
-            document.getElementById('messageText').textContent = text;
-            document.getElementById('messageBox').style.display = 'block';
-            
-            document.getElementById('messageBtn').onclick = () => {
-                document.getElementById('messageBox').style.display = 'none';
-                callback();
-            };
-        }
-
-        // Resize handler
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Dropdown toggles
-        document.getElementById('hudHeader').addEventListener('click', () => {
-            const content = document.getElementById('hudContent');
-            const toggle = document.getElementById('hudToggle');
-            content.classList.toggle('collapsed');
-            toggle.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
-        });
-
-        document.getElementById('buildMenuHeader').addEventListener('click', () => {
-            const content = document.getElementById('buildMenuContent');
-            const toggle = document.getElementById('buildMenuToggle');
-            content.classList.toggle('collapsed');
-            toggle.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
         });
     </script>
 </body>
