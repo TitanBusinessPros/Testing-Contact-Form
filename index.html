@@ -482,9 +482,44 @@
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            
+            // Detect if mobile
+            isMobile = window.innerWidth <= 768;
+            
+            // Set world size - 3x bigger on mobile
+            if (isMobile) {
+                worldWidth = canvas.width * 3;
+                worldHeight = canvas.height * 3;
+            } else {
+                worldWidth = canvas.width;
+                worldHeight = canvas.height;
+            }
+            
+            // Update fuse box position to center of world
+            fuseBox.x = worldWidth / 2;
+            fuseBox.y = worldHeight / 2 + 100;
+            
+            // Update water positions relative to world size
+            updateWaterPositions();
         }
         
-        resizeCanvas();
+        let isMobile = false;
+        let worldWidth = window.innerWidth;
+        let worldHeight = window.innerHeight;
+        let cameraX = 0;
+        let cameraY = 0;
+        
+        function updateWaterPositions() {
+            waterAreas[0].x = worldWidth / 2 - 150;
+            waterAreas[0].y = worldHeight / 2 + 50;
+            waterAreas[1].x = worldWidth / 2 + 150;
+            waterAreas[1].y = worldHeight / 2 - 50;
+            waterAreas[2].x = worldWidth / 4;
+            waterAreas[2].y = worldHeight * 3/4;
+            waterAreas[3].x = worldWidth * 3/4;
+            waterAreas[3].y = worldHeight / 4;
+        }
+        
         window.addEventListener('resize', resizeCanvas);
         
         // Game state
@@ -508,8 +543,8 @@
         
         // Player stats
         const player = {
-            x: canvas.width / 2,
-            y: canvas.height / 2,
+            x: 0, // Will be set in initGame
+            y: 0, // Will be set in initGame
             width: 40,
             height: 60,
             speed: 2.5,
@@ -524,18 +559,18 @@
         
         // Fuse box stats
         const fuseBox = {
-            x: canvas.width / 2,
-            y: canvas.height / 2 + 100,
+            x: 0, // Will be set in resizeCanvas
+            y: 0, // Will be set in resizeCanvas
             width: 80,
             height: 100
         };
         
         // Water areas
         const waterAreas = [
-            { x: canvas.width / 2 - 150, y: canvas.height / 2 + 50, radius: 80 },
-            { x: canvas.width / 2 + 150, y: canvas.height / 2 - 50, radius: 60 },
-            { x: canvas.width / 4, y: canvas.height * 3/4, radius: 70 },
-            { x: canvas.width * 3/4, y: canvas.height / 4, radius: 90 }
+            { x: 0, y: 0, radius: 80 },
+            { x: 0, y: 0, radius: 60 },
+            { x: 0, y: 0, radius: 70 },
+            { x: 0, y: 0, radius: 90 }
         ];
         
         // Arrays for game objects
@@ -712,8 +747,8 @@
             totalMonstersForStage = 0;
             monstersSpawned = 0;
             
-            player.x = canvas.width / 2;
-            player.y = canvas.height / 2;
+            player.x = worldWidth / 2;
+            player.y = worldHeight / 2;
             player.health = player.maxHealth;
             
             monsters = [];
@@ -771,8 +806,8 @@
             const monsterType = monsterTypes[type];
             
             const margin = 50;
-            const x = margin + Math.random() * (canvas.width - 2 * margin);
-            const y = margin + Math.random() * (canvas.height - 2 * margin);
+            const x = margin + Math.random() * (worldWidth - 2 * margin);
+            const y = margin + Math.random() * (worldHeight - 2 * margin);
             
             let spawnX = x;
             let spawnY = y;
@@ -785,8 +820,8 @@
                 spawnX = fuseBox.x + (Math.random() > 0.5 ? 200 : -200);
                 spawnY = fuseBox.y + (Math.random() > 0.5 ? 200 : -200);
                 
-                spawnX = Math.max(margin, Math.min(canvas.width - margin, spawnX));
-                spawnY = Math.max(margin, Math.min(canvas.height - margin, spawnY));
+                spawnX = Math.max(margin, Math.min(worldWidth - margin, spawnX));
+                spawnY = Math.max(margin, Math.min(worldHeight - margin, spawnY));
             }
             
             monsters.push({
@@ -842,8 +877,21 @@
             player.x += player.direction.x * player.speed;
             player.y += player.direction.y * player.speed;
             
-            player.x = Math.max(player.width/2, Math.min(canvas.width - player.width/2, player.x));
-            player.y = Math.max(player.height/2, Math.min(canvas.height - player.height/2, player.y));
+            player.x = Math.max(player.width/2, Math.min(worldWidth - player.width/2, player.x));
+            player.y = Math.max(player.height/2, Math.min(worldHeight - player.height/2, player.y));
+            
+            // Update camera to follow player (for mobile)
+            if (isMobile) {
+                cameraX = player.x - canvas.width / 2;
+                cameraY = player.y - canvas.height / 2;
+                
+                // Keep camera within world bounds
+                cameraX = Math.max(0, Math.min(worldWidth - canvas.width, cameraX));
+                cameraY = Math.max(0, Math.min(worldHeight - canvas.height, cameraY));
+            } else {
+                cameraX = 0;
+                cameraY = 0;
+            }
         }
         
         function updateMonsters(currentTime) {
@@ -1048,8 +1096,8 @@
             totalMonstersForStage = 0;
             monstersSpawned = 0;
             
-            player.x = canvas.width / 2;
-            player.y = canvas.height / 2;
+            player.x = worldWidth / 2;
+            player.y = worldHeight / 2;
             
             monsters = [];
             playerProjectiles = [];
@@ -1247,26 +1295,30 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
+            // Save context and apply camera transform
+            ctx.save();
+            ctx.translate(-cameraX, -cameraY);
+            
             if (images.map) {
-                ctx.drawImage(images.map, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(images.map, 0, 0, worldWidth, worldHeight);
             } else {
                 ctx.fillStyle = "#1a1a2e";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(0, 0, worldWidth, worldHeight);
                 
                 ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
                 ctx.lineWidth = 1;
                 
-                for (let x = 0; x < canvas.width; x += 50) {
+                for (let x = 0; x < worldWidth; x += 50) {
                     ctx.beginPath();
                     ctx.moveTo(x, 0);
-                    ctx.lineTo(x, canvas.height);
+                    ctx.lineTo(x, worldHeight);
                     ctx.stroke();
                 }
                 
-                for (let y = 0; y < canvas.height; y += 50) {
+                for (let y = 0; y < worldHeight; y += 50) {
                     ctx.beginPath();
                     ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
+                    ctx.lineTo(worldWidth, y);
                     ctx.stroke();
                 }
             }
@@ -1414,6 +1466,9 @@
                 ctx.stroke();
                 ctx.setLineDash([]);
             }
+            
+            // Restore context (remove camera transform)
+            ctx.restore();
         }
         
         function saveGame() {
@@ -1613,6 +1668,9 @@
                 rulesDiv.appendChild(highScoreElem);
             }
         });
+        
+        // Initialize canvas size after all objects are defined
+        resizeCanvas();
         
         gameLoop();
     </script>
