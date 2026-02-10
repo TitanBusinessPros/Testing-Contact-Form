@@ -323,6 +323,19 @@
             z-index: 5;
         }
         
+        #minimap {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            display: none;
+            z-index: 15;
+        }
+        
         #waterWarning {
             position: absolute;
             top: 50%;
@@ -346,6 +359,14 @@
         }
         
         @media (max-width: 768px) {
+            #minimap {
+                display: block;
+            }
+            
+            #stageInfo {
+                top: 190px;
+            }
+            
             #mobileControls {
                 display: flex;
             }
@@ -470,6 +491,8 @@
         
         <button id="audioToggle">🔇 Sound Off</button>
         
+        <canvas id="minimap"></canvas>
+        
         <canvas id="gameCanvas"></canvas>
     </div>
 
@@ -477,6 +500,12 @@
         // Game variables
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        
+        // Minimap
+        const minimap = document.getElementById('minimap');
+        const minimapCtx = minimap.getContext('2d');
+        minimap.width = 150;
+        minimap.height = 150;
         
         // Set canvas size
         function resizeCanvas() {
@@ -937,8 +966,9 @@
                 proj.x += proj.dx;
                 proj.y += proj.dy;
                 
-                if (proj.x < -50 || proj.x > canvas.width + 50 || 
-                    proj.y < -50 || proj.y > canvas.height + 50) {
+                // Use world bounds instead of canvas bounds
+                if (proj.x < -50 || proj.x > worldWidth + 50 || 
+                    proj.y < -50 || proj.y > worldHeight + 50) {
                     playerProjectiles.splice(i, 1);
                 }
             }
@@ -948,8 +978,9 @@
                 proj.x += proj.dx;
                 proj.y += proj.dy;
                 
-                if (proj.x < -50 || proj.x > canvas.width + 50 || 
-                    proj.y < -50 || proj.y > canvas.height + 50) {
+                // Use world bounds instead of canvas bounds
+                if (proj.x < -50 || proj.x > worldWidth + 50 || 
+                    proj.y < -50 || proj.y > worldHeight + 50) {
                     monsterProjectiles.splice(i, 1);
                 }
             }
@@ -1469,6 +1500,62 @@
             
             // Restore context (remove camera transform)
             ctx.restore();
+            
+            // Draw minimap on mobile
+            if (isMobile) {
+                drawMinimap();
+            }
+        }
+        
+        function drawMinimap() {
+            const scale = 150 / worldWidth; // Scale world to fit 150x150 minimap
+            
+            // Clear minimap
+            minimapCtx.fillStyle = "rgba(10, 10, 30, 0.9)";
+            minimapCtx.fillRect(0, 0, 150, 150);
+            
+            // Draw world bounds
+            minimapCtx.strokeStyle = "#ffcc00";
+            minimapCtx.lineWidth = 2;
+            minimapCtx.strokeRect(0, 0, 150, 150);
+            
+            // Draw fuse box
+            minimapCtx.fillStyle = "#666";
+            const fuseBoxX = fuseBox.x * scale;
+            const fuseBoxY = fuseBox.y * scale;
+            minimapCtx.fillRect(fuseBoxX - 3, fuseBoxY - 3, 6, 6);
+            
+            // Draw water areas
+            minimapCtx.fillStyle = "rgba(0, 100, 255, 0.5)";
+            for (const water of waterAreas) {
+                minimapCtx.beginPath();
+                minimapCtx.arc(water.x * scale, water.y * scale, water.radius * scale, 0, Math.PI * 2);
+                minimapCtx.fill();
+            }
+            
+            // Draw monsters
+            minimapCtx.fillStyle = "#FF5555";
+            for (const monster of monsters) {
+                minimapCtx.beginPath();
+                minimapCtx.arc(monster.x * scale, monster.y * scale, 2, 0, Math.PI * 2);
+                minimapCtx.fill();
+            }
+            
+            // Draw player
+            minimapCtx.fillStyle = "#FFFF00";
+            minimapCtx.beginPath();
+            minimapCtx.arc(player.x * scale, player.y * scale, 3, 0, Math.PI * 2);
+            minimapCtx.fill();
+            
+            // Draw view rectangle (what the camera sees)
+            minimapCtx.strokeStyle = "#00FF00";
+            minimapCtx.lineWidth = 1;
+            minimapCtx.strokeRect(
+                cameraX * scale,
+                cameraY * scale,
+                canvas.width * scale,
+                canvas.height * scale
+            );
         }
         
         function saveGame() {
