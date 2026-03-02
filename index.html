@@ -1,1846 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
-    <title>Don't Shock Mason</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        body {
-            background: #000;
-            overflow: hidden;
-            color: #fff;
-        }
-        
-        #gameContainer {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            touch-action: none; /* Prevent default touch actions */
-        }
-        
-        #startScreen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-        
-        #title {
-            font-size: 3.5rem;
-            color: #ffcc00;
-            text-shadow: 0 0 10px #ff9900;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        #startImage {
-            max-width: 80%;
-            max-height: 40vh;
-            border: 4px solid #ffcc00;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        #rules {
-            background: rgba(0, 0, 50, 0.8);
-            border: 2px solid #ffcc00;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px;
-            max-width: 800px;
-            max-height: 40vh;
-            overflow-y: auto;
-        }
-        
-        #rules h2 {
-            color: #ffcc00;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        #rules ul {
-            padding-left: 20px;
-        }
-        
-        #rules li {
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
-        #startButton {
-            background: linear-gradient(to bottom, #ff9900, #cc6600);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        
-        #startButton:hover {
-            background: linear-gradient(to bottom, #ffcc00, #ff9900);
-            transform: scale(1.05);
-        }
-        
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        #ui {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 5;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #ffcc00;
-            min-width: 250px;
-        }
-        
-        .ui-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .ui-label {
-            color: #ffcc00;
-            font-weight: bold;
-        }
-        
-        .ui-value {
-            color: white;
-        }
-        
-        #healthBar {
-            width: 100%;
-            height: 20px;
-            background: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 5px;
-        }
-        
-        #healthFill {
-            height: 100%;
-            background: linear-gradient(to right, #ff0000, #ff9900, #00ff00);
-            width: 100%;
-            transition: width 0.3s;
-        }
-        
-        #stageInfo {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 5;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #ffcc00;
-            text-align: center;
-        }
-        
-        #mobileControls {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            z-index: 5;
-            display: none;
-            justify-content: space-between;
-            padding: 0 30px;
-        }
-        
-        .mobile-btn {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 204, 0, 0.3);
-            border: 2px solid #ffcc00;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            color: white;
-            user-select: none;
-        }
-        
-        #joystickArea {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            width: 150px;
-            height: 150px;
-            display: none;
-            z-index: 5;
-        }
-        
-        #joystick {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 204, 0, 0.5);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        #shootBtn {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-        }
-        
-        #adScreen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 25;
-        }
-        
-        #adVideo {
-            max-width: 90%;
-            max-height: 70vh;
-            border: 3px solid #ffcc00;
-            border-radius: 10px;
-        }
-        
-        #adMessage {
-            color: #ffcc00;
-            font-size: 1.8rem;
-            margin-top: 20px;
-            text-align: center;
-            padding: 0 20px;
-        }
-        
-        #adTimer {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-        
-        #continueButton {
-            background: linear-gradient(to bottom, #00cc00, #008800);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        #continueButton:hover {
-            background: linear-gradient(to bottom, #00ff00, #00cc00);
-            transform: scale(1.05);
-        }
-        
-        #gameOverScreen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-        }
-        
-        #stageCompleteScreen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 50, 0.9);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-        }
-        
-        .screen-title {
-            font-size: 4rem;
-            color: #ffcc00;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .screen-message {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            text-align: center;
-            max-width: 80%;
-        }
-        
-        .screen-button {
-            background: linear-gradient(to bottom, #ff9900, #cc6600);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        
-        #audioToggle {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: 1px solid #ffcc00;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 5;
-        }
-        
-        #waterWarning {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 100, 255, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 1.5rem;
-            display: none;
-            z-index: 25;
-            text-align: center;
-            animation: pulse 1s infinite;
-        }
-        
-        #zoomControls {
-            position: absolute;
-            top: 100px;
-            right: 20px;
-            z-index: 5;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #ffcc00;
-        }
-        
-        #zoomInfo {
-            position: absolute;
-            top: 180px;
-            right: 20px;
-            z-index: 5;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 10px;
-            border: 2px solid #ffcc00;
-            font-size: 0.9rem;
-            text-align: center;
-            display: none;
-            max-width: 200px;
-        }
-        
-        .zoom-btn {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 204, 0, 0.3);
-            border: 2px solid #ffcc00;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-        
-        @media (max-width: 768px) {
-            #mobileControls {
-                display: flex;
-            }
-            
-            #joystickArea {
-                display: block;
-            }
-            
-            #ui, #stageInfo {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-            
-            .mobile-btn {
-                width: 70px;
-                height: 70px;
-                font-size: 25px;
-            }
-            
-            #title {
-                font-size: 2.5rem;
-            }
-            
-            #rules {
-                max-height: 30vh;
-                padding: 15px;
-                margin: 10px;
-            }
-            
-            #zoomControls {
-                display: flex;
-            }
-            
-            #zoomInfo {
-                display: block;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tulsa, OK meta -->
+  <meta name="description" content="Free small business tools in Tulsa, OK: QR code maker, business card designer, invoice generator. Provided by Mail World Office.">
+  <meta name="keywords" content="Tulsa, small business, tools, QR code, business card, invoice, Oklahoma, Mail World Office, shipping, notary">
+  <meta name="geo.region" content="US-OK">
+  <meta name="geo.placename" content="Tulsa">
+  <meta name="geo.position" content="36.1539;-95.9928">
+  <meta name="ICBM" content="36.1539, -95.9928">
+  <title>Small Business Tools · Mail World Office | Tulsa, OK</title>
+  <link rel="icon" type="image/png" href="https://github.com/TitanBusinessPros/MWO-SB/raw/main/MWO-Logo-T.png">
+  <style>
+    /* (styles unchanged – keep your existing futuristic CSS) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(145deg, #0a0e1c 0%, #141b2b 100%);
+      color: #e0f2fe;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    header, main, footer {
+      width: 100%;
+      max-width: 1400px;
+      padding: 1.5rem 2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .logo-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .logo-container {
+      width: min(700px, 95%);
+      margin: 1rem 0 0.5rem;
+      filter: drop-shadow(0 0 25px cyan);
+      animation: softGlow 3s infinite alternate;
+    }
+    @keyframes softGlow {
+      0% { filter: drop-shadow(0 0 15px #0ff) drop-shadow(0 0 25px #0af); }
+      100% { filter: drop-shadow(0 0 25px #f0f) drop-shadow(0 0 35px #a0f); }
+    }
+    .logo-container img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      display: block;
+      border-radius: 30px;
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a5f0ff, #c084fc, #ffb3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0.5rem 0 0.25rem;
+      text-shadow: 0 0 20px #0ff8;
+      letter-spacing: 1px;
+    }
+    .intro-paragraph {
+      font-size: 1.3rem;
+      max-width: 1000px;
+      margin: 1.5rem auto 1rem;
+      background: rgba(10, 20, 40, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid #00ffff33;
+      box-shadow: 0 0 30px #00b3ff33, inset 0 0 20px #00a6ff1a;
+      padding: 1.6rem 2.8rem;
+      border-radius: 80px 20px 80px 20px;
+      color: #e0f2ff;
+      font-weight: 400;
+    }
+    .mailbox-cta {
+      text-align: center;
+      margin: 0.5rem auto 2.5rem;
+    }
+    .mailbox-cta a {
+      display: inline-block;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: 3px solid #0ff;
+      border-radius: 60px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 30px cyan, 0 0 15px magenta;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      transition: 0.3s;
+    }
+    .mailbox-cta a:hover {
+      background: rgba(255, 0, 255, 0.3);
+      border-color: magenta;
+      box-shadow: 0 0 50px magenta, 0 0 30px cyan;
+      transform: scale(1.05);
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 2rem 0 3rem;
+    }
+    .tool-card {
+      background: rgba(12, 22, 38, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid #00ffffaa;
+      border-radius: 40px;
+      padding: 2rem 1.2rem 1.8rem;
+      box-shadow: 0 20px 40px -16px #000, 0 0 30px #00b8ffcc;
+      transition: 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .tool-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: #ff66ff;
+      box-shadow: 0 0 40px cyan, 0 0 80px #f0f;
+      background: rgba(20, 30, 50, 0.9);
+    }
+    .tool-card a {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 30px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      line-height: 0;
+      border: 3px solid #00ffff;
+      transition: border 0.2s;
+      text-decoration: none;
+    }
+    .tool-card a:hover {
+      border-color: #ff99ff;
+    }
+    .tool-card img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      background: #0a1424;
+      border-radius: 27px;
+      transition: transform 0.3s, filter 0.4s;
+    }
+    .tool-card a:hover img {
+      transform: scale(1.08);
+      filter: drop-shadow(0 0 15px cyan);
+    }
+    .tool-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #b0f0ff, #dbb5ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0.4rem 0 0.3rem;
+      text-shadow: 0 0 10px magenta;
+    }
+    .tool-card p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin: 0;
+      padding: 0 0.4rem;
+      text-shadow: 0 0 5px #0ff;
+    }
+    footer {
+      background: rgba(2, 10, 22, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 2px solid #0ff;
+      border-radius: 60px 60px 0 0;
+      margin-top: auto;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      box-shadow: 0 -10px 40px #0ff4;
+    }
+    footer a {
+      text-decoration: none;
+      border-bottom: none;
+      color: #9effff;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    footer a:hover {
+      color: white;
+      text-shadow: 0 0 10px hotpink;
+    }
+    .footer-contact {
+      font-size: 1.3rem;
+      margin-bottom: 1.8rem;
+    }
+    .footer-contact strong {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #0ff, #f6f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .footer-tulsa {
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid #ff44ff66;
+      border-radius: 60px;
+      padding: 1.2rem 2rem;
+      max-width: 900px;
+      margin: 1.5rem auto 2rem;
+      font-size: 1.2rem;
+      color: #e2f0ff;
+      box-shadow: 0 0 30px #0ff4;
+    }
+    .footer-tulsa strong {
+      color: #ffccff;
+      font-weight: 700;
+      text-shadow: 0 0 10px magenta;
+    }
+    .footer-copyright {
+      border-top: 1px solid #0ff6;
+      padding-top: 2rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: #b0e0ff;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    @media (max-width: 1000px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 700px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      header, main, footer { padding: 1rem 1.5rem; }
+      h1 { font-size: 2rem; }
+      .intro-paragraph { font-size: 1.1rem; padding: 1rem 1.5rem; }
+      .mailbox-cta a { font-size: 1.2rem; padding: 0.8rem 1.2rem; }
+      .footer-tulsa { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <div id="startScreen">
-            <h1 id="title">Don't Shock Mason</h1>
-            <img id="startImage" src="https://github.com/TitanBusinessPros/DSD/raw/main/Game-Start-Image.png" alt="Game Start">
-            <div id="rules">
-                <h2>Game Rules:</h2>
-                <ul>
-                    <li>Defend the fuse box from electrical monsters for 5 stages</li>
-                    <li>Stand on the fuse box for 20 seconds after killing all monsters to win each stage</li>
-                    <li>Each stage has a 3-minute time limit</li>
-                    <li>Stage 1: 10 enemies | Stage 2: 20 enemies | Stage 3: 30 enemies | Stage 4: 40 enemies | Stage 5: 50 enemies</li>
-                    <li>You take 20% more damage when standing in water</li>
-                    <li>Use arrow keys or touch controls to move</li>
-                    <li>Press Space or touch the shoot button to fire lightning bolts</li>
-                    <li>Each monster type has unique attacks</li>
-                    <li>Game progress is saved automatically</li>
-                    <li style="color: #ffcc00;">MOBILE: Pinch with two fingers to zoom in/out</li>
-                </ul>
-            </div>
-            <button id="startButton">START GAME</button>
-        </div>
-        
-        <div id="adScreen">
-            <video id="adVideo" autoplay>
-                <source src="https://github.com/TitanBusinessPros/DSD/raw/main/DE-Ad-1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <p id="adMessage">Watch this ad to get an extra life and continue!</p>
-            <p id="adTimer">Video ends in: <span id="adTimeRemaining">0</span>s</p>
-            <button id="continueButton">CONTINUE WITH EXTRA LIFE</button>
-        </div>
-        
-        <div id="gameOverScreen">
-            <h2 class="screen-title">GAME OVER</h2>
-            <p id="gameOverMessage" class="screen-message">Mason has been shocked!</p>
-            <button id="restartButton" class="screen-button">PLAY AGAIN</button>
-            <button id="backToMenuButton" class="screen-button">MAIN MENU</button>
-        </div>
-        
-        <div id="stageCompleteScreen">
-            <h2 class="screen-title">STAGE COMPLETE!</h2>
-            <p id="stageCompleteMessage" class="screen-message"></p>
-            <button id="nextStageButton" class="screen-button">NEXT STAGE</button>
-        </div>
-        
-        <div id="waterWarning">⚠️ WATER! 20% MORE DAMAGE ⚠️</div>
-        
-        <div id="ui">
-            <div class="ui-row">
-                <span class="ui-label">Health:</span>
-                <span id="healthValue" class="ui-value">100%</span>
-            </div>
-            <div id="healthBar">
-                <div id="healthFill"></div>
-            </div>
-            <div class="ui-row">
-                <span class="ui-label">Stage:</span>
-                <span id="stageValue" class="ui-value">1/5</span>
-            </div>
-            <div class="ui-row">
-                <span class="ui-label">Remaining:</span>
-                <span id="monstersValue" class="ui-value">10/10</span>
-            </div>
-            <div class="ui-row">
-                <span class="ui-label">Fuse Time:</span>
-                <span id="fuseTimeValue" class="ui-value">0s</span>
-            </div>
-        </div>
-        
-        <div id="stageInfo">
-            <div class="ui-row">
-                <span class="ui-label">Time:</span>
-                <span id="timeValue" class="ui-value">03:00</span>
-            </div>
-            <div class="ui-row">
-                <span class="ui-label">Kills:</span>
-                <span id="killsValue" class="ui-value">0</span>
-            </div>
-            <div class="ui-row">
-                <span class="ui-label">Score:</span>
-                <span id="scoreValue" class="ui-value">0</span>
-            </div>
-        </div>
-        
-        <div id="zoomInfo">
-            Pinch to Zoom<br>
-            Double-tap to reset
-        </div>
-        
-        <div id="zoomControls">
-            <div id="zoomInBtn" class="zoom-btn">+</div>
-            <div id="zoomOutBtn" class="zoom-btn">-</div>
-            <div id="resetZoomBtn" class="zoom-btn">↺</div>
-        </div>
-        
-        <div id="mobileControls">
-            <div id="joystickArea">
-                <div id="joystick"></div>
-            </div>
-            <div id="shootBtn" class="mobile-btn">⚡</div>
-        </div>
-        
-        <button id="audioToggle">🔇 Sound Off</button>
-        
-        <canvas id="gameCanvas"></canvas>
+  <header>
+    <div class="logo-header">
+      <div class="logo-container">
+        <img src="https://github.com/TitanBusinessPros/MWO-SB/raw/main/MWO-Logo-T.png" 
+             alt="Mail World Office logo" 
+             width="700" height="700">
+      </div>
+      <h1>Small Business Made Easy by Mail World Office</h1>
+      <div class="intro-paragraph">
+        ⚡ Free tools built for new small business owners. From QR codes and business cards to invoices — all with a futuristic edge. Powered by Mail World Office, your Tulsa shipping & business hub. ⚡
+      </div>
+      <div class="mailbox-cta">
+        <a href="https://www.mailworldofficeok.com/" target="_blank" rel="noopener">
+          PRIVATE MAILBOX RENTALS FOR YOUR HOME OR OFFICE
+        </a>
+      </div>
     </div>
+  </header>
 
-    <script>
-        // Game variables
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            // Detect if mobile
-            isMobile = window.innerWidth <= 768;
-            
-            // Set world size - 3x bigger on mobile
-            if (isMobile) {
-                worldWidth = canvas.width * 3;
-                worldHeight = canvas.height * 3;
-            } else {
-                worldWidth = canvas.width;
-                worldHeight = canvas.height;
-            }
-            
-            // Update fuse box position to center of world
-            fuseBox.x = worldWidth / 2;
-            fuseBox.y = worldHeight / 2 + 100;
-            
-            // Update water positions relative to world size
-            updateWaterPositions();
+  <main>
+    <div id="tools-grid" class="grid-container"></div>
+  </main>
+
+  <footer>
+    <div class="footer-contact">
+      <strong>Mail World Office</strong><br>
+      <a href="https://www.mailworldofficeok.com/" target="_blank" rel="noopener">www.mailworldofficeok.com</a><br>
+      <a href="tel:+19188142310">918-814-2310</a> · 
+      <a href="mailto:mailworldoffice@gmail.com">mailworldoffice@gmail.com</a>
+    </div>
+    <div class="footer-tulsa">
+      <strong>Tulsa’s Authorized ShipCenter & Authorized Shipping Outlet</strong><br>
+      📞 CALL TODAY — RENTALS, PACKAGING, SHIPPING, AND NOTARY SERVICES FOR SMALL BUSINESSES IN TULSA
+    </div>
+    <div class="footer-copyright">
+      <span>© 2026 Mail World Office, Tulsa, OK — This website is provided by Mail World Office out of Tulsa, Oklahoma.</span>
+      <span> 918-814-2310</span>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // Base path for your GitHub Pages site – your repository name is "MWO-SB"
+      const basePath = "/MWO-SB/";  // this ensures links go to the correct folder
+
+      const tools = [
+        { name: "QR CODE MAKER", desc: "Custom QR codes with neon scan effects. Connects customers instantly.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/QR%20Code%20Maker.png", link: "tool1.html" },
+        { name: "BUSINESS CARD MAKER", desc: "Futuristic card designs that stand out in any stack.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Digital%20Business%20Card%20Maker.png", link: "tool2.html" },
+        { name: "INVOICE GENERATOR", desc: "Lightning-fast invoices tat cost nothing.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Quote%20Estimate%20Generator.png", link: "tool3.html" },
+        { name: "Document Watermarking Tool", desc: "Safeguard documents with this free tool!", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Watermark%20Tool.png", link: "tool4.html" },
+        { name: "Neon FLYER DESIGNER", desc: "Neon flyer template.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Neon%20Flyer%20Builder.png", link: "tool5.html" },
+        { name: "Policy & Terms Builder", desc: "Build policy & terms for your company.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Policy%20%26%20Terms%20Builder.png", link: "tool6.html" },
+        { name: "Digital Signature Verification", desc: "Easily capture needed signatures!", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Digital%20Signature%20Taker.png", link: "tool7.html" },
+        { name: "NDA Maker", desc: "NDA template for small business owners.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/NDA%20Builder.png", link: "tool8.html" },
+        { name: "Digital SOP/Checklist Manager", desc: "Create digital checklist & SOP's!", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Sop-Checklist.png", link: "tool9.html" },
+        { name: "Photo Website Builder", desc: "Build unlimited websites with images!", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/Photo.png", link: "tool10.html" },
+        { name: "NEWSLETTER CREATOR", desc: "Neon newsletters that pop in inboxes.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/MW-Ad-3.png", link: "tool11.html" },
+        { name: "POSTCARD DESIGNER", desc: "Direct mail postcards with QR + AR triggers.", img: "https://github.com/TitanBusinessPros/MWO-SB/raw/main/MW-Ad-3.png", link: "tool12.html" }
+      ];
+
+      const grid = document.getElementById('tools-grid');
+      if (grid) {
+        let html = '';
+        for (let i = 0; i < tools.length; i++) {
+          const tool = tools[i];
+          // Build absolute URL: basePath + filename
+          const fullLink = basePath + tool.link;
+          html += `
+            <div class="tool-card">
+              <a href="${fullLink}" target="_blank" rel="noopener">
+                <img src="${tool.img}" alt="${tool.name} - free tool by Mail World Office" loading="lazy">
+              </a>
+              <h3>${tool.name}</h3>
+              <p>${tool.desc}</p>
+            </div>
+          `;
         }
-        
-        let isMobile = false;
-        let worldWidth = window.innerWidth;
-        let worldHeight = window.innerHeight;
-        let cameraX = 0;
-        let cameraY = 0;
-        
-        // Pinch zoom variables
-        let pinchZoomEnabled = true;
-        let currentScale = 1.0;
-        let minScale = 0.5;
-        let maxScale = 3.0;
-        let initialPinchDistance = 0;
-        let isPinching = false;
-        
-        // Double tap variables
-        let lastTapTime = 0;
-        let doubleTapDelay = 300;
-        
-        function updateWaterPositions() {
-            waterAreas[0].x = worldWidth / 2 - 150;
-            waterAreas[0].y = worldHeight / 2 + 50;
-            waterAreas[1].x = worldWidth / 2 + 150;
-            waterAreas[1].y = worldHeight / 2 - 50;
-            waterAreas[2].x = worldWidth / 4;
-            waterAreas[2].y = worldHeight * 3/4;
-            waterAreas[3].x = worldWidth * 3/4;
-            waterAreas[3].y = worldHeight / 4;
-        }
-        
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Game state
-        let gameState = 'start'; // start, playing, gameOver, stageComplete
-        let currentStage = 1;
-        let maxStages = 5;
-        let score = 0;
-        let kills = 0;
-        let stageKills = 0; // Track kills for current stage
-        let gameTime = 180; // 3 minutes in seconds
-        let fuseBoxTime = 0;
-        let isInWater = false;
-        let audioEnabled = true;
-        let lastTime = 0;
-        let spawnStartTime = 0;
-        let animationFrameId = null; // Track animation frame for cleanup
-        let hasUsedExtraLife = false; // Track if player has used their extra life this game
-        let adWatchTimer = null; // Timer for ad countdown
-        let totalMonstersForStage = 0; // Track total monsters that should spawn in current stage
-        let monstersSpawned = 0; // Track how many monsters have actually spawned
-        
-        // Player stats
-        const player = {
-            x: 0, // Will be set in initGame
-            y: 0, // Will be set in initGame
-            width: 40,
-            height: 60,
-            speed: 2.5,
-            maxHealth: 100,
-            health: 100,
-            attackDamage: 20,
-            attackCooldown: 0,
-            attackSpeed: 300,
-            lastAttack: 0,
-            direction: { x: 0, y: 0 }
-        };
-        
-        // Fuse box stats
-        const fuseBox = {
-            x: 0, // Will be set in resizeCanvas
-            y: 0, // Will be set in resizeCanvas
-            width: 80,
-            height: 100
-        };
-        
-        // Water areas
-        const waterAreas = [
-            { x: 0, y: 0, radius: 80 },
-            { x: 0, y: 0, radius: 60 },
-            { x: 0, y: 0, radius: 70 },
-            { x: 0, y: 0, radius: 90 }
-        ];
-        
-        // Arrays for game objects
-        let monsters = [];
-        let playerProjectiles = [];
-        let monsterProjectiles = [];
-        
-        // Monster types
-        const monsterTypes = [
-            {
-                name: "Sparky",
-                color: "#FF5555",
-                health: 50,
-                speed: 0,
-                attackDamage: 10,
-                attackCooldown: 5000,
-                attackColor: "#FF5555",
-                width: 50,
-                height: 50
-            },
-            {
-                name: "Bolt",
-                color: "#5555FF",
-                health: 60,
-                speed: 0,
-                attackDamage: 12,
-                attackCooldown: 4000,
-                attackColor: "#5555FF",
-                width: 55,
-                height: 55
-            },
-            {
-                name: "Flamer",
-                color: "#FF8800",
-                health: 70,
-                speed: 0,
-                attackDamage: 15,
-                attackCooldown: 3500,
-                attackColor: "#FF8800",
-                width: 60,
-                height: 60
-            },
-            {
-                name: "Acid",
-                color: "#55FF55",
-                health: 80,
-                speed: 0,
-                attackDamage: 18,
-                attackCooldown: 3000,
-                attackColor: "#55FF55",
-                width: 65,
-                height: 65
-            },
-            {
-                name: "Volt",
-                color: "#FFAA00",
-                health: 100,
-                speed: 0,
-                attackDamage: 20,
-                attackCooldown: 2500,
-                attackColor: "#FFAA00",
-                width: 70,
-                height: 70
-            }
-        ];
-        
-        // Stage configurations - FIXED: Each stage adds 10 more monsters
-        const stageConfigs = [
-            { // Stage 1: 10 monsters
-                monsters: [0],
-                counts: [10],
-                spawnTime: 60,
-                totalTime: 180
-            },
-            { // Stage 2: 20 monsters
-                monsters: [0, 1],
-                counts: [10, 10],
-                spawnTime: 60,
-                totalTime: 180
-            },
-            { // Stage 3: 30 monsters
-                monsters: [0, 1, 2],
-                counts: [10, 10, 10],
-                spawnTime: 60,
-                totalTime: 180
-            },
-            { // Stage 4: 40 monsters
-                monsters: [0, 1, 2, 3],
-                counts: [10, 10, 10, 10],
-                spawnTime: 60,
-                totalTime: 180
-            },
-            { // Stage 5: 50 monsters
-                monsters: [0, 1, 2, 3, 4],
-                counts: [10, 10, 10, 10, 10],
-                spawnTime: 60,
-                totalTime: 180
-            }
-        ];
-        
-        // Images preloading
-        const images = {};
-        const imageUrls = {
-            player: "https://github.com/TitanBusinessPros/DSD/raw/main/DE-Character-1.png",
-            fuseBox: "https://github.com/TitanBusinessPros/DSD/raw/main/Fuse-Box.png",
-            monster1: "https://github.com/TitanBusinessPros/DSD/raw/main/Monster-1.png",
-            monster2: "https://github.com/TitanBusinessPros/DSD/raw/main/Monster-2.png",
-            monster3: "https://github.com/TitanBusinessPros/DSD/raw/main/Monster-3.png",
-            monster4: "https://github.com/TitanBusinessPros/DSD/raw/main/Monster-4.png",
-            monster5: "https://github.com/TitanBusinessPros/DSD/raw/main/Monster-5.png",
-            map: "https://github.com/TitanBusinessPros/DSD/raw/main/Game-Map-Image.png"
-        };
-        
-        // Load images
-        let imagesLoaded = 0;
-        const totalImages = Object.keys(imageUrls).length;
-        
-        function loadImages() {
-            for (const key in imageUrls) {
-                images[key] = new Image();
-                images[key].onload = () => {
-                    imagesLoaded++;
-                    if (imagesLoaded === totalImages) {
-                        console.log("All images loaded");
-                    }
-                };
-                images[key].onerror = () => {
-                    console.error(`Failed to load image: ${imageUrls[key]}`);
-                    images[key] = null;
-                    imagesLoaded++;
-                };
-                images[key].src = imageUrls[key];
-            }
-        }
-        
-        // Audio
-        const backgroundMusic = new Audio("https://github.com/TitanBusinessPros/DSD/raw/main/Swim%20or%20Sink.mp3");
-        backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.5;
-        
-        // Sound effects
-        const sounds = {
-            shoot: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-shot-1669.mp3'),
-            hit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3'),
-            monsterHit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-electronic-retro-block-hit-2185.mp3'),
-            water: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-water-splash-2001.mp3'),
-            stageComplete: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'),
-            gameOver: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-retro-game-over-1947.mp3')
-        };
-        
-        // Set volume for all sounds
-        for (const key in sounds) {
-            sounds[key].volume = 0.3;
-        }
-        
-        // Game functions
-        function initGame() {
-            // FIXED: Stop any existing game loop
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-            
-            gameState = 'playing';
-            currentStage = 1;
-            score = 0;
-            kills = 0;
-            stageKills = 0;
-            gameTime = stageConfigs[currentStage-1].totalTime;
-            fuseBoxTime = 0;
-            spawnStartTime = Date.now();
-            lastTime = Date.now();
-            hasUsedExtraLife = false; // Reset extra life for new game
-            totalMonstersForStage = 0;
-            monstersSpawned = 0;
-            
-            player.x = worldWidth / 2;
-            player.y = worldHeight / 2;
-            player.health = player.maxHealth;
-            
-            monsters = [];
-            playerProjectiles = [];
-            monsterProjectiles = [];
-            
-            startStage(currentStage);
-            
-            if (audioEnabled) {
-                backgroundMusic.currentTime = 0;
-                backgroundMusic.play().catch(e => console.log("Audio play failed:", e));
-            }
-            
-            updateUI();
-        }
-        
-        function startStage(stage) {
-            const config = stageConfigs[stage-1];
-            gameTime = config.totalTime;
-            fuseBoxTime = 0;
-            stageKills = 0;
-            spawnStartTime = Date.now();
-            
-            // Clear monsters array
-            monsters = [];
-            
-            // Calculate total monsters for this stage
-            totalMonstersForStage = config.counts.reduce((a, b) => a + b, 0);
-            monstersSpawned = 0;
-            
-            console.log(`Starting Stage ${stage}: Should spawn ${totalMonstersForStage} monsters total`);
-            
-            // Clear any existing timeouts to prevent duplicate spawns
-            const spawnInterval = config.spawnTime * 1000 / totalMonstersForStage;
-            
-            let monsterIndex = 0;
-            for (let i = 0; i < config.monsters.length; i++) {
-                const monsterType = config.monsters[i];
-                const count = config.counts[i];
-                
-                for (let j = 0; j < count; j++) {
-                    setTimeout(() => {
-                        if (gameState === 'playing' && monstersSpawned < totalMonstersForStage) {
-                            spawnMonster(monsterType);
-                            monstersSpawned++;
-                            console.log(`Spawned monster ${monstersSpawned}/${totalMonstersForStage}`);
-                        }
-                    }, monsterIndex * spawnInterval);
-                    monsterIndex++;
-                }
-            }
-        }
-        
-        function spawnMonster(type) {
-            const monsterType = monsterTypes[type];
-            
-            const margin = 50;
-            const x = margin + Math.random() * (worldWidth - 2 * margin);
-            const y = margin + Math.random() * (worldHeight - 2 * margin);
-            
-            let spawnX = x;
-            let spawnY = y;
-            const fuseBoxDistance = Math.sqrt(
-                Math.pow(spawnX - fuseBox.x, 2) + 
-                Math.pow(spawnY - fuseBox.y, 2)
-            );
-            
-            if (fuseBoxDistance < 200) {
-                spawnX = fuseBox.x + (Math.random() > 0.5 ? 200 : -200);
-                spawnY = fuseBox.y + (Math.random() > 0.5 ? 200 : -200);
-                
-                spawnX = Math.max(margin, Math.min(worldWidth - margin, spawnX));
-                spawnY = Math.max(margin, Math.min(worldHeight - margin, spawnY));
-            }
-            
-            monsters.push({
-                x: spawnX,
-                y: spawnY,
-                width: monsterType.width,
-                height: monsterType.height,
-                type: type,
-                health: monsterType.health,
-                maxHealth: monsterType.health,
-                speed: monsterType.speed,
-                attackDamage: monsterType.attackDamage,
-                attackCooldown: monsterType.attackCooldown,
-                lastAttack: 0,
-                color: monsterType.color,
-                attackColor: monsterType.attackColor,
-                name: monsterType.name
-            });
-            
-            updateUI();
-        }
-        
-        function updateGame() {
-            if (gameState !== 'playing') return;
-            
-            const currentTime = Date.now();
-            const deltaTime = (currentTime - lastTime) / 1000;
-            lastTime = currentTime;
-            
-            updatePlayer();
-            updateMonsters(currentTime);
-            updateProjectiles();
-            checkCollisions();
-            checkFuseBox();
-            checkWater();
-            
-            gameTime -= deltaTime;
-            
-            if (monsters.length === 0 && fuseBoxTime >= 20) {
-                completeStage();
-                return;
-            }
-            
-            if (player.health <= 0 || gameTime <= 0) {
-                gameOver();
-                return;
-            }
-            
-            updateUI();
-        }
-        
-        function updatePlayer() {
-            player.x += player.direction.x * player.speed;
-            player.y += player.direction.y * player.speed;
-            
-            player.x = Math.max(player.width/2, Math.min(worldWidth - player.width/2, player.x));
-            player.y = Math.max(player.height/2, Math.min(worldHeight - player.height/2, player.y));
-            
-            // Update camera to follow player (for mobile)
-            if (isMobile) {
-                cameraX = player.x - (canvas.width / currentScale) / 2;
-                cameraY = player.y - (canvas.height / currentScale) / 2;
-                
-                // Keep camera within world bounds
-                const viewportWidth = canvas.width / currentScale;
-                const viewportHeight = canvas.height / currentScale;
-                
-                cameraX = Math.max(0, Math.min(worldWidth - viewportWidth, cameraX));
-                cameraY = Math.max(0, Math.min(worldHeight - viewportHeight, cameraY));
-            } else {
-                cameraX = 0;
-                cameraY = 0;
-            }
-        }
-        
-        function updateMonsters(currentTime) {
-            for (let i = monsters.length - 1; i >= 0; i--) {
-                const monster = monsters[i];
-                
-                if (currentTime - monster.lastAttack > monster.attackCooldown) {
-                    monsterAttack(monster);
-                    monster.lastAttack = currentTime;
-                }
-                
-                if (monster.health <= 0) {
-                    monsters.splice(i, 1);
-                    kills++;
-                    stageKills++;
-                    score += 100;
-                    if (audioEnabled) sounds.monsterHit.play().catch(e => console.log("Sound error"));
-                }
-            }
-        }
-        
-        function monsterAttack(monster) {
-            const dx = player.x - monster.x;
-            const dy = player.y - monster.y;
-            const distance = Math.sqrt(dx*dx + dy*dy);
-            
-            if (distance < 800) {
-                monsterProjectiles.push({
-                    x: monster.x,
-                    y: monster.y,
-                    dx: dx / distance * 5,
-                    dy: dy / distance * 5,
-                    damage: monster.attackDamage,
-                    color: monster.attackColor,
-                    radius: 8
-                });
-            }
-        }
-        
-        function updateProjectiles() {
-            for (let i = playerProjectiles.length - 1; i >= 0; i--) {
-                const proj = playerProjectiles[i];
-                proj.x += proj.dx;
-                proj.y += proj.dy;
-                
-                // Use world bounds instead of canvas bounds
-                if (proj.x < -50 || proj.x > worldWidth + 50 || 
-                    proj.y < -50 || proj.y > worldHeight + 50) {
-                    playerProjectiles.splice(i, 1);
-                }
-            }
-            
-            for (let i = monsterProjectiles.length - 1; i >= 0; i--) {
-                const proj = monsterProjectiles[i];
-                proj.x += proj.dx;
-                proj.y += proj.dy;
-                
-                // Use world bounds instead of canvas bounds
-                if (proj.x < -50 || proj.x > worldWidth + 50 || 
-                    proj.y < -50 || proj.y > worldHeight + 50) {
-                    monsterProjectiles.splice(i, 1);
-                }
-            }
-        }
-        
-        function checkCollisions() {
-            for (let i = playerProjectiles.length - 1; i >= 0; i--) {
-                const proj = playerProjectiles[i];
-                
-                for (let j = monsters.length - 1; j >= 0; j--) {
-                    const monster = monsters[j];
-                    
-                    const dx = proj.x - monster.x;
-                    const dy = proj.y - monster.y;
-                    const distance = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if (distance < monster.width/2 + proj.radius) {
-                        monster.health -= player.attackDamage;
-                        playerProjectiles.splice(i, 1);
-                        break;
-                    }
-                }
-            }
-            
-            for (let i = monsterProjectiles.length - 1; i >= 0; i--) {
-                const proj = monsterProjectiles[i];
-                
-                const dx = proj.x - player.x;
-                const dy = proj.y - player.y;
-                const distance = Math.sqrt(dx*dx + dy*dy);
-                
-                if (distance < player.width/2 + proj.radius) {
-                    let damage = proj.damage;
-                    
-                    if (isInWater) {
-                        damage *= 1.2;
-                    }
-                    
-                    player.health -= damage;
-                    monsterProjectiles.splice(i, 1);
-                    
-                    if (audioEnabled) sounds.hit.play().catch(e => console.log("Sound error"));
-                    
-                    if (player.health <= 0) {
-                        gameOver();
-                        return;
-                    }
-                }
-            }
-            
-            for (let i = monsters.length - 1; i >= 0; i--) {
-                const monster = monsters[i];
-                
-                const dx = monster.x - player.x;
-                const dy = monster.y - player.y;
-                const distance = Math.sqrt(dx*dx + dy*dy);
-                
-                if (distance < monster.width/2 + player.width/2) {
-                    let damage = 5;
-                    
-                    if (isInWater) {
-                        damage *= 1.2;
-                    }
-                    
-                    player.health -= damage;
-                    
-                    if (audioEnabled) sounds.hit.play().catch(e => console.log("Sound error"));
-                    
-                    player.x -= dx / distance * 10;
-                    player.y -= dy / distance * 10;
-                    
-                    if (player.health <= 0) {
-                        gameOver();
-                        return;
-                    }
-                }
-            }
-        }
-        
-        function checkFuseBox() {
-            const dx = player.x - fuseBox.x;
-            const dy = player.y - fuseBox.y;
-            const distance = Math.sqrt(dx*dx + dy*dy);
-            
-            if (distance < fuseBox.width/2 && monsters.length === 0) {
-                fuseBoxTime += 1/60;
-            } else {
-                fuseBoxTime = 0;
-            }
-        }
-        
-        function checkWater() {
-            isInWater = false;
-            
-            for (const water of waterAreas) {
-                const dx = player.x - water.x;
-                const dy = player.y - water.y;
-                const distance = Math.sqrt(dx*dx + dy*dy);
-                
-                if (distance < water.radius) {
-                    isInWater = true;
-                    break;
-                }
-            }
-            
-            const waterWarning = document.getElementById('waterWarning');
-            waterWarning.style.display = isInWater ? 'block' : 'none';
-        }
-        
-        function completeStage() {
-            gameState = 'stageComplete';
-            score += Math.floor(gameTime) * 10;
-            
-            document.getElementById('stageCompleteMessage').textContent = 
-                `Stage ${currentStage} Complete! You defended the fuse box!`;
-            
-            document.getElementById('stageCompleteScreen').style.display = 'flex';
-            
-            if (audioEnabled) {
-                backgroundMusic.pause();
-                sounds.stageComplete.play().catch(e => console.log("Sound error"));
-            }
-            
-            saveGame();
-        }
-        
-        function nextStage() {
-            currentStage++;
-            
-            if (currentStage > maxStages) {
-                document.getElementById('stageCompleteMessage').textContent = 
-                    `Congratulations! You completed all stages! Final Score: ${score}`;
-                document.getElementById('nextStageButton').style.display = 'none';
-                return;
-            }
-            
-            document.getElementById('stageCompleteScreen').style.display = 'none';
-            
-            gameState = 'playing';
-            gameTime = stageConfigs[currentStage-1].totalTime;
-            fuseBoxTime = 0;
-            stageKills = 0;
-            spawnStartTime = Date.now();
-            totalMonstersForStage = 0;
-            monstersSpawned = 0;
-            
-            player.x = worldWidth / 2;
-            player.y = worldHeight / 2;
-            
-            monsters = [];
-            playerProjectiles = [];
-            monsterProjectiles = [];
-            
-            startStage(currentStage);
-            
-            if (audioEnabled) {
-                backgroundMusic.play().catch(e => console.log("Sound error"));
-            }
-            
-            updateUI();
-        }
-        
-        function gameOver() {
-            // FIXED: Properly stop the game
-            gameState = 'gameOver';
-            
-            // Stop animation loop
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-            
-            // Check if player can get an extra life (hasn't used one yet)
-            if (!hasUsedExtraLife) {
-                showAdForExtraLife();
-                return;
-            }
-            
-            // No extra life available - show game over screen
-            let message = "Mason has been shocked! ";
-            if (gameTime <= 0) {
-                message = "Time's up! The fuse box overloaded! ";
-            }
-            message += `Final Score: ${score}`;
-            
-            document.getElementById('gameOverMessage').textContent = message;
-            document.getElementById('gameOverScreen').style.display = 'flex';
-            
-            if (audioEnabled) {
-                backgroundMusic.pause();
-                sounds.gameOver.play().catch(e => console.log("Sound error"));
-            }
-            
-            saveGame();
-        }
-        
-        function showAdForExtraLife() {
-            // Show ad screen
-            document.getElementById('adScreen').style.display = 'flex';
-            
-            // Get video element
-            const adVideo = document.getElementById('adVideo');
-            const continueBtn = document.getElementById('continueButton');
-            const adTimeDisplay = document.getElementById('adTimeRemaining');
-            
-            // Reset and play video
-            adVideo.currentTime = 0;
-            adVideo.play().catch(e => console.log("Video play failed:", e));
-            
-            // Hide continue button initially
-            continueBtn.style.display = 'none';
-            
-            // Update timer display
-            let updateTimer = setInterval(() => {
-                const remaining = Math.ceil(adVideo.duration - adVideo.currentTime);
-                adTimeDisplay.textContent = remaining > 0 ? remaining : 0;
-            }, 100);
-            
-            // When video ends, show continue button
-            adVideo.onended = () => {
-                clearInterval(updateTimer);
-                continueBtn.style.display = 'block';
-                adTimeDisplay.textContent = '0';
-            };
-            
-            // Allow skipping after 5 seconds (optional)
-            setTimeout(() => {
-                if (adVideo.currentTime >= 5) {
-                    continueBtn.style.display = 'block';
-                }
-            }, 5000);
-            
-            if (audioEnabled) {
-                backgroundMusic.pause();
-            }
-        }
-        
-        function continueWithExtraLife() {
-            // Hide ad screen
-            document.getElementById('adScreen').style.display = 'none';
-            
-            // Mark that player has used their extra life
-            hasUsedExtraLife = true;
-            
-            // Restore player health
-            player.health = player.maxHealth;
-            
-            // Clear all enemy projectiles to give player a chance
-            monsterProjectiles = [];
-            
-            // Resume game
-            gameState = 'playing';
-            lastTime = Date.now();
-            
-            // Resume background music
-            if (audioEnabled) {
-                backgroundMusic.play().catch(e => console.log("Sound error"));
-            }
-            
-            // Restart game loop
-            gameLoop();
-            
-            updateUI();
-        }
-        
-        function updateUI() {
-            const healthPercent = (player.health / player.maxHealth) * 100;
-            document.getElementById('healthFill').style.width = `${healthPercent}%`;
-            document.getElementById('healthValue').textContent = `${Math.round(healthPercent)}%`;
-            
-            document.getElementById('stageValue').textContent = `${currentStage}/${maxStages}`;
-            
-            // FIXED: Show remaining monsters out of total for stage
-            document.getElementById('monstersValue').textContent = `${monsters.length}/${totalMonstersForStage}`;
-            
-            document.getElementById('fuseTimeValue').textContent = `${Math.round(fuseBoxTime)}s`;
-            
-            const minutes = Math.max(0, Math.floor(gameTime / 60));
-            const seconds = Math.max(0, Math.floor(gameTime % 60));
-            document.getElementById('timeValue').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            document.getElementById('killsValue').textContent = kills;
-            document.getElementById('scoreValue').textContent = score;
-        }
-        
-        function playerAttack() {
-            const currentTime = Date.now();
-            
-            if (currentTime - player.lastAttack < player.attackSpeed) return;
-            
-            let targetX = player.x + (player.direction.x || 0) * 100;
-            let targetY = player.y + (player.direction.y || 0) * 100;
-            
-            if ((player.direction.x === 0 && player.direction.y === 0) || 
-                (player.direction.x === undefined || player.direction.y === undefined)) {
-                let nearestDist = Infinity;
-                let nearestMonster = null;
-                
-                for (const monster of monsters) {
-                    const dx = monster.x - player.x;
-                    const dy = monster.y - player.y;
-                    const distance = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if (distance < nearestDist) {
-                        nearestDist = distance;
-                        nearestMonster = monster;
-                    }
-                }
-                
-                if (nearestMonster) {
-                    const dx = nearestMonster.x - player.x;
-                    const dy = nearestMonster.y - player.y;
-                    const distance = Math.sqrt(dx*dx + dy*dy);
-                    
-                    targetX = player.x + dx / distance * 100;
-                    targetY = player.y + dy / distance * 100;
-                }
-            }
-            
-            const dx = targetX - player.x;
-            const dy = targetY - player.y;
-            const distance = Math.sqrt(dx*dx + dy*dy);
-            
-            if (distance > 0) {
-                playerProjectiles.push({
-                    x: player.x,
-                    y: player.y,
-                    dx: dx / distance * 10,
-                    dy: dy / distance * 10,
-                    damage: player.attackDamage,
-                    color: "#FFFF00",
-                    radius: 6
-                });
-                
-                player.lastAttack = currentTime;
-                
-                if (audioEnabled) sounds.shoot.play().catch(e => console.log("Sound error"));
-            }
-        }
-        
-        // Drawing functions
-        function drawGame() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Save context and apply camera transform with zoom
-            ctx.save();
-            
-            if (isMobile) {
-                // Apply pinch zoom transformation
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.scale(currentScale, currentScale);
-                ctx.translate(-cameraX - (canvas.width / currentScale) / 2, -cameraY - (canvas.height / currentScale) / 2);
-            } else {
-                // No zoom on desktop
-                ctx.translate(-cameraX, -cameraY);
-            }
-            
-            if (images.map) {
-                ctx.drawImage(images.map, 0, 0, worldWidth, worldHeight);
-            } else {
-                ctx.fillStyle = "#1a1a2e";
-                ctx.fillRect(0, 0, worldWidth, worldHeight);
-                
-                ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-                ctx.lineWidth = 1;
-                
-                for (let x = 0; x < worldWidth; x += 50) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, worldHeight);
-                    ctx.stroke();
-                }
-                
-                for (let y = 0; y < worldHeight; y += 50) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(worldWidth, y);
-                    ctx.stroke();
-                }
-            }
-            
-            ctx.fillStyle = "rgba(0, 100, 255, 0.3)";
-            for (const water of waterAreas) {
-                ctx.beginPath();
-                ctx.arc(water.x, water.y, water.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.strokeStyle = "rgba(100, 200, 255, 0.5)";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.arc(water.x, water.y, water.radius + Math.sin(Date.now() / 500) * 5, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-            
-            if (images.fuseBox) {
-                ctx.drawImage(
-                    images.fuseBox, 
-                    fuseBox.x - fuseBox.width/2, 
-                    fuseBox.y - fuseBox.height/2, 
-                    fuseBox.width, 
-                    fuseBox.height
-                );
-            } else {
-                ctx.fillStyle = "#444";
-                ctx.fillRect(fuseBox.x - fuseBox.width/2, fuseBox.y - fuseBox.height/2, fuseBox.width, fuseBox.height);
-                
-                ctx.fillStyle = "#666";
-                ctx.fillRect(fuseBox.x - fuseBox.width/3, fuseBox.y - fuseBox.height/3, fuseBox.width/1.5, fuseBox.height/1.5);
-                
-                if (monsters.length === 0) {
-                    ctx.fillStyle = fuseBoxTime >= 20 ? "#00FF00" : "#FFFF00";
-                    ctx.beginPath();
-                    ctx.arc(fuseBox.x, fuseBox.y - 60, 10 + Math.sin(Date.now() / 200) * 5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-            
-            for (const monster of monsters) {
-                let monsterImg = null;
-                
-                if (monster.type === 0 && images.monster1) monsterImg = images.monster1;
-                else if (monster.type === 1 && images.monster2) monsterImg = images.monster2;
-                else if (monster.type === 2 && images.monster3) monsterImg = images.monster3;
-                else if (monster.type === 3 && images.monster4) monsterImg = images.monster4;
-                else if (monster.type === 4 && images.monster5) monsterImg = images.monster5;
-                
-                if (monsterImg) {
-                    const drawX = Math.max(monster.width/2, Math.min(canvas.width - monster.width/2, monster.x));
-                    const drawY = Math.max(monster.height/2, Math.min(canvas.height - monster.height/2, monster.y));
-                    
-                    ctx.drawImage(monsterImg, drawX - monster.width/2, drawY - monster.height/2, monster.width, monster.height);
-                } else {
-                    ctx.fillStyle = monster.color;
-                    ctx.fillRect(monster.x - monster.width/2, monster.y - monster.height/2, monster.width, monster.height);
-                    
-                    ctx.fillStyle = "#000";
-                    ctx.beginPath();
-                    ctx.arc(monster.x, monster.y - monster.height/6, 5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                
-                const healthPercent = monster.health / monster.maxHealth;
-                ctx.fillStyle = "#333";
-                ctx.fillRect(monster.x - monster.width/2, monster.y - monster.height/2 - 10, monster.width, 5);
-                ctx.fillStyle = healthPercent > 0.5 ? "#00FF00" : healthPercent > 0.25 ? "#FFFF00" : "#FF0000";
-                ctx.fillRect(monster.x - monster.width/2, monster.y - monster.height/2 - 10, monster.width * healthPercent, 5);
-                
-                ctx.fillStyle = "#FFF";
-                ctx.font = "12px Arial";
-                ctx.textAlign = "center";
-                ctx.fillText(monster.name, monster.x, monster.y - monster.height/2 - 15);
-            }
-            
-            if (images.player) {
-                ctx.drawImage(
-                    images.player, 
-                    player.x - player.width/2, 
-                    player.y - player.height/2, 
-                    player.width, 
-                    player.height
-                );
-            } else {
-                ctx.fillStyle = "#FFCC00";
-                ctx.fillRect(player.x - player.width/2, player.y - player.height/2, player.width, player.height);
-                
-                ctx.fillStyle = "#000";
-                ctx.beginPath();
-                ctx.arc(player.x, player.y - 10, 5, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.fillStyle = "#888";
-                ctx.fillRect(player.x + player.width/4, player.y - player.height/4, 20, 5);
-            }
-            
-            for (const proj of playerProjectiles) {
-                ctx.fillStyle = proj.color;
-                ctx.beginPath();
-                ctx.arc(proj.x, proj.y, proj.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.strokeStyle = "#FFFFFF";
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(proj.x, proj.y);
-                ctx.lineTo(proj.x - proj.dx, proj.y - proj.dy);
-                ctx.stroke();
-            }
-            
-            for (const proj of monsterProjectiles) {
-                ctx.fillStyle = proj.color;
-                ctx.beginPath();
-                ctx.arc(proj.x, proj.y, proj.radius, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.strokeStyle = proj.color;
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(proj.x, proj.y);
-                ctx.lineTo(proj.x - proj.dx * 3, proj.y - proj.dy * 3);
-                ctx.stroke();
-            }
-            
-            if (monsters.length === 0) {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-                ctx.fillRect(fuseBox.x - 60, fuseBox.y - 80, 120, 15);
-                
-                ctx.fillStyle = fuseBoxTime >= 20 ? "#00FF00" : "#FFFF00";
-                ctx.fillRect(fuseBox.x - 60, fuseBox.y - 80, 120 * (fuseBoxTime / 20), 15);
-                
-                ctx.fillStyle = "#FFF";
-                ctx.font = "12px Arial";
-                ctx.textAlign = "center";
-                ctx.fillText(`Fuse Box: ${Math.round(fuseBoxTime)}/20s`, fuseBox.x, fuseBox.y - 85);
-            }
-            
-            if (player.direction.x === 0 && player.direction.y === 0) {
-                ctx.strokeStyle = "#FFFF00";
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
-                ctx.beginPath();
-                ctx.arc(player.x, player.y, 30, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-            
-            // Restore context (remove camera transform)
-            ctx.restore();
-        }
-        
-        // Pinch zoom functions
-        function handlePinchStart(e) {
-            if (e.touches.length === 2) {
-                isPinching = true;
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                initialPinchDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                e.preventDefault();
-            }
-        }
-        
-        function handlePinchMove(e) {
-            if (isPinching && e.touches.length === 2) {
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                const currentDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                
-                if (initialPinchDistance > 0) {
-                    const scaleFactor = currentDistance / initialPinchDistance;
-                    currentScale = Math.max(minScale, Math.min(maxScale, currentScale * scaleFactor));
-                    initialPinchDistance = currentDistance;
-                }
-                e.preventDefault();
-            }
-        }
-        
-        function handlePinchEnd(e) {
-            if (e.touches.length < 2) {
-                isPinching = false;
-                initialPinchDistance = 0;
-            }
-        }
-        
-        function handleDoubleTap(e) {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTapTime;
-            
-            if (tapLength < doubleTapDelay && tapLength > 0) {
-                // Double tap detected - reset zoom
-                currentScale = 1.0;
-                e.preventDefault();
-            }
-            lastTapTime = currentTime;
-        }
-        
-        function zoomIn() {
-            currentScale = Math.min(maxScale, currentScale + 0.2);
-        }
-        
-        function zoomOut() {
-            currentScale = Math.max(minScale, currentScale - 0.2);
-        }
-        
-        function resetZoom() {
-            currentScale = 1.0;
-        }
-        
-        function saveGame() {
-            const gameData = {
-                currentStage: currentStage,
-                highScore: Math.max(score, parseInt(localStorage.getItem('dsmHighScore') || 0)),
-                score: score
-            };
-            
-            localStorage.setItem('dsmGameData', JSON.stringify(gameData));
-            localStorage.setItem('dsmHighScore', gameData.highScore);
-        }
-        
-        function loadGame() {
-            const savedData = localStorage.getItem('dsmGameData');
-            if (savedData) {
-                const gameData = JSON.parse(savedData);
-            }
-        }
-        
-        const keys = {};
-        
-        window.addEventListener('keydown', (e) => {
-            keys[e.key] = true;
-            
-            if (e.key === ' ' && gameState === 'playing') {
-                playerAttack();
-                e.preventDefault();
-            }
-        });
-        
-        window.addEventListener('keyup', (e) => {
-            keys[e.key] = false;
-        });
-        
-        function updateInput() {
-            // Only update from keyboard if joystick is not active
-            if (!joystickActive) {
-                player.direction.x = 0;
-                player.direction.y = 0;
-                
-                if (keys['ArrowUp'] || keys['w'] || keys['W']) player.direction.y = -1;
-                if (keys['ArrowDown'] || keys['s'] || keys['S']) player.direction.y = 1;
-                if (keys['ArrowLeft'] || keys['a'] || keys['A']) player.direction.x = -1;
-                if (keys['ArrowRight'] || keys['d'] || keys['D']) player.direction.x = 1;
-                
-                if (player.direction.x !== 0 && player.direction.y !== 0) {
-                    player.direction.x *= 0.7071;
-                    player.direction.y *= 0.7071;
-                }
-            }
-        }
-        
-        let joystickActive = false;
-        let joystickStartX = 0;
-        let joystickStartY = 0;
-        let joystickX = 0;
-        let joystickY = 0;
-        
-        const joystickArea = document.getElementById('joystickArea');
-        const joystick = document.getElementById('joystick');
-        const shootBtn = document.getElementById('shootBtn');
-        
-        joystickArea.addEventListener('touchstart', (e) => {
-            if (isPinching) return;
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = joystickArea.getBoundingClientRect();
-            
-            joystickStartX = rect.left + rect.width / 2;
-            joystickStartY = rect.top + rect.height / 2;
-            
-            joystickX = touch.clientX - joystickStartX;
-            joystickY = touch.clientY - joystickStartY;
-            
-            const distance = Math.sqrt(joystickX * joystickX + joystickY * joystickY);
-            const maxDistance = 40;
-            
-            if (distance > maxDistance) {
-                joystickX = (joystickX / distance) * maxDistance;
-                joystickY = (joystickY / distance) * maxDistance;
-            }
-            
-            joystick.style.transform = `translate(calc(-50% + ${joystickX}px), calc(-50% + ${joystickY}px))`;
-            joystickActive = true;
-            
-            player.direction.x = joystickX / maxDistance;
-            player.direction.y = joystickY / maxDistance;
-        });
-        
-        joystickArea.addEventListener('touchmove', (e) => {
-            if (!joystickActive || isPinching) return;
-            e.preventDefault();
-            
-            const touch = e.touches[0];
-            joystickX = touch.clientX - joystickStartX;
-            joystickY = touch.clientY - joystickStartY;
-            
-            const distance = Math.sqrt(joystickX * joystickX + joystickY * joystickY);
-            const maxDistance = 40;
-            
-            if (distance > maxDistance) {
-                joystickX = (joystickX / distance) * maxDistance;
-                joystickY = (joystickY / distance) * maxDistance;
-            }
-            
-            joystick.style.transform = `translate(calc(-50% + ${joystickX}px), calc(-50% + ${joystickY}px))`;
-            
-            player.direction.x = joystickX / maxDistance;
-            player.direction.y = joystickY / maxDistance;
-        });
-        
-        joystickArea.addEventListener('touchend', (e) => {
-            joystickActive = false;
-            joystick.style.transform = 'translate(-50%, -50%)';
-            player.direction.x = 0;
-            player.direction.y = 0;
-        });
-        
-        shootBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameState === 'playing') {
-                playerAttack();
-            }
-        });
-        
-        shootBtn.addEventListener('click', () => {
-            if (gameState === 'playing') {
-                playerAttack();
-            }
-        });
-        
-        // Add pinch zoom event listeners
-        canvas.addEventListener('touchstart', handlePinchStart);
-        canvas.addEventListener('touchmove', handlePinchMove);
-        canvas.addEventListener('touchend', handlePinchEnd);
-        canvas.addEventListener('touchcancel', handlePinchEnd);
-        
-        // Add double tap to reset zoom
-        canvas.addEventListener('touchend', handleDoubleTap);
-        
-        // Add zoom control buttons
-        document.getElementById('zoomInBtn').addEventListener('click', zoomIn);
-        document.getElementById('zoomOutBtn').addEventListener('click', zoomOut);
-        document.getElementById('resetZoomBtn').addEventListener('click', resetZoom);
-        
-        function gameLoop() {
-            updateInput();
-            updateGame();
-            drawGame();
-            
-            // FIXED: Only continue loop if game is playing
-            if (gameState === 'playing') {
-                animationFrameId = requestAnimationFrame(gameLoop);
-            }
-        }
-        
-        document.getElementById('startButton').addEventListener('click', () => {
-            document.getElementById('startScreen').style.display = 'none';
-            loadImages();
-            initGame();
-            gameLoop();
-        });
-        
-        document.getElementById('restartButton').addEventListener('click', () => {
-            document.getElementById('gameOverScreen').style.display = 'none';
-            initGame();
-            // FIXED: Restart the game loop
-            gameLoop();
-        });
-        
-        document.getElementById('continueButton').addEventListener('click', () => {
-            continueWithExtraLife();
-        });
-        
-        document.getElementById('backToMenuButton').addEventListener('click', () => {
-            document.getElementById('gameOverScreen').style.display = 'none';
-            document.getElementById('startScreen').style.display = 'flex';
-        });
-        
-        document.getElementById('nextStageButton').addEventListener('click', () => {
-            nextStage();
-            // FIXED: Restart the game loop for next stage
-            if (gameState === 'playing') {
-                gameLoop();
-            }
-        });
-        
-        document.getElementById('audioToggle').addEventListener('click', () => {
-            audioEnabled = !audioEnabled;
-            document.getElementById('audioToggle').textContent = 
-                audioEnabled ? "🔈 Sound On" : "🔇 Sound Off";
-            
-            if (audioEnabled && gameState === 'playing') {
-                backgroundMusic.play().catch(e => console.log("Sound error"));
-            } else {
-                backgroundMusic.pause();
-            }
-        });
-        
-        window.addEventListener('load', () => {
-            loadGame();
-            
-            const highScore = localStorage.getItem('dsmHighScore');
-            if (highScore) {
-                const rulesDiv = document.getElementById('rules');
-                const highScoreElem = document.createElement('p');
-                highScoreElem.style.textAlign = 'center';
-                highScoreElem.style.marginTop = '10px';
-                highScoreElem.style.color = '#ffcc00';
-                highScoreElem.textContent = `High Score: ${highScore}`;
-                rulesDiv.appendChild(highScoreElem);
-            }
-        });
-        
-        // Initialize canvas size after all objects are defined
-        resizeCanvas();
-        
-        gameLoop();
-    </script>
+        grid.innerHTML = html;
+      }
+    })();
+  </script>
 </body>
 </html>
